@@ -39,13 +39,13 @@ namespace Esdms.Models
         [ColumnDef(Filter = true,
             EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.ProjectSelectItems.AssemblyQualifiedName,
             ColSize = 3)]        
-        public int ProjectId { get; set; }
+        public int? ProjectId { get; set; }
 
         [Display(Name = "會議")]
         [ColumnDef(Filter = true,
             EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.ActivityCategorySelectItems.AssemblyQualifiedName,
             ColSize = 3)]
-        public int ActivityCategoryId { get; set; }
+        public int? ActivityCategoryId { get; set; }
 
         static object lockGetAllDatas = new object();
         public static IEnumerable<FTISUserHistory> GetAllDatas(int cachetimer = 0)

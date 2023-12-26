@@ -10,7 +10,7 @@ namespace Esdms.Models
     {
         public EsdmsModelContextExt() : base("name=EsdmsModelContextExt")
         {
-            //Database.SetInitializer<DouImpModelContext>(null);
+            Database.SetInitializer<EsdmsModelContextExt>(null);
         }
 
         public virtual DbSet<City> City { get; set; }

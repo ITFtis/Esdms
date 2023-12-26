@@ -21,6 +21,7 @@ namespace Esdms.Models
         public string PId { get; set; }
         
         [Display(Name = "姓名")]
+        [Required]
         [ColumnDef(EditType = EditType.TextList, SelectItemsClassNamespace = Esdms.Models.BasicUserNameSelectItems.AssemblyQualifiedName, 
             Filter = true, FilterAssign = FilterAssignType.Contains,
             ColSize = 3)]
@@ -37,7 +38,7 @@ namespace Esdms.Models
         [ColumnDef(Filter = true, 
             EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.CategorySelectItems.AssemblyQualifiedName,
             ColSize = 3)]        
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
 
         [Display(Name = "在職狀況")]
         [ColumnDef(EditType = EditType.Select, SelectItems = "{\"OJ1\":\"在職\",\"OJ2\":\"退休\",\"OJ3\":\"歿\"}",
@@ -94,12 +95,6 @@ namespace Esdms.Models
         [StringLength(50)]
         public string PrivateEmail { get; set; }
         
-        [Display(Name = "證照")]
-        [ColumnDef(Filter = true,
-            EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.LicenseSelectItems.AssemblyQualifiedName,
-            ColSize = 3)]
-        public int LicenseId { get; set; }
-
         [Display(Name = "國籍")]
         [ColumnDef(ColSize = 3)]
         [StringLength(50)]
