@@ -19,7 +19,7 @@
         $_d5EditDataContainer = $('<table>').appendTo($_oform.parent());
         $_d6EditDataContainer = $('<table>').appendTo($_oform.parent());
         $_d7EditDataContainer = $('<table>').appendTo($_oform.parent());
-        //$_d8EditDataContainer = $('<table>').appendTo($_oform.parent());
+        $_d8EditDataContainer = $('<table>').appendTo($_oform.parent());
         //$_d9EditDataContainer = $('<table>').appendTo($_oform.parent());
 
         var oPId = row.PId;
@@ -52,22 +52,17 @@
             //1-n 專家參與紀錄
             SetDouDa7(row.FTISUserHistorys, oPId);
 
-            ////1-n Detail(EmpDa8) 專業資格
-            //SetDouEmpDa8(row.Da8s, oPId);
+            //1-n 證照
+            SetDouDa8(row.BasicUser_Licenses, oPId);
 
             ////1-n Detail(EmpDa9) 著作
             //SetDouEmpDa9(row.Da9s, oPId);
         }
 
-        //////產tab
-        ////helper.bootstrap.genBootstrapTabpanel($_d4EditDataContainer.parent(), undefined, undefined,
-        ////    ['員工資料', '通訊方式', '學歷', '經歷', '家庭狀況', '外語檢定', '專業資格', '著作'],
-        ////    [$_oform, $_d1EditDataContainer, $_d4EditDataContainer, $_d5EditDataContainer, $_d6EditDataContainer, $_d7EditDataContainer, $_d8EditDataContainer, $_d9EditDataContainer]);
-
         //產tab        
         helper.bootstrap.genBootstrapTabpanel($_d4EditDataContainer.parent(), undefined, undefined,
-            ['基本資料', '個人資料', '專長', '意見', '經歷', '專家參與紀錄'],
-            [$_oform, $_d1EditDataContainer, $_d4EditDataContainer, $_d5EditDataContainer, $_d6EditDataContainer, $_d7EditDataContainer]);
+            ['基本資料', '個人資料', '專長', '意見', '經歷', '專家參與紀錄', '證照'],
+            [$_oform, $_d1EditDataContainer, $_d4EditDataContainer, $_d5EditDataContainer, $_d6EditDataContainer, $_d7EditDataContainer, $_d8EditDataContainer]);
 
 
         //點選的Tab
@@ -507,6 +502,29 @@
 
             //實體Dou js
             $_d7Table = $_d7EditDataContainer.douTable(_opt);
+        });
+    };
+
+    function SetDouDa8(datas, PId) {
+        $.getJSON($.AppConfigOptions.baseurl + 'BasicUser_License/GetDataManagerOptionsJson', function (_opt) { //取model option
+
+            _opt.title = '證照';
+
+            //取消自動抓後端資料
+            _opt.tableOptions.url = undefined;
+
+            datas = datas ? datas : [{}];
+            _opt.datas = datas;
+
+            _opt.editformSize = { minWidth: 700 };
+            _opt.beforeCreateEditDataForm = function (row, callback) {
+                row.PId = PId;
+
+                callback();
+            };
+
+            //實體Dou js
+            $_d8Table = $_d8EditDataContainer.douTable(_opt);
         });
     };
 })

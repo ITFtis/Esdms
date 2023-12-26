@@ -187,6 +187,16 @@ namespace Esdms.Models
                 return FTISUserHistory.GetAllDatas().Where(a => a.PId == this.PId).ToList();
             }
         }
+
+        //證照
+        [NotMapped]
+        public virtual ICollection<BasicUser_License> BasicUser_Licenses
+        {
+            get
+            {
+                return BasicUser_License.GetAllDatas().Where(a => a.PId == this.PId).ToList();
+            }
+        }
     }
 
     public class BasicUserNameSelectItems : Dou.Misc.Attr.SelectItemsClass
