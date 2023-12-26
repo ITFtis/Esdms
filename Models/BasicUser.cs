@@ -138,6 +138,7 @@ namespace Esdms.Models
         [StringLength(50)]
         public string Recommender { get; set; }
 
+        //個人資料
         [ColumnDef(Visible = false, VisibleEdit = false)]
         public virtual BasicUser_Private BasicUser_Private 
         { 
@@ -147,6 +148,7 @@ namespace Esdms.Models
             }
         }
 
+        //專長
         [NotMapped]
         public virtual ICollection<Expertise> Expertises        
         {
@@ -156,6 +158,7 @@ namespace Esdms.Models
             }
         }
 
+        //意見
         [NotMapped]
         public virtual ICollection<UserHistoryOpinion> UserHistoryOpinions
         {
@@ -165,6 +168,7 @@ namespace Esdms.Models
             }
         }
 
+        //經歷
         [NotMapped]
         public virtual ICollection<Resume> Resumes
         {
@@ -174,6 +178,7 @@ namespace Esdms.Models
             }
         }
 
+        //Ftis活動計畫參與
         [NotMapped]
         public virtual ICollection<FTISUserHistory> FTISUserHistorys
         {
