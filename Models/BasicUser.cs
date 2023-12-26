@@ -21,7 +21,9 @@ namespace Esdms.Models
         public string PId { get; set; }
         
         [Display(Name = "姓名")]
-        [ColumnDef(ColSize = 3)]
+        [ColumnDef(EditType = EditType.TextList, SelectItemsClassNamespace = Esdms.Models.BasicUserNameSelectItems.AssemblyQualifiedName, 
+            Filter = true, FilterAssign = FilterAssignType.Contains,
+            ColSize = 3)]
         [StringLength(40)]
         public string Name { get; set; }
         
@@ -184,6 +186,37 @@ namespace Esdms.Models
             {
                 return FTISUserHistory.GetAllDatas().Where(a => a.PId == this.PId).ToList();
             }
+        }
+    }
+
+    public class BasicUserNameSelectItems : Dou.Misc.Attr.SelectItemsClass
+    {
+        public const string AssemblyQualifiedName = "Esdms.Models.BasicUserNameSelectItems, Esdms";
+
+        protected static IEnumerable<BasicUser> _basicUsers;
+        internal static IEnumerable<BasicUser> BasicUsers
+        {
+            get
+            {
+                if (_basicUsers == null)
+                {
+                    using (var db = new EsdmsModelContextExt())
+                    {
+                        _basicUsers = db.BasicUser.ToArray();
+                    }
+                }
+                return _basicUsers;
+            }
+        }
+
+
+        public static void Reset()
+        {
+            _basicUsers = null;
+        }
+        public override IEnumerable<KeyValuePair<string, object>> GetSelectItems()
+        {
+            return BasicUsers.Select(s => new KeyValuePair<string, object>(s.Name, s.Name));
         }
     }
 }
