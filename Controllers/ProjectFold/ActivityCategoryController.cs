@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Esdms.Controllers.ProjectFold
 {
-    [Dou.Misc.Attr.MenuDef(Id = "ActivityCategory", Name = "專案類型", MenuPath = "專案資料", Action = "Index", Index = 1, Func = Dou.Misc.Attr.FuncEnum.ALL, AllowAnonymous = false)]
+    [Dou.Misc.Attr.MenuDef(Id = "ActivityCategory", Name = "會議", MenuPath = "專案資料", Action = "Index", Index = 1, Func = Dou.Misc.Attr.FuncEnum.ALL, AllowAnonymous = false)]
     public class ActivityCategoryController : APaginationModelController<ActivityCategory>
     {        
         // GET: ActivityCategory

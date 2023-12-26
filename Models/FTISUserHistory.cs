@@ -41,7 +41,7 @@ namespace Esdms.Models
             ColSize = 3)]        
         public int ProjectId { get; set; }
 
-        [Display(Name = "專案類型")]
+        [Display(Name = "會議")]
         [ColumnDef(Filter = true,
             EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.ActivityCategorySelectItems.AssemblyQualifiedName,
             ColSize = 3)]

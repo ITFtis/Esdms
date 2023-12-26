@@ -9,7 +9,7 @@ using System.Web;
 namespace Esdms.Models
 {
     /// <summary>
-    /// 專案類型
+    /// 會議
     /// </summary>
     [Table("ActivityCategory")]
     public class ActivityCategory
