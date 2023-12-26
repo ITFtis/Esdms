@@ -33,7 +33,7 @@ namespace Esdms.Models
 
         [Display(Name = "日期")]
         [ColumnDef(EditType = EditType.Date, ColSize = 3)]
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
 
         [Display(Name = "專案")]
         [ColumnDef(Filter = true,

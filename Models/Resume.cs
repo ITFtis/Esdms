@@ -43,11 +43,11 @@ namespace Esdms.Models
 
         [Display(Name = "任職起")]
         [ColumnDef(ColSize = 3, EditType = EditType.Date)]
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         [Display(Name = "任職迄")]
         [ColumnDef(ColSize = 3, EditType = EditType.Date)]
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         [Display(Name = "備註")]
         [ColumnDef(ColSize = 3)]
