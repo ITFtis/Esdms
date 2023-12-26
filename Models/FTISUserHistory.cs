@@ -35,13 +35,13 @@ namespace Esdms.Models
         [ColumnDef(EditType = EditType.Date, ColSize = 3)]
         public DateTime Date { get; set; }
 
-        [Display(Name = "計畫")]
+        [Display(Name = "專案")]
         [ColumnDef(Filter = true,
             EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.ProjectSelectItems.AssemblyQualifiedName,
             ColSize = 3)]        
         public int ProjectId { get; set; }
 
-        [Display(Name = "參與活動類型")]
+        [Display(Name = "專案類型")]
         [ColumnDef(Filter = true,
             EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.ActivityCategorySelectItems.AssemblyQualifiedName,
             ColSize = 3)]
