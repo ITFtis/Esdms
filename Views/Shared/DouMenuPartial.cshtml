@@ -1,0 +1,158 @@
+﻿@using Dou.Misc
+@using Dou.Misc.Attr
+@using Dou.Misc.Extension
+
+<style>
+    /*muti level*/
+
+    .dou-menu .dropdown-submenu {
+        position: relative;
+    }
+
+    .dou-menu .dropdown-submenu > .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -6px;
+        /*margin-left: .25rem;*/
+        -webkit-border-radius: 0 6px 6px 6px;
+        -moz-border-radius: 0 6px 6px 6px;
+        border-radius: 0 6px 6px 6px;
+    }
+
+    .dou-menu .dropdown-submenu:hover > .dropdown-menu {
+        display: inline-table;
+    }
+    .dou-menu .dropdown-submenu:hover > .dropdown-menu > .nav-item {
+        display: block;
+    }
+
+    .dou-menu .dropdown-submenu > a:after {
+        display: block;
+        content: " ";
+        float: right;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 0.25rem 0 0.25rem 0.4rem;
+        border-left-color: #cccccc;
+        padding-right:.75rem;
+        margin-top: 0.3rem;
+    }
+
+    .dou-menu .dropdown-submenu:hover > a:after {
+        border-left-color: #ffffff;
+    }
+
+    .dou-menu .dropdown-submenu.pull-left {
+        float: none;
+    }
+
+    .dou-menu .dropdown-submenu.pull-left > .dropdown-menu {
+        left: -100%;
+        margin-left: 10px;
+        -webkit-border-radius: 6px 0 6px 6px;
+        -moz-border-radius: 6px 0 6px 6px;
+        border-radius: 6px 0 6px 6px;
+    }
+
+    .dou-menu .nav-link.dou-non-action-controller {
+        white-space: nowrap;
+    }
+
+    .fixed-table-toolbar {
+        background-color: #dfdfdf;
+        border-radius: .4rem .4rem 0 0;
+    }
+    @@media (max-width: 576px) {
+        .dou-menu .navbar-nav .dropdown-submenu > .dropdown-menu {
+            display: inline-table;
+            padding:.25rem;
+            background-color: rgba(0,0,0,.1) !important;
+            width:96%;
+        }
+        .dou-menu .dropdown-submenu > .dropdown-menu > .nav-item {
+            display: block;
+        }
+        .dou-menu .dropdown-menu {
+            transition: none;
+        }
+</style>
+
+@*<ul class="nav navbar-nav dou-menu  flex-grow-1">*@
+
+    @foreach (Menu.MenuItem item in Menu.GetCurrentUserMenuTree())
+    {
+        if (item.Children != null)
+        {
+    <li class="dropdown nav-item">
+        @*a 下加label mousecursor 位置有問題 ，部分IE按下無反應(只能按最左顛才有反映)*@
+        @*<a href="#" class="dropdown-toggle" data-toggle="dropdown">@Html.MenuImage(item.Icon != null ? Url.Content(item.Icon) : null) <label class=@(item.Id.Replace(".", "_"))><span>@(item.Name)</span></label><b class="caret"></b></a>*@
+        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" data-bs-toggle="dropdown">@Html.MenuImage(item.Icon != null ? Url.Content(item.Icon) : null)<span  class=@(item.Id.Replace(".", "_"))>@(item.Name)</span><b class="caret"></b></a>
+        @GenGroupMenu(item, item.Children)
+    </li>
+        }
+        else
+        {
+            @GenActionMenu(item);
+        }
+    }
+@*</ul>*@
+@helper GenActionMenu(Menu.MenuItem item)
+{
+    <li  class="nav-item">
+        <a href="@(item.Attributes is HtmlIFrameMenuDefAttribute &&  item.Attributes.IsPromptUI ?(item.Attributes as HtmlIFrameMenuDefAttribute).Url: Url.Action(item.Attributes.Action, item.Attributes.ActionController))"
+           class="nav-link @( IsWorkItem(item) ? "dou-action-controller" : "dou-non-action-controller")"
+           url="@((!item.Attributes.IsPromptUI && item.Attributes is HtmlIFrameMenuDefAttribute) ?  (item.Attributes as HtmlIFrameMenuDefAttribute).Url : null)"
+           target=@(item.Attributes.IsPromptUI ? item.Name : null)>
+            @*@Html.MenuImage(item.Icon != null ? Url.Content(item.Icon) : null)<label class=@(item.Id.Replace(".", "_"))><span>@(item.Name)</span></label>*@
+            @Html.MenuImage(item.Icon != null ? Url.Content(item.Icon) : null)<span class=@(item.Id.Replace(".", "_"))>@(item.Name)</span>
+        </a>
+    </li>
+}
+@helper GenGroupMenu(Menu.MenuItem node, IEnumerable<Menu.MenuItem> items)
+{
+    <ul class="dropdown-menu">
+
+        @foreach (Menu.MenuItem item in items)
+        {
+            if (item.Children != null && item.Children.Count() > 0)
+            {
+        <li class="dropdown  dropdown-submenu nav-item">
+            @*<a href="#" class="dropdown-toggle" data-toggle="dropdown">@(item.Icon != null ? "<img src='" + Url.Content(item.Icon) + "'>" : "")<label class=@(item.Id.Replace(".", "_"))><span>@(item.Name)</span></label></a>*@
+            <a href="#" class="dropdown-toggle  nav-link" data-bs-toggle="dropdown" data-toggle="dropdown">@(item.Icon != null ? "<img src='" + Url.Content(item.Icon) + "'>" : "")<span class=@(item.Id.Replace(".", "_"))>@(item.Name)</span></a>
+            @GenGroupMenu(item, item.Children)
+        </li>
+            }
+            else
+            {
+                @GenActionMenu(item);
+            }
+        }
+    </ul>
+}
+@functions{
+    public bool IsWorkItem(Menu.MenuItem item)
+    {
+        return item.Attributes.ActionController.Equals(this.ViewContext.RouteData.Values["controller"].ToString()) &&
+            ((item.Attributes is HtmlIFrameMenuDefAttribute) ? (item.Attributes as HtmlIFrameMenuDefAttribute).Url.Equals(ViewBag.PageUrl) : true);/* item.Attributes.Action.Equals(this.ViewContext.RouteData.Values["action"].ToString());*/
+    }
+}
+<script>
+
+    $('.dou-action-controller').parents('.dropdown ').find('> a[data-toggle="dropdown"]').addClass("dou-action-controller-root");
+    $('.dou-menu a[url=""]').removeAttr("url");
+    $('.dou-menu a[target=""]').removeAttr("target");
+
+    $.each($('.dou-menu a[url]'), function () {
+        $(this).attr("href", $(this).attr("href") + "?url=" + $(this).attr("url")).removeAttr("url");
+    });
+
+    //$('.dou-menu a:not([href="#"]):not([target]), #user-profile + .popover a').click(function () { //20220928
+    $('.dou-menu a:not(#user-profile):not([href="#"]):not([target])').click(function () {   ////bootstrap 5
+        helper.misc.showBusyIndicator();
+    });
+
+</script>
+
+

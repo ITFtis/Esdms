@@ -1,0 +1,19 @@
+﻿@using Dou.Misc.Extension
+@Html.MenuMap()
+@Html.DataManagerOptionsJavascript(null, "douoptions")
+
+<table id="_table"></table>
+
+<script>
+    $(document).ready(function () {
+
+        douoptions.afterCreateEditDataForm = function ($container, row) {
+            //加提示字
+            var $p1 = $('div[data-field=ZIP]').find('label');
+            var remind = '<span class="text-danger fw-lighter pull-right">(郵遞區號)</span>';
+            $(remind).appendTo($p1);
+        }
+
+        $("#_table").DouEditableTable(douoptions);
+    });
+</script>

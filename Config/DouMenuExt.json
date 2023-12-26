@@ -1,0 +1,32 @@
+[
+  {
+    "Name": "系統管理",
+    "MenuPath": "",
+    "Index": 99999,
+    "IsOnlyPath": true
+  },
+  {
+    "Name": "專家資料",
+    "MenuPath": "",
+    "Index": 1,
+    "IsOnlyPath": true
+  },
+  {
+    "Name": "專案資料",
+    "MenuPath": "",
+    "Index": 2,
+    "IsOnlyPath": true
+  },
+  {
+    "Name": "專業項目",
+    "MenuPath": "",
+    "Index": 3,
+    "IsOnlyPath": true
+  },
+  {
+    "Name": "代碼維護",
+    "MenuPath": "",
+    "Index": 4,
+    "IsOnlyPath": true
+  }
+]
