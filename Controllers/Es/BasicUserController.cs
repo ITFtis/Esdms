@@ -30,9 +30,9 @@ namespace Esdms.Controllers.Es
         {
             var options = base.GetDataManagerOptions();
 
-            //////全部欄位排序
-            ////foreach (var field in opts.fields)
-            ////    field.sortable = true;
+            //全部欄位排序
+            foreach (var field in options.fields)
+                field.sortable = true;
 
             options.ctrlFieldAlign = "left";
             options.editformWindowStyle = "modal";
