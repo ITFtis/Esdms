@@ -16,11 +16,12 @@
         var $_oform = $("#_tabs");
         $_d1EditDataContainer = $('<div>').appendTo($_oform.parent());
         $_d4EditDataContainer = $('<table>').appendTo($_oform.parent());
-        $_d5EditDataContainer = $('<table>').appendTo($_oform.parent());
+        //////意見
+        ////$_d5EditDataContainer = $('<table>').appendTo($_oform.parent());
         $_d6EditDataContainer = $('<table>').appendTo($_oform.parent());
         $_d7EditDataContainer = $('<table>').appendTo($_oform.parent());
-        $_d8EditDataContainer = $('<table>').appendTo($_oform.parent());
-        //$_d9EditDataContainer = $('<table>').appendTo($_oform.parent());
+        //////證照
+        ////$_d8EditDataContainer = $('<table>').appendTo($_oform.parent());        
 
         var oPId = row.PId;
         var isChange = false;
@@ -43,8 +44,8 @@
             //1-n 專長
             SetDouDa4(row.Expertises, oPId);
 
-            //1-n 意見
-            SetDouDa5(row.UserHistoryOpinions, oPId);
+            //////1-n 意見
+            ////SetDouDa5(row.UserHistoryOpinions, oPId);
 
             //1-n 經歷
             SetDouDa6(row.Resumes, oPId);
@@ -52,18 +53,19 @@
             //1-n 專家參與紀錄
             SetDouDa7(row.FTISUserHistorys, oPId);
 
-            //1-n 證照
-            SetDouDa8(row.BasicUser_Licenses, oPId);
-
-            ////1-n Detail(EmpDa9) 著作
-            //SetDouEmpDa9(row.Da9s, oPId);
+            //////1-n 證照
+            ////SetDouDa8(row.BasicUser_Licenses, oPId);
         }
 
         //產tab        
-        helper.bootstrap.genBootstrapTabpanel($_d4EditDataContainer.parent(), undefined, undefined,
-            ['基本資料', '個人資料', '專長', '意見', '經歷', '專家參與紀錄', '證照'],
-            [$_oform, $_d1EditDataContainer, $_d4EditDataContainer, $_d5EditDataContainer, $_d6EditDataContainer, $_d7EditDataContainer, $_d8EditDataContainer]);
+        ////helper.bootstrap.genBootstrapTabpanel($_d4EditDataContainer.parent(), undefined, undefined,
+        ////    ['基本資料', '個人資料', '專長', '意見', '經歷', '專家參與紀錄', '證照'],
+        ////    [$_oform, $_d1EditDataContainer, $_d4EditDataContainer, $_d5EditDataContainer, $_d6EditDataContainer, $_d7EditDataContainer, $_d8EditDataContainer]);
 
+
+        helper.bootstrap.genBootstrapTabpanel($_d4EditDataContainer.parent(), undefined, undefined,
+            ['基本資料', '個人資料', '專長', '經歷', '專家參與紀錄'],
+            [$_oform, $_d1EditDataContainer, $_d4EditDataContainer, $_d6EditDataContainer, $_d7EditDataContainer]);
 
         //點選的Tab
         var jTabToggle = $('#_tabs').closest('div[class=tab-content]').siblings().find('a[data-toggle="tab"]');
