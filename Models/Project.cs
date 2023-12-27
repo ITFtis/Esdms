@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace Esdms.Models
 {
@@ -37,6 +38,7 @@ namespace Esdms.Models
         public string ExecuteUnit { get; set; }
     }
 
+    //專案自行新增
     public class ProjectSelectItems : Dou.Misc.Attr.SelectItemsClass
     {
         public const string AssemblyQualifiedName = "Esdms.Models.ProjectSelectItems, Esdms";
@@ -61,10 +63,63 @@ namespace Esdms.Models
         public static void Reset()
         {
             _projects = null;
+            ProjectIntegrateSelectItems.Reset();
         }
         public override IEnumerable<KeyValuePair<string, object>> GetSelectItems()
         {
             return Projects.Select(s => new KeyValuePair<string, object>(s.Id.ToString(), s.Name));
+        }
+    }
+
+    public class ProjectIntegrate
+    {
+        [Display(Name = "專案編號")]
+        public string PrjID { get; set; }
+
+        [Display(Name = "專案名稱")]
+        public string Name { get; set; }
+    }
+
+    //產基會 + 專案自行新增
+    public class ProjectIntegrateSelectItems : Dou.Misc.Attr.SelectItemsClass
+    {
+        public const string AssemblyQualifiedName = "Esdms.Models.ProjectIntegrateSelectItems, Esdms";
+
+        protected static IEnumerable<ProjectIntegrate> _projectIntegrate;
+        internal static IEnumerable<ProjectIntegrate> ProjectIntegrate
+        {
+            get
+            {
+                if (_projectIntegrate == null)
+                {
+                    using (var db = new EsdmsModelContextExt())
+                    {
+                        var a1 = ProjectSelectItems.Projects.Select(a => new ProjectIntegrate
+                        {
+                            PrjID = a.Id.ToString(),
+                            Name = a.Name,
+                        }).ToArray();
+                        var a2 = FtisHelperV2.DB.Helpe.Project.GetAllProject().Select(a => new ProjectIntegrate
+                        {
+                            PrjID = a.PrjID,
+                            Name = a.PrjName
+                        }).ToArray();
+
+                        _projectIntegrate = a1.Concat(a2).OrderBy(a => a.Name);
+                    }
+                }
+                return _projectIntegrate;
+            }
+        }
+
+
+        public static void Reset()
+        {
+            _projectIntegrate = null;
+        }
+        public override IEnumerable<KeyValuePair<string, object>> GetSelectItems()
+        {
+            return ProjectIntegrate.Select(s => new KeyValuePair<string, object>(s.PrjID, JsonConvert.SerializeObject(new { v = s.Name, s = s.Name })));            
         }
     }
 }
