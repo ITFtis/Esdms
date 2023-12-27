@@ -107,10 +107,10 @@ namespace Esdms.Controllers.Es
             BasicUserNameSelectItems.Reset();
         }
 
-        //是否重複姓名
-        public ActionResult ExistsName(string PId, string name)
+        //姓名已存在(true:有)
+        public ActionResult ExistName(string PId, string Name)
         {
-            int n = GetModelEntity().GetAll().Where(a => a.PId != PId && a.Name == name).Count();
+            int n = GetModelEntity().GetAll().Where(a => a.PId != PId && a.Name == Name).Count();
             return Json(new { exist = n > 0 }, JsonRequestBehavior.AllowGet);
         }
 

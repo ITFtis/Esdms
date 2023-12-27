@@ -225,30 +225,13 @@
 
                 //提示訊息(姓名已存在)
                 var lblName = $('[data-field="Name"]').find('label').text();
-                var name = $('.field-content [data-fn="Name"]').val();
+                var Name = $('.field-content [data-fn="Name"]').val();
 
                 if (isChangeText.indexOf(lblName) > -1) {
-                    helper.misc.showBusyIndicator();
-                    $.ajax({
-                        url: app.siteRoot + 'BasicUser/ExistsName',
-                        datatype: "json",
-                        type: "Get",
-                        data: { PId: oPId, name: name },
-                        async: false,
-                        success: function (data) {
-                            if (data.exist) {
-                                content += '<span class="text-danger">****姓名已存在(' + name + ')，確認是否更改****</span>' + '</br>';
-                            }
-                        },
-                        complete: function () {
-                            helper.misc.hideBusyIndicator();
-                        },
-                        error: function (xhr, status, error) {
-                            var err = eval("(" + xhr.responseText + ")");
-                            alert(err.Message);
-                            helper.misc.hideBusyIndicator();
-                        }
-                    });
+                    var exist = ExistName(oPId, Name);
+                    if (exist) {
+                        content += '<span class="text-danger">****姓名已存在(' + Name + ')，確認是否更改****</span>' + '</br>';
+                    }
                 }
 
                 //互動訊息
@@ -326,6 +309,48 @@
         });
 
     }
+
+    douoptions.addServerData =
+        function (row, callback) {
+            var PId = $('.field-content [data-fn="PId"]').val();
+            var Name = $('.field-content [data-fn="Name"]').val();
+            var exist = ExistName(PId, Name);
+
+            if (exist) {
+                var content = '<span class="text-danger">****姓名已存在(' + Name + ')，確認是否更改****</span>' + '</br>';
+                jspConfirmYesNo($("body"), { content: content }, function (confrim) {
+                    if (confrim) {
+                        //確定
+                        transactionDouClientDataToServer(row, $.AppConfigOptions.baseurl + 'BasicUser/Add', callback);
+                    }
+                })
+            }
+            else {
+                //確定
+                transactionDouClientDataToServer(row, $.AppConfigOptions.baseurl + 'BasicUser/Add', callback);
+            }
+        };
+
+    douoptions.updateServerData =
+        function (row, callback) {
+            var PId = $('.field-content [data-fn="PId"]').val();
+            var Name = $('.field-content [data-fn="Name"]').val();
+            var exist = ExistName(PId, Name);
+
+            if (exist) {                
+                var content = '<span class="text-danger">****姓名已存在(' + Name + ')，確認是否更改****</span>' + '</br>';
+                jspConfirmYesNo($("body"), { content: content }, function (confrim) {
+                    if (confrim) {
+                        //確定
+                        transactionDouClientDataToServer(row, $.AppConfigOptions.baseurl + 'BasicUser/Update', callback);
+                    }
+                })
+            }
+            else {
+                //確定
+                transactionDouClientDataToServer(row, $.AppConfigOptions.baseurl + 'BasicUser/Update', callback);
+            }                        
+        };
 
     douoptions.afterUpdateServerData = function (row, callback) {
         jspAlertMsg($("body"), { autoclose: 2000, content: '基本資料更新成功!!', classes: 'modal-sm' },
@@ -559,4 +584,31 @@
             $_d8Table = $_d8EditDataContainer.douTable(_opt);
         });
     };
+
+    function ExistName(PId, Name) {
+
+        var result = false;
+
+        helper.misc.showBusyIndicator();
+        $.ajax({
+            url: app.siteRoot + 'BasicUser/ExistName',
+            datatype: "json",
+            type: "Get",
+            data: { PId: PId, Name: Name },
+            async: false,
+            success: function (data) {
+                result = data.exist;                
+            },
+            complete: function () {
+                helper.misc.hideBusyIndicator();
+            },
+            error: function (xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                alert(err.Message);
+                helper.misc.hideBusyIndicator();
+            }
+        });
+
+        return result;
+    }
 })
