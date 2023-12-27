@@ -221,21 +221,22 @@
             //異動處理
             if (isChange) {
 
-                var content = '';
+                //addServerData(update)已設定，提示訊息(姓名已存在)
+                ////var content = '';
 
-                //提示訊息(姓名已存在)
-                var lblName = $('[data-field="Name"]').find('label').text();
-                var Name = $('.field-content [data-fn="Name"]').val();
+                //////提示訊息(姓名已存在)
+                ////var lblName = $('[data-field="Name"]').find('label').text();
+                ////var Name = $('.field-content [data-fn="Name"]').val();
 
-                if (isChangeText.indexOf(lblName) > -1) {
-                    var exist = ExistName(oPId, Name);
-                    if (exist) {
-                        content += '<span class="text-danger">****姓名已存在(' + Name + ')，確認是否更改****</span>' + '</br>';
-                    }
-                }
+                ////if (isChangeText.indexOf(lblName) > -1) {
+                ////    var exist = ExistName(oPId, Name);
+                ////    if (exist) {
+                ////        content += '<span class="text-danger">****姓名已存在(' + Name + ')，確認是否更改****</span>' + '</br>';
+                ////    }
+                ////}
 
                 //互動訊息
-                content += '資料異動(' + $_nowTable.instance.settings.title + ')項目：' + '</br>'
+                var content = '資料異動(' + $_nowTable.instance.settings.title + ')項目：' + '</br>'
                     + isChangeText.join(', ') + '</br>'
                     + "是否儲存";                
 

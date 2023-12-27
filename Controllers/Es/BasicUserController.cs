@@ -48,6 +48,9 @@ namespace Esdms.Controllers.Es
 
         protected override void AddDBObject(IModelEntity<BasicUser> dbEntity, IEnumerable<BasicUser> objs)
         {
+            if (!ToValidate(objs.First(), "Add"))
+                return;
+
             var f = objs.First();
 
             f.BDate = DateTime.Now;
@@ -112,6 +115,25 @@ namespace Esdms.Controllers.Es
         {
             int n = GetModelEntity().GetAll().Where(a => a.PId != PId && a.Name == Name).Count();
             return Json(new { exist = n > 0 }, JsonRequestBehavior.AllowGet);
+        }
+
+        private bool ToValidate(BasicUser f, string type)
+        {
+            bool result = false;
+
+            var v = GetModelEntity().GetAll().Where(a => a.PId == f.PId);
+            if (type == "Add")
+            {
+                if (v.Count() > 0)
+                {
+                    string errorMessage = string.Format("身分證已存在:" + f.PId);
+                    throw new Exception(errorMessage);
+                }
+            }
+
+            result = true;
+
+            return result;
         }
 
         protected override Dou.Models.DB.IModelEntity<BasicUser> GetModelEntity()
