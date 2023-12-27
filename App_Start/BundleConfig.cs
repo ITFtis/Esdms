@@ -19,37 +19,35 @@ namespace Esdms
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-            //          "~/Scripts/bootstrap.bundle.js"));
+            ////xxxxzz
+            ////bundles.Add(new Bundle("~/bundles/bootstrap").Include(
+            ////          "~/Scripts/bootstrap.js"));
 
             bundles.Add(new Bundle("~/bundles/bootstrap").Include(
-          "~/Scripts/bootstrap.bundle.js"));
-
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css"
-                      //,"~/Content/site.css"
-                      ));
+                      "~/Scripts/bootstrap.bundle.js"));
 
             bundles.Add(new ScriptBundle("~/dou/js").Include(
                 "~/Scripts/gis/bootstraptable/bootstrap-table.js",
                 "~/Scripts/gis/bootstraptable/extensions/mobile/bootstrap-table-mobile.js",
-                "~/Scripts/gis/select/bselect/bootstrap-select-b5.min.js",
+            "~/Scripts/gis/select/bselect/bootstrap-select-b5.min.js",
                 "~/Scripts/Dou/datetimepicker/js/moment.js",
                 "~/Scripts/Dou/datetimepicker/js/tempusdominus-bootstrap-4.min.js", //bootstrpa4、5
                 "~/Scripts/gis/helper.js",
                 "~/Scripts/gis/Main.js",
                 "~/Scripts/Dou/Dou.js"
-
-    ));
+            ));
 
             bundles.Add(new StyleBundle("~/dou/css").Include(
                 "~/Scripts/gis/bootstraptable/bootstrap-table.css",
                 "~/Scripts/gis/select/bselect/bootstrap-select.min.css",
-                "~/Scripts/gis/b3/css/bootstrap.css",
                 "~/Scripts/gis/Main.css",
                 "~/Scripts/Dou/Dou.css",
                 "~/Scripts/Dou/datetimepicker/css/bootstrap-datetimepicker.css"));
 
+
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/bootstrap.css"
+                      ));
         }
     }
 }
