@@ -55,6 +55,7 @@ namespace Esdms.Controllers.Es
             f.BName = Dou.Context.CurrentUserBase.Name;
 
             base.AddDBObject(dbEntity, objs);
+            BasicUserNameSelectItems.Reset();
         }
 
         protected override void UpdateDBObject(IModelEntity<BasicUser> dbEntity, IEnumerable<BasicUser> objs)
@@ -66,6 +67,7 @@ namespace Esdms.Controllers.Es
             f.UName = Dou.Context.CurrentUserBase.Name;
 
             base.UpdateDBObject(dbEntity, objs);
+            BasicUserNameSelectItems.Reset();
         }
 
         protected override void DeleteDBObject(IModelEntity<BasicUser> dbEntity, IEnumerable<BasicUser> objs)
@@ -102,6 +104,7 @@ namespace Esdms.Controllers.Es
             }            
 
             base.DeleteDBObject(dbEntity, objs);
+            BasicUserNameSelectItems.Reset();
         }
 
         protected override Dou.Models.DB.IModelEntity<BasicUser> GetModelEntity()
