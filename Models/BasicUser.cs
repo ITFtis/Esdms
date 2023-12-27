@@ -138,6 +138,11 @@ namespace Esdms.Models
         [StringLength(50)]
         public string Recommender { get; set; }
 
+        [Display(Name = "重覆姓名")]
+        [ColumnDef(VisibleEdit = false,
+                Filter = true, EditType = EditType.Select, SelectItems = "{\"Y\":\"是\",\"N\":\"否\"}")]
+        public string DuplicateName { get; }
+
         //個人資料
         [ColumnDef(Visible = false, VisibleEdit = false)]
         public virtual BasicUser_Private BasicUser_Private 

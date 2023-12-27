@@ -23,6 +23,28 @@ namespace Esdms.Controllers.Es
 
         protected override IQueryable<BasicUser> BeforeIQueryToPagedList(IQueryable<BasicUser> iquery, params KeyValueParams[] paras)
         {
+            var DuplicateName = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "DuplicateName");
+            if (DuplicateName != null)
+            {
+                var v = iquery.GroupBy(a => a.Name)
+                        .Select(a => new
+                        {
+                            Name = a.Key,
+                            Count = a.Count(),
+                        });               
+                if (DuplicateName == "Y")
+                {
+                    v = v.Where(a => a.Count > 1);
+                }
+                else
+                {
+                    v = v.Where(a => a.Count == 1);
+                }                
+
+                iquery = iquery.Where(a => v.Any(b => b.Name == a.Name));                
+                iquery = iquery.OrderBy(a => a.Name);                
+            }
+
             return base.BeforeIQueryToPagedList(iquery, paras);
         }
 
@@ -39,6 +61,8 @@ namespace Esdms.Controllers.Es
             options.editformWindowClasses = "modal-xl";
             options.editformSize.height = "fixed";
             options.editformSize.width = "auto";
+
+            options.GetFiled("DuplicateName").visible = true;
 
             //共用頁面
             options.editformWindowStyle = "showEditformOnly";
