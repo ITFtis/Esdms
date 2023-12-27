@@ -221,10 +221,40 @@
             //異動處理
             if (isChange) {
 
+                var content = '';
+
+                //提示訊息(姓名已存在)
+                var lblName = $('[data-field="Name"]').find('label').text();
+                var name = $('.field-content [data-fn="Name"]').val();
+
+                if (isChangeText.indexOf(lblName) > -1) {
+                    helper.misc.showBusyIndicator();
+                    $.ajax({
+                        url: app.siteRoot + 'BasicUser/ExistsName',
+                        datatype: "json",
+                        type: "Get",
+                        data: { PId: oPId, name: name },
+                        async: false,
+                        success: function (data) {
+                            if (data.exist) {
+                                content += '<span class="text-danger">****姓名已存在(' + name + ')，確認是否更改****</span>' + '</br>';
+                            }
+                        },
+                        complete: function () {
+                            helper.misc.hideBusyIndicator();
+                        },
+                        error: function (xhr, status, error) {
+                            var err = eval("(" + xhr.responseText + ")");
+                            alert(err.Message);
+                            helper.misc.hideBusyIndicator();
+                        }
+                    });
+                }
+
                 //互動訊息
-                var content = '資料異動(' + $_nowTable.instance.settings.title + ')項目：' + '</br>'
+                content += '資料異動(' + $_nowTable.instance.settings.title + ')項目：' + '</br>'
                     + isChangeText.join(', ') + '</br>'
-                    + "是否儲存";
+                    + "是否儲存";                
 
                 //confirm挑選取消(重複執行，不知原因)
                 var isDoing = false;

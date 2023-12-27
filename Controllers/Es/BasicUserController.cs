@@ -107,6 +107,13 @@ namespace Esdms.Controllers.Es
             BasicUserNameSelectItems.Reset();
         }
 
+        //是否重複姓名
+        public ActionResult ExistsName(string PId, string name)
+        {
+            int n = GetModelEntity().GetAll().Where(a => a.PId != PId && a.Name == name).Count();
+            return Json(new { exist = n > 0 }, JsonRequestBehavior.AllowGet);
+        }
+
         protected override Dou.Models.DB.IModelEntity<BasicUser> GetModelEntity()
         {
             return new Dou.Models.DB.ModelEntity<BasicUser>(new EsdmsModelContextExt());
