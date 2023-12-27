@@ -1,0 +1,307 @@
+﻿:root {
+    --navbar-color: #53575A;
+    --navbar-hover-color: #AA002C;
+    --dou-action-color: #b7b9b6;
+    --drop-menu-bg: #FFFFFF;
+    --tool-bar-bg: #F0F0F1;
+    --add-btn-bg: #AA002C;
+    --add-btn-hover-bg: #D60037;
+    --add-btn-active-bg: #8A0024;
+    --search-btn-bg: #53575A;
+    --search-btn-hover-bg: #707579;
+    --search-btn-active-bg: #373A3C;
+    --tb-th-bg: #d9d9dc;
+    --tb-color: #53575A;
+    --tb-hover-color: #000000;
+    --tb-hover-bg: rgba(255, 218, 227, 0.9);
+    --edit-color: #53575A;
+    --modal-header-color: #FFFFFF;
+}
+
+
+body {
+    background-color: #FFFFFF;
+}
+
+
+/* Header START */
+
+/*.bg-dark {
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
+}*/
+
+.navbar.bg-light {
+    color: var(--navbar-color);
+}
+
+.navbar {
+    --bs-navbar-color: var(--navbar-color);
+    --bs-navbar-hover-color: var(--navbar-hover-color);
+    font-weight: bold;
+}
+
+/*.logo {
+    margin-left: 20px;
+    margin-right: 15px;
+}*/
+
+.prj-title {
+    margin-left: 1rem;
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+.dou-menu.navbar {
+    margin-bottom: 0;
+}
+
+.dou-menu li > .dou-action-controller-root,
+.dou-menu li > .dou-action-controller,
+.dou-menu > li > .dou-action-controller {
+    color: var(--dou-action-color) !important;
+}
+
+.navbar.bg-light .navbar-nav .dropdown-menu {
+    background-color: var(--drop-menu-bg) !important;
+}
+
+#user-profile {
+    color: var(--navbar-color) !important;
+    margin-right: 1rem;
+    padding-right: 0px;
+}
+
+.popover {
+    --bs-popover-header-color: #FFFFFF;
+    --bs-popover-header-bg: var(--navbar-color);
+    background-color: var(--drop-menu-bg) !important;
+}
+
+/*@media (max-width: 767px) {
+    .prj-title {
+        display: none
+    }
+}*/
+
+/* Header END */
+
+
+
+/* Container START */
+
+.container-fluid.body-content {
+    padding: 65px 12px 0px 12px !important;
+}
+
+/* Container END */
+
+
+
+/* Menu Map START */
+
+.data-manager-menu-map {
+    padding-top: 1rem;
+}
+
+    .data-manager-menu-map a {
+        color: var(--navbar-color);
+        margin-left: 1rem;
+    }
+
+/* Menu Map END */
+
+
+/* Tool Bar START */
+
+.fixed-table-toolbar {
+    background-color: var(--tool-bar-bg) !important;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.bootstrap-table > .fixed-table-toolbar > .bs-bars > * {
+    margin-right: 0;
+}
+
+.btn-success {
+    --bs-btn-bg: var(--add-btn-bg);
+    --bs-btn-border-color: var(--add-btn-bg);
+    --bs-btn-hover-bg: var(--add-btn-hover-bg);
+    --bs-btn-hover-border-color: var(--add-btn-hover-bg);
+    --bs-btn-active-bg: var(--add-btn-active-bg);
+    --bs-btn-active-border-color: var(--add-btn-active-bg);
+}
+
+.btn-secondary {
+    --bs-btn-bg: var(--search-btn-bg);
+    --bs-btn-border-color: var(--search-btn-bg);
+    --bs-btn-hover-bg: var(--search-btn-hover-bg);
+    --bs-btn-hover-border-color: var(--search-btn-hover-bg);
+    --bs-btn-active-bg: var(--search-btn-active-bg);
+    --bs-btn-active-border-color: var(--search-btn-active-bg);
+}
+
+/* Tool Bar END */
+
+
+/* Table START */
+
+.fixed-table-container {
+    margin-bottom: 0.5rem;
+}
+
+.table > thead {
+    background-color: var(--tb-th-bg);
+    color: var(--tb-color);
+}
+
+.table {
+    --bs-table-color: var(--tb-color);
+    --bs-table-hover-color: var(--tb-hover-color);
+    --bs-table-hover-bg: var(--tb-hover-bg);
+    --bs-table-border-color: #cdcecf;
+}
+
+    /*.table > tbody > tr:nth-child(10n),
+tr:nth-child(10n-1),
+tr:nth-child(10n-2),
+tr:nth-child(10n-3),
+tr:nth-child(10n-4) {
+    background-color: var(--tool-bar-bg);
+}*/
+
+
+    /*.table > tbody > tr:nth-child(4n),
+tr:nth-child(4n-1) {
+    background-color: var(--tool-bar-bg);
+}
+*/
+
+    .table > tbody > tr:nth-child(2n) {
+        background-color: var(--tool-bar-bg);
+    }
+
+
+.btn-default {
+    color: var(--edit-color);
+}
+
+/* Table END */
+
+
+
+/* Edit Modal START */
+
+.modal-header {
+    background-color: var(--navbar-color) !important;
+    color: var(--modal-header-color) !important;
+}
+
+.modal-dialog {
+    margin-top: 1rem !important;
+}
+
+.data-edit-form-group .user-edit-tile,
+.data-edit-form-group .attribute-tile {
+    color: var(--navbar-color);
+}
+
+.membership-groups-list,
+.glyphicon-stop,
+.rtree-root {
+    color: var(--navbar-color);
+}
+
+.rtree-node.rtree-leaf {
+    color: var(--navbar-color);
+}
+
+    .rtree-node.rtree-leaf:hover {
+        color: #000000;
+        background-color: #D3D3D3;
+    }
+
+.form-control:disabled {
+    background-color: rgba(83, 87, 90, 0.1);
+}
+
+.user-edit-role-container .glyphicon-user:before {
+    color: var(--add-btn-bg) !important;
+}
+
+.nav.nav-tabs {
+    margin-top: 1rem;
+}
+
+.nav-tabs .nav-link {
+    color: var(--dou-action-color);
+    font-weight: bold;
+}
+
+    .nav-tabs .nav-link:hover {
+        color: var(--navbar-color);
+        background-color: #F2F3F4;
+        border-bottom: 5px solid #F2F3F4;
+    }
+
+    .nav-tabs .nav-link.active {
+        border-bottom: 5px solid var(--navbar-hover-color);
+        color: var(--navbar-hover-color);
+    }
+
+        .nav-tabs .nav-link.active:hover {
+            background-color: white;
+        }
+
+.form-group.field-container:nth-child(2n) {
+    background-color: var(--tb-tb-bg) !important;
+}
+
+.modal-footer {
+    background-color: var(--tb-th-bg);
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--add-btn-bg);
+    --bs-btn-border-color: var(--add-btn-bg);
+    --bs-btn-hover-bg: var(--add-btn-hover-bg);
+    --bs-btn-hover-border-color: var(--add-btn-hover-bg);
+    --bs-btn-active-bg: var(--add-btn-active-bg);
+    --bs-btn-active-border-color: var(--add-btn-active-bg);
+}
+
+/* Edit Modal END */
+
+
+
+/* Pagination START */
+
+.dropdown-item:hover {
+    background-color: var(--tb-th-bg);
+}
+
+.dropdown-item.active {
+    background-color: var(--search-btn-bg);
+}
+
+.pagination {
+    --bs-pagination-color: var(--navbar-color);
+    --bs-pagination-active-color: #fff;
+    --bs-pagination-active-bg: var(--add-btn-bg);
+    --bs-pagination-active-border-color: var(--add-btn-bg);
+    --bs-pagination-hover-color: var(--add-btn-bg);
+    --bs-pagination-focus-color: var(--add-btn-active-bg);
+}
+
+/* Pagination END */
+
+
+
+/* Footer START */
+
+.text-center p {
+    color: var(--navbar-color);
+}
+
+/* Footer END */
