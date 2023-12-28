@@ -29,18 +29,14 @@ namespace Esdms.Models
         [Display(Name = "科目類別")]
         [ColumnDef(Filter = true,
             EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.SubjectSelectItems.AssemblyQualifiedName,
-            ColSize = 3)]        
-        public int SubjectId { get; set; }
+            SelectGearingWith = "SubjectDetailId,SubjectId,true", ColSize = 3)]
+        public int? SubjectId { get; set; }
 
-        [Display(Name = "類別名稱")]
-        [StringLength(50)]
-        [ColumnDef(ColSize = 3)]
-        public string TypeName { get; set; }
-
-        [Display(Name = "科別名稱")]
-        [StringLength(50)]
-        [ColumnDef(ColSize = 3)]
-        public string SName { get; set; }
+        [Display(Name = "科目")]
+        [ColumnDef(Filter = true,
+            EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.SubjectDetailSelectItems.AssemblyQualifiedName,
+            ColSize = 3)]
+        public int? SubjectDetailId { get; set; }
 
         [Display(Name = "專長內容")]
         [ColumnDef(ColSize = 3)]

@@ -23,7 +23,7 @@ namespace Esdms.Models
         [Required]
         [Display(Name = "科目類別")]
         [ColumnDef(Filter = true, EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.SubjectSelectItems.AssemblyQualifiedName)]        
-        public int MId { get; set; }
+        public int SubjectId { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -59,7 +59,7 @@ namespace Esdms.Models
         }
         public override IEnumerable<KeyValuePair<string, object>> GetSelectItems()
         {
-            return SubjectDetails.Select(s => new KeyValuePair<string, object>(s.Id.ToString(), "{\"v\":\"" + s.Name + "\",\"MId\":\"" + s.MId + "\"}"));
+            return SubjectDetails.Select(s => new KeyValuePair<string, object>(s.Id.ToString(), "{\"v\":\"" + s.Name + "\",\"SubjectId\":\"" + s.SubjectId + "\"}"));
         }
     }
 }
