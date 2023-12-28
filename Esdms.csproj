@@ -163,6 +163,7 @@
     <Compile Include="Controllers\Es\UserHistoryOpinionController.cs" />
     <Compile Include="Controllers\ExpertiseFold\LicenseController.cs" />
     <Compile Include="Controllers\ExpertiseFold\SubjectController.cs" />
+    <Compile Include="Controllers\ExpertiseFold\SubjectDetailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoggerController.cs" />
     <Compile Include="Controllers\ProjectFold\ActivityCategoryController.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="Models\Resume.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Subject.cs" />
+    <Compile Include="Models\SubjectDetail.cs" />
     <Compile Include="Models\Town.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserHistoryOpinion.cs" />
@@ -286,6 +288,7 @@
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\BasicUser\Index.cshtml" />
     <Content Include="Views\Shared\DouLoginError.cshtml" />
+    <Content Include="Views\SubjectDetail\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

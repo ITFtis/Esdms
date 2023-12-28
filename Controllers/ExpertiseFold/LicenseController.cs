@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Esdms.Controllers.ExpertiseFold
 {
-    [Dou.Misc.Attr.MenuDef(Id = "License", Name = "證照代碼", MenuPath = "專業項目", Action = "Index", Index = 2, Func = Dou.Misc.Attr.FuncEnum.ALL, AllowAnonymous = false)]
+    [Dou.Misc.Attr.MenuDef(Id = "License", Name = "證照代碼", MenuPath = "專業項目", Action = "Index", Index = 3, Func = Dou.Misc.Attr.FuncEnum.ALL, AllowAnonymous = false)]
     public class LicenseController : APaginationModelController<License>
     {
         // GET: License

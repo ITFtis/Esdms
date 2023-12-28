@@ -27,7 +27,8 @@ namespace Esdms.Models
         public virtual DbSet<UserHistoryOpinion> UserHistoryOpinion { get; set; }        
         public virtual DbSet<Resume> Resume { get; set; }        
         public virtual DbSet<FTISUserHistory> FTISUserHistory { get; set; }
-        public virtual DbSet<BasicUser_License> BasicUser_License { get; set; }
+        public virtual DbSet<BasicUser_License> BasicUser_License { get; set; }        
+        public virtual DbSet<SubjectDetail> SubjectDetail { get; set; }
     }
 
 }
