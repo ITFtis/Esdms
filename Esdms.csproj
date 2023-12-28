@@ -159,6 +159,7 @@
     <Compile Include="Controllers\Es\BasicUser_PrivateController.cs" />
     <Compile Include="Controllers\Es\ExpertiseController.cs" />
     <Compile Include="Controllers\Es\FTISUserHistoryController.cs" />
+    <Compile Include="Controllers\Es\Fun_BasicUserPIdController.cs" />
     <Compile Include="Controllers\Es\ResumeController.cs" />
     <Compile Include="Controllers\Es\UserHistoryOpinionController.cs" />
     <Compile Include="Controllers\SysCode\LicenseController.cs" />
@@ -242,6 +243,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\prj\BasicUser.js" />
+    <Content Include="Scripts\prj\Fun_BasicUserPId.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -289,6 +291,7 @@
     <Content Include="Views\BasicUser\Index.cshtml" />
     <Content Include="Views\Shared\DouLoginError.cshtml" />
     <Content Include="Views\SubjectDetail\Index.cshtml" />
+    <Content Include="Views\Fun_BasicUserPId\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
