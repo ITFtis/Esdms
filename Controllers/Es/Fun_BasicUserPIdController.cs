@@ -1,4 +1,5 @@
 ﻿using Dou.Controllers;
+using Dou.Misc;
 using Dou.Misc.Attr;
 using Dou.Models.DB;
 using Esdms.Models;
@@ -15,7 +16,7 @@ using static Esdms.Controllers.Es.Fun_BasicUserPIdController;
 namespace Esdms.Controllers.Es
 {
     [Dou.Misc.Attr.MenuDef(Id = "Fun_BasicUserPId", Name = "客製化-專家身分證", MenuPath = "專家資料", Action = "Index", Index = 100, Func = Dou.Misc.Attr.FuncEnum.None, AllowAnonymous = false)]
-    public class Fun_BasicUserPIdController : AGenericModelController<vwe_Fun_BasicUserPId>
+    public class Fun_BasicUserPIdController : AGenericModelController<BasicUser>
     {
         // GET: Fun_BasicUserPId
         public ActionResult Index()
@@ -23,34 +24,29 @@ namespace Esdms.Controllers.Es
             return View();
         }
 
-        protected override IEnumerable<vwe_Fun_BasicUserPId> GetDataDBObject(IModelEntity<vwe_Fun_BasicUserPId> dbEntity, params KeyValueParams[] paras)
+        public override DataManagerOptions GetDataManagerOptions()
         {
-            var dbContext = new EsdmsModelContextExt();
-            Dou.Models.DB.IModelEntity<BasicUser> basicUser = new Dou.Models.DB.ModelEntity<BasicUser>(dbContext);
+            var _opts = base.GetDataManagerOptions();
 
-            var result = basicUser.GetAll().Select(a => new vwe_Fun_BasicUserPId
+            foreach (var field in _opts.fields)
             {
-                PId = a.PId,
-                Name = a.Name
-            });
+                field.visible = false;
+                field.visibleView = false;
+                field.visibleEdit = false;
+                field.filter = false;
+            }
 
-            return result;
-            //return base.GetDataDBObject(dbEntity, paras);
+            _opts.GetFiled("PId").visible = true;
+            _opts.GetFiled("PId").visibleView = true;
+            _opts.GetFiled("Name").visible = true;
+            _opts.GetFiled("Name").visibleView = true;
+
+            return _opts;
         }
 
-        protected override Dou.Models.DB.IModelEntity<vwe_Fun_BasicUserPId> GetModelEntity()
+        protected override Dou.Models.DB.IModelEntity<BasicUser> GetModelEntity()
         {
-            return new Dou.Models.DB.ModelEntity<vwe_Fun_BasicUserPId>(new EsdmsModelContextExt());
-        }
-
-        public class vwe_Fun_BasicUserPId
-        {
-            [Key]
-            [Display(Name = "身分證字號")]
-            public string PId { get; set; }
-
-            [Display(Name = "姓名")]
-            public string Name { get; set; }
+            return new Dou.Models.DB.ModelEntity<BasicUser>(new EsdmsModelContextExt());
         }
     }
 }
