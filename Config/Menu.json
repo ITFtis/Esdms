@@ -40,9 +40,9 @@
     "TypeId": "Dou.Misc.Attr.MenuDefAttribute, Dou, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null"
   },
   {
-    "Name": "專業科目代碼",
+    "Name": "科目類別代碼",
     "MenuPath": "專業項目",
-    "FullMenuPath": "專業項目/專業科目代碼",
+    "FullMenuPath": "專業項目/科目類別代碼",
     "Index": 1,
     "Desc": null,
     "AllowAnonymous": false,
