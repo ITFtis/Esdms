@@ -170,21 +170,33 @@ body {
     white-space: nowrap;
 }
 
-    /*.table > tbody > tr:nth-child(10n),
+.bootstrap-table .fixed-table-container .table thead th .both {
+    background-image: url(/Images/prj/sort-arrow-both.png);
+    margin-right: 3px;
+}
+
+.bootstrap-table .fixed-table-container .table thead th .asc {
+    background-image: url(/Images/prj/sort-arrow-asc.png);
+    margin-right: 3px;
+}
+
+.bootstrap-table .fixed-table-container .table thead th .desc {
+    background-image: url(/Images/prj/sort-arrow-desc.png);
+    margin-right: 3px;
+}
+
+/*.table > tbody > tr:nth-child(10n),
 tr:nth-child(10n-1),
 tr:nth-child(10n-2),
 tr:nth-child(10n-3),
 tr:nth-child(10n-4) {
     background-color: var(--tool-bar-bg);
 }*/
-
-
-    /*.table > tbody > tr:nth-child(4n),
+/*.table > tbody > tr:nth-child(4n),
 tr:nth-child(4n-1) {
     background-color: var(--tool-bar-bg);
 }
 */
-
 .table > tbody > tr:nth-child(2n) {
     background-color: var(--tool-bar-bg);
 }
