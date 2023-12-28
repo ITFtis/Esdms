@@ -44,6 +44,19 @@ namespace Esdms.Controllers.Es
             return _opts;
         }
 
+        //更新身分證
+        public ActionResult UpdatePId(string PId, string newPId)
+        {
+            if (string.IsNullOrEmpty(newPId))
+            {
+                return Json(new { result = false, errorMessage = string.Format("不可為Null或空值:newPId({0})", newPId) }, JsonRequestBehavior.AllowGet);
+            }
+
+            string aaa = "123";
+
+            return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+        }
+
         protected override Dou.Models.DB.IModelEntity<BasicUser> GetModelEntity()
         {
             return new Dou.Models.DB.ModelEntity<BasicUser>(new EsdmsModelContextExt());

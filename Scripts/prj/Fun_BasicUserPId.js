@@ -29,11 +29,37 @@
 
                         $('#btnUpdatePid').click(function () {
                             jspConfirmYesNo($("body"), { content: "確認更新身分證資料" }, function (confrim) {
-                                if (confrim) {                                    
-                                    jspAlertMsg($("body"), { autoclose: 2000, content: '身分證更新成功!!', classes: 'modal-sm' },
-                                        function () {
-                                            location.reload();
-                                        });
+                                if (confrim) {
+
+                                    var PId = '123';
+                                    var newPId = 'aa';
+
+                                    helper.misc.showBusyIndicator();
+                                    $.ajax({
+                                        url: app.siteRoot + 'Fun_BasicUserPId/UpdatePId',
+                                        datatype: "json",
+                                        type: "Get",
+                                        data: { PId: PId, newPId: newPId },
+                                        success: function (data) {
+                                            if (data.result) {
+                                                jspAlertMsg($("body"), { autoclose: 2000, content: '身分證更新成功!!', classes: 'modal-sm' },
+                                                    function () {
+                                                        location.reload();
+                                                    });
+                                            }
+                                            else {
+                                                alert("身分證更新失敗：\n" + data.errorMessage);
+                                            }
+                                        },
+                                        complete: function () {
+                                            helper.misc.hideBusyIndicator();
+                                        },
+                                        error: function (xhr, status, error) {
+                                            var err = eval("(" + xhr.responseText + ")");
+                                            alert(err.Message);
+                                            helper.misc.hideBusyIndicator();
+                                        }
+                                    });                                    
                                 }
                             })
                         });
