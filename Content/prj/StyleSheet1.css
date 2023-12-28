@@ -167,6 +167,7 @@ body {
     --bs-table-hover-color: var(--tb-hover-color);
     --bs-table-hover-bg: var(--tb-hover-bg);
     --bs-table-border-color: #cdcecf;
+    white-space: nowrap;
 }
 
     /*.table > tbody > tr:nth-child(10n),
@@ -184,9 +185,9 @@ tr:nth-child(4n-1) {
 }
 */
 
-    .table > tbody > tr:nth-child(2n) {
-        background-color: var(--tool-bar-bg);
-    }
+.table > tbody > tr:nth-child(2n) {
+    background-color: var(--tool-bar-bg);
+}
 
 
 .btn-default {
@@ -223,10 +224,10 @@ tr:nth-child(4n-1) {
     color: var(--navbar-color);
 }
 
-    .rtree-node.rtree-leaf:hover {
-        color: #000000;
-        background-color: #D3D3D3;
-    }
+.rtree-node.rtree-leaf:hover {
+    color: #000000;
+    background-color: #D3D3D3;
+}
 
 .form-control:disabled {
     background-color: rgba(83, 87, 90, 0.1);
