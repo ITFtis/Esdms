@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Esdms.Controllers.SysCode
 {
-    [Dou.Misc.Attr.MenuDef(Id = "Town", Name = "鄉鎮代碼", MenuPath = "代碼維護", Action = "Index", Index = 3, Func = Dou.Misc.Attr.FuncEnum.ALL, AllowAnonymous = false)]
+    [Dou.Misc.Attr.MenuDef(Id = "Town", Name = "鄉鎮代碼", MenuPath = "代碼維護", Action = "Index", Index = 2, Func = Dou.Misc.Attr.FuncEnum.ALL, AllowAnonymous = false)]
     public class TownController : APaginationModelController<Town>
     {
         // GET: Town
