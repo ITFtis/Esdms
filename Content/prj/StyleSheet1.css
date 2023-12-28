@@ -171,17 +171,17 @@ body {
 }
 
 .bootstrap-table .fixed-table-container .table thead th .both {
-    background-image: url(/Images/prj/sort-arrow-both.png);
+    background-image: url(../prjImage/sort-arrow-both.png);
     margin-right: 3px;
 }
 
 .bootstrap-table .fixed-table-container .table thead th .asc {
-    background-image: url(/Images/prj/sort-arrow-asc.png);
+    background-image: url(../prjImage/sort-arrow-asc.png);
     margin-right: 3px;
 }
 
 .bootstrap-table .fixed-table-container .table thead th .desc {
-    background-image: url(/Images/prj/sort-arrow-desc.png);
+    background-image: url(../prjImage/sort-arrow-desc.png);
     margin-right: 3px;
 }
 
