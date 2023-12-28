@@ -128,7 +128,12 @@ namespace Esdms.Controllers.Es
             {
                 Dou.Models.DB.IModelEntity<FTISUserHistory> ftisUserHistory = new Dou.Models.DB.ModelEntity<FTISUserHistory>(dbContext);
                 ftisUserHistory.Delete(obj.FTISUserHistorys);                
-            }            
+            }
+            if (obj.BasicUser_Licenses != null)
+            {
+                Dou.Models.DB.IModelEntity<BasicUser_License> basicUser_License = new Dou.Models.DB.ModelEntity<BasicUser_License>(dbContext);
+                basicUser_License.Delete(obj.BasicUser_Licenses);
+            }
 
             base.DeleteDBObject(dbEntity, objs);
             BasicUserNameSelectItems.Reset();
