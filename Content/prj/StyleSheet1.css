@@ -2,7 +2,7 @@
     --navbar-color: #53575A;
     --navbar-hover-color: #AA002C;
     --dou-action-color: #b7b9b6;
-    --drop-menu-bg: #FFFFFF;
+    --drop-menu-bg: #FEFEFA;
     --tool-bar-bg: #F0F0F1;
     --add-btn-bg: #AA002C;
     --add-btn-hover-bg: #D60037;
@@ -64,6 +64,12 @@ body {
 
 .navbar.bg-light .navbar-nav .dropdown-menu {
     background-color: var(--drop-menu-bg) !important;
+    box-shadow: rgba(0,0,0,0.2) 3px 3px 3px;
+}
+
+.navbar.bg-light .navbar-nav .dropdown-menu.show {
+    border-top: 2px solid rgba(0,0,0,0.1);
+    border-left: 2px solid rgba(0,0,0,0.1);
 }
 
 #user-profile {
