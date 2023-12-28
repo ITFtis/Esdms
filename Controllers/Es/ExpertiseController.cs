@@ -56,8 +56,10 @@ namespace Esdms.Controllers.Es
                 field.sortable = true;
             }
 
+            opts.GetFiled("PId").editable = false;
+
             opts.GetFiled("PId").colsize = 6;
-            opts.GetFiled("SubjectCode").colsize = 6;
+            opts.GetFiled("SubjectId").colsize = 6;
             opts.GetFiled("TypeName").colsize = 6;
             opts.GetFiled("SName").colsize = 6;
 
@@ -72,12 +74,12 @@ namespace Esdms.Controllers.Es
         {
             bool result = false;
 
-            var v = GetModelEntity().GetAll().Where(a => a.PId == f.PId && a.SubjectCode == f.SubjectCode);
+            var v = GetModelEntity().GetAll().Where(a => a.PId == f.PId && a.SubjectId == f.SubjectId);
             if (type == "Add")
             {                
                 if (v.Count() > 0)
                 {
-                    string errorMessage = string.Format("身分證 + 代碼，不可重複");
+                    string errorMessage = string.Format("身分證 + 科目類別，不可重複");
                     throw new Exception(errorMessage);
                 }
             }

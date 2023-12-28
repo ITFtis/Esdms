@@ -16,20 +16,21 @@ namespace Esdms.Models
     public class Expertise
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Display(Name = "Id")]
+        [ColumnDef(Visible = false)]
+        public int Id { get; set; }
+
         [Display(Name = "身分證字號")]
-        [ColumnDef(ColSize = 3)]
-        [Column(Order = 1)]
+        [ColumnDef(ColSize = 3)]        
         [StringLength(10)]
         public string PId { get; set; }
 
-        [Key]
-        [Display(Name = "科別代碼")]
+        [Display(Name = "科目類別")]
         [ColumnDef(Filter = true,
             EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.SubjectSelectItems.AssemblyQualifiedName,
-            ColSize = 3)]
-        [Column(Order = 2)]
-        [StringLength(20)]
-        public string SubjectCode { get; set; }
+            ColSize = 3)]        
+        public int SubjectId { get; set; }
 
         [Display(Name = "類別名稱")]
         [StringLength(50)]

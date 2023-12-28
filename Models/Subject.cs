@@ -9,15 +9,16 @@ using System.Web;
 namespace Esdms.Models
 {
     /// <summary>
-    /// 專業代碼
+    /// 科目類別代碼
     /// </summary>
     [Table("Subject")]
     public class Subject
     {
         [Key]
-        [ColumnDef(Display = "科別代碼")]
-        [StringLength(20)]
-        public string Code { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Display(Name = "Id")]
+        [ColumnDef(Visible = false)]
+        public int Id { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -53,7 +54,7 @@ namespace Esdms.Models
         }
         public override IEnumerable<KeyValuePair<string, object>> GetSelectItems()
         {
-            return Subjects.Select(s => new KeyValuePair<string, object>(s.Code, s.Name));
+            return Subjects.Select(s => new KeyValuePair<string, object>(s.Id.ToString(), s.Name));
         }
     }
 }
