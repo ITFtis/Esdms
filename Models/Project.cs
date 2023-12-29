@@ -73,11 +73,14 @@ namespace Esdms.Models
 
     public class ProjectIntegrate
     {
+        [Display(Name = "順序")]
+        public int SerialNo { get; set; }
+
         [Display(Name = "專案編號")]
         public string PrjID { get; set; }
 
         [Display(Name = "專案名稱")]
-        public string Name { get; set; }
+        public string Name { get; set; }                
     }
 
     //產基會 + 專案自行新增
@@ -96,16 +99,23 @@ namespace Esdms.Models
                     {
                         var a1 = ProjectSelectItems.Projects.Select(a => new ProjectIntegrate
                         {
+                            SerialNo = 1,
                             PrjID = a.Id.ToString(),
                             Name = a.Name,
                         }).ToArray();
                         var a2 = FtisHelperV2.DB.Helpe.Project.GetAllProject().Select(a => new ProjectIntegrate
                         {
+                            SerialNo = 2,
                             PrjID = a.PrjID,
                             Name = a.PrjName
                         }).ToArray();
 
-                        _projectIntegrate = a1.Concat(a2).OrderBy(a => a.Name);
+                        _projectIntegrate = a1.Concat(a2).OrderBy(a => a.SerialNo).ThenBy(a => a.Name)
+                                            .Select((a, index) => new ProjectIntegrate { 
+                                                SerialNo = index,
+                                                PrjID = a.PrjID,
+                                                Name = a.Name,
+                                            });
                     }
                 }
                 return _projectIntegrate;
@@ -119,7 +129,7 @@ namespace Esdms.Models
         }
         public override IEnumerable<KeyValuePair<string, object>> GetSelectItems()
         {
-            return ProjectIntegrate.Select(s => new KeyValuePair<string, object>(s.PrjID, JsonConvert.SerializeObject(new { v = s.Name, s = s.Name })));            
+            return ProjectIntegrate.Select(s => new KeyValuePair<string, object>(s.PrjID, JsonConvert.SerializeObject(new { v = s.Name, s = s.SerialNo })));            
         }
     }
 }
