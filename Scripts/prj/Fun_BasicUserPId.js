@@ -21,7 +21,7 @@
                                              <b>新身分證</b> \
                                           </div> \
                                           <div class="field-content col-sm-3"> \
-                                             <input type="text" class="form-control" maxlength="20"> \
+                                             <input id="newPId" type="text" class="form-control" maxlength="20"> \
                                           </div> \
                                           <button id="btnUpdatePid" type="button" class="btn btn-primary " style=""> 確 定 </button> \
                                       </div>';
@@ -31,8 +31,8 @@
                             jspConfirmYesNo($("body"), { content: "確認更新身分證資料" }, function (confrim) {
                                 if (confrim) {
 
-                                    var PId = '123';
-                                    var newPId = 'aa';
+                                    var PId = value;
+                                    var newPId = $('#newPId').val();
 
                                     helper.misc.showBusyIndicator();
                                     $.ajax({

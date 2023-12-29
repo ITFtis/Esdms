@@ -6,6 +6,7 @@ using Esdms.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
@@ -40,6 +41,10 @@ namespace Esdms.Controllers.Es
             _opts.GetFiled("PId").visibleView = true;
             _opts.GetFiled("Name").visible = true;
             _opts.GetFiled("Name").visibleView = true;
+            _opts.GetFiled("BDate").visible = true;
+            _opts.GetFiled("BDate").visibleView = true;
+            _opts.GetFiled("BName").visible = true;
+            _opts.GetFiled("BName").visibleView = true;
 
             return _opts;
         }
@@ -47,12 +52,66 @@ namespace Esdms.Controllers.Es
         //更新身分證
         public ActionResult UpdatePId(string PId, string newPId)
         {
+            //驗證新身分證:空值
             if (string.IsNullOrEmpty(newPId))
             {
-                return Json(new { result = false, errorMessage = string.Format("不可為Null或空值:newPId({0})", newPId) }, JsonRequestBehavior.AllowGet);
+                return Json(new { result = false, errorMessage = string.Format("不可為Null或空值：newPId({0})", newPId) }, JsonRequestBehavior.AllowGet);
             }
 
-            string aaa = "123";
+            //驗證新身分證:已存在
+            int n = GetModelEntity().GetAll().Where(a => a.PId == newPId).Count();
+            if (n > 0)
+            {
+                return Json(new { result = false, errorMessage = string.Format("新身分證已存在，不可更新：newPId({0})", newPId) }, JsonRequestBehavior.AllowGet);
+            }
+
+            using (var db = new EsdmsModelContextExt())
+            {
+                string sql = @"
+                                Update BasicUser Set PId = @newPId  Where PId = @PId
+                                Update BasicUser_Private Set PId = @newPId  Where PId = @PId
+                                Update Expertise Set PId = @newPId  Where PId = @PId
+                                Update UserHistoryOpinion Set PId = @newPId  Where PId = @PId
+                                Update Resume Set PId = @newPId  Where PId = @PId				
+                                Update FTISUserHistory Set PId = @newPId  Where PId = @PId
+                                Update BasicUser_License Set PId = @newPId  Where PId = @PId
+                            ";
+
+                SqlParameter[] sqlParameters = new SqlParameter[]
+                {
+                    new SqlParameter("PId", PId),
+                    new SqlParameter("newPId", newPId),
+                };
+
+                int s = db.Database.ExecuteSqlCommand(sql, sqlParameters);
+                if (s == 0)
+                {
+                    return Json(new { result = false, errorMessage = "更新身分證，執行錯誤" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    //reset
+                    //BasicUser 專家基本資料
+
+                    //個人資料 BasicUser_Private
+                    BasicUser_Private.ResetGetAllDatas();
+
+                    //專長 Expertise
+                    Expertise.ResetGetAllDatas();
+
+                    //意見 UserHistoryOpinion
+                    UserHistoryOpinion.ResetGetAllDatas();
+
+                    //經歷 Resume
+                    Resume.ResetGetAllDatas();
+
+                    //Ftis活動計畫參與 FTISUserHistory
+                    FTISUserHistory.ResetGetAllDatas();
+
+                    //證照 BasicUser_License
+                    BasicUser_License.ResetGetAllDatas();
+                }
+            }
 
             return Json(new { result = true }, JsonRequestBehavior.AllowGet);
         }
