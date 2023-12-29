@@ -97,20 +97,22 @@ namespace Esdms.Models
                 {
                     using (var db = new EsdmsModelContextExt())
                     {
-                        var a1 = ProjectSelectItems.Projects.Select(a => new ProjectIntegrate
+                        var a1 = ProjectSelectItems.Projects.Select(a => new 
                         {
-                            SerialNo = 1,
+                            SType = 1,
+                            Year = a.Id,
                             PrjID = a.Id.ToString(),
                             Name = a.Name,
                         }).ToArray();
-                        var a2 = FtisHelperV2.DB.Helpe.Project.GetAllProject().Select(a => new ProjectIntegrate
+                        var a2 = FtisHelperV2.DB.Helpe.Project.GetAllProject().Select(a => new 
                         {
-                            SerialNo = 2,
+                            SType = 2,
+                            Year = a.PrjYear,
                             PrjID = a.PrjID,
                             Name = a.PrjName
                         }).ToArray();
 
-                        _projectIntegrate = a1.Concat(a2).OrderBy(a => a.SerialNo).ThenBy(a => a.Name)
+                        _projectIntegrate = a1.Concat(a2).OrderBy(a => a.SType).ThenByDescending(a => a.Year).ThenBy(a => a.Name)
                                             .Select((a, index) => new ProjectIntegrate { 
                                                 SerialNo = index,
                                                 PrjID = a.PrjID,
