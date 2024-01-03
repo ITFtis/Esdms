@@ -26,7 +26,7 @@ namespace Esdms.Models
         [StringLength(10)]
         public string PId { get; set; }
 
-        [ColumnDef(Display = "部門", EditType = EditType.Select, SelectItemsClassNamespace = "FtisHelperV2.DB.DepartmentSelectItemsClassImp, FtisHelperV2", Filter = true, 
+        [ColumnDef(Display = "部門", EditType = EditType.Select, SelectItemsClassNamespace = DepartmentSelectItems.AssemblyQualifiedName, Filter = true, 
             ColSize = 3)]
         [StringLength(2)]
         public string DCode { get; set; }
