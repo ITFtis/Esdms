@@ -21,7 +21,7 @@ namespace Esdms.Models
         [ColumnDef(Visible = false)]
         public int Id { get; set; }
 
-        [Display(Name = "身分證字號")]
+        [Display(Name = "身分代碼")]
         [ColumnDef(ColSize = 3)]
         [StringLength(10)]
         public string PId { get; set; }

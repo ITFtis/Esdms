@@ -23,7 +23,7 @@ namespace Esdms.Models
         [Required]
         [StringLength(50)]
         [Column(TypeName = "nvarchar")]
-        [Display(Name = "名稱(中)")]
+        [Display(Name = "專長類別")]
         public string Name { get; set; }
     }
 

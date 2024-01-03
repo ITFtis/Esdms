@@ -396,7 +396,7 @@
 
                 //加提示字
                 var $p1 = $('div[data-field=OfficePhone]').find('label');
-                var remind = '<span class="text-danger fw-lighter pull-right">格式(02-23******)</span>';
+                var remind = '<span class="text-danger fw-lighter pull-right">格式(02-23****** #123)</span>';
                 $(remind).appendTo($p1);
 
                 var $p2 = $('div[data-field=Fax]').find('label');

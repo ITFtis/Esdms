@@ -16,7 +16,7 @@ namespace Esdms.Models
     public class BasicUser_Private
     {
         [Key]
-        [Display(Name = "身分證字號")]
+        [Display(Name = "身分代碼")]
         [ColumnDef(ColSize = 3)]
         [StringLength(10)]
         public string PId { get; set; }
@@ -46,32 +46,32 @@ namespace Esdms.Models
         public string PAddress { get; set; }
 
         [Display(Name = "LINE ID")]
-        [ColumnDef(ColSize = 3)]
+        [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
         [StringLength(100)]
         public string LINE { get; set; }
 
         [Display(Name = "最高學歷")]
-        [ColumnDef(ColSize = 3)]
+        [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
         [StringLength(50)]
         public string Education { get; set; }
 
         [Display(Name = "科系名稱")]
-        [ColumnDef(ColSize = 3)]
+        [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
         [StringLength(50)]
         public string EducationDepartment { get; set; }
 
         [Display(Name = "次高學歷")]
-        [ColumnDef(ColSize = 3)]
+        [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
         [StringLength(50)]
         public string MinorEducation { get; set; }
 
         [Display(Name = "興趣喜好")]
-        [ColumnDef(ColSize = 3)]
+        [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
         [StringLength(100)]
         public string Interest { get; set; }
 
         [Display(Name = "其他")]
-        [ColumnDef(ColSize = 3)]
+        [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
         [StringLength(200)]
         public string Note { get; set; }
 

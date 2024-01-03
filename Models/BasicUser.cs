@@ -15,7 +15,7 @@ namespace Esdms.Models
     public class BasicUser
     {
         [Key]
-        [Display(Name = "身分證字號")]
+        [Display(Name = "身分代碼")]
         [ColumnDef(ColSize = 3)]
         [StringLength(10)]
         public string PId { get; set; }
@@ -41,7 +41,7 @@ namespace Esdms.Models
         public int? CategoryId { get; set; }
 
         [Display(Name = "在職狀況")]
-        [ColumnDef(EditType = EditType.Select, SelectItems = "{\"OJ1\":\"在職\",\"OJ2\":\"退休\",\"OJ3\":\"歿\"}",
+        [ColumnDef(EditType = EditType.Select, SelectItems = "{\"OJ1\":\"在職\",\"OJ2\":\"退休\"}",
             ColSize = 3)]
         [StringLength(10)]
         public string OnJob { get; set; }
@@ -96,12 +96,12 @@ namespace Esdms.Models
         public string PrivateEmail { get; set; }
         
         [Display(Name = "國籍")]
-        [ColumnDef(ColSize = 3)]
+        [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
         [StringLength(50)]
         public string Nation { get; set; }
 
         [Display(Name = "擅長語言")]
-        [ColumnDef(ColSize = 3)]
+        [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
         [StringLength(50)]
         public string Language { get; set; }
 
@@ -134,7 +134,7 @@ namespace Esdms.Models
         public string UName { get; set; }
 
         [Display(Name = "推薦人")]
-        [ColumnDef(ColSize = 3)]
+        [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
         [StringLength(50)]
         public string Recommender { get; set; }
 

@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Esdms.Controllers.ExpertiseFold
 {
-    [Dou.Misc.Attr.MenuDef(Id = "Subject", Name = "科目類別代碼", MenuPath = "專業項目", Action = "Index", Index = 1, Func = Dou.Misc.Attr.FuncEnum.ALL, AllowAnonymous = false)]
+    [Dou.Misc.Attr.MenuDef(Id = "Subject", Name = "專長類別代碼", MenuPath = "專業項目", Action = "Index", Index = 1, Func = Dou.Misc.Attr.FuncEnum.ALL, AllowAnonymous = false)]
     public class SubjectController : APaginationModelController<Subject>
     {        
         // GET: Subject

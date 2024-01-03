@@ -21,14 +21,14 @@ namespace Esdms.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "科目類別")]
+        [Display(Name = "專長類別")]
         [ColumnDef(Filter = true, EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.SubjectSelectItems.AssemblyQualifiedName)]        
         public int SubjectId { get; set; }
 
         [Required]
         [StringLength(100)]
         [Column(TypeName = "nvarchar")]
-        [Display(Name = "名稱(中)")]
+        [Display(Name = "專長領域")]
         public string Name { get; set; }
     }
 

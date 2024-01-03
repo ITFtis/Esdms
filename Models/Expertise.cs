@@ -21,25 +21,25 @@ namespace Esdms.Models
         [ColumnDef(Visible = false)]
         public int Id { get; set; }
 
-        [Display(Name = "身分證字號")]
+        [Display(Name = "身分代碼")]
         [ColumnDef(ColSize = 3)]        
         [StringLength(10)]
         public string PId { get; set; }
 
-        [Display(Name = "科目類別")]
+        [Display(Name = "專長類別")]
         [ColumnDef(Filter = true,
             EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.SubjectSelectItems.AssemblyQualifiedName,
             SelectGearingWith = "SubjectDetailId,SubjectId,true", ColSize = 3)]
         public int? SubjectId { get; set; }
 
-        [Display(Name = "科目")]
+        [Display(Name = "專長領域")]
         [ColumnDef(Filter = true,
             EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.SubjectDetailSelectItems.AssemblyQualifiedName,
             ColSize = 3)]
         public int? SubjectDetailId { get; set; }
 
         [Display(Name = "專長內容")]
-        [ColumnDef(ColSize = 3)]
+        [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
         [StringLength(500)]
         public string Note { get; set; }
 
