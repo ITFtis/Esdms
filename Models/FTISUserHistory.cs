@@ -35,17 +35,17 @@ namespace Esdms.Models
         [ColumnDef(EditType = EditType.Date, ColSize = 3)]
         public DateTime? Date { get; set; }
 
-        [Display(Name = "專案")]
-        [ColumnDef(Filter = true,
-            EditType = EditType.TextList, SelectItemsClassNamespace = Esdms.Models.ProjectIntegrateSelectItems.AssemblyQualifiedName,
-            ColSize = 3)]        
-        public int? ProjectId { get; set; }
-
         [Display(Name = "會議")]
         [ColumnDef(Filter = true,
             EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.ActivityCategorySelectItems.AssemblyQualifiedName,
             ColSize = 3)]
         public int? ActivityCategoryId { get; set; }
+
+        [Display(Name = "專案")]
+        [ColumnDef(Filter = true,
+            EditType = EditType.TextList, SelectItemsClassNamespace = Esdms.Models.ProjectIntegrateSelectItems.AssemblyQualifiedName,
+            ColSize = 3)]        
+        public int? ProjectId { get; set; }        
 
         static object lockGetAllDatas = new object();
         public static IEnumerable<FTISUserHistory> GetAllDatas(int cachetimer = 0)

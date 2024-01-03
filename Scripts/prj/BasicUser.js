@@ -18,7 +18,8 @@
         $_d4EditDataContainer = $('<table>').appendTo($_oform.parent());
         //////意見
         ////$_d5EditDataContainer = $('<table>').appendTo($_oform.parent());
-        $_d6EditDataContainer = $('<table>').appendTo($_oform.parent());
+        ////////經歷
+        ////$_d6EditDataContainer = $('<table>').appendTo($_oform.parent());
         $_d7EditDataContainer = $('<table>').appendTo($_oform.parent());
         //////證照
         ////$_d8EditDataContainer = $('<table>').appendTo($_oform.parent());        
@@ -47,8 +48,8 @@
             //////1-n 意見
             ////SetDouDa5(row.UserHistoryOpinions, oPId);
 
-            //1-n 經歷
-            SetDouDa6(row.Resumes, oPId);
+            //////1-n 經歷
+            ////SetDouDa6(row.Resumes, oPId);
 
             //1-n 專家參與紀錄
             SetDouDa7(row.FTISUserHistorys, oPId);
@@ -64,8 +65,8 @@
 
 
         helper.bootstrap.genBootstrapTabpanel($_d4EditDataContainer.parent(), undefined, undefined,
-            ['基本資料', '個人資料', '專長', '經歷', '專家參與紀錄'],
-            [$_oform, $_d1EditDataContainer, $_d4EditDataContainer, $_d6EditDataContainer, $_d7EditDataContainer]);
+            ['基本資料', '個人資料', '專長', '專家參與紀錄'],
+            [$_oform, $_d1EditDataContainer, $_d4EditDataContainer, $_d7EditDataContainer]);
 
         //點選的Tab
         var jTabToggle = $('#_tabs').closest('div[class=tab-content]').siblings().find('a[data-toggle="tab"]');
