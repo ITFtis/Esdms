@@ -23,18 +23,21 @@ namespace Esdms.Controllers.ExpertiseFold
         {
             base.AddDBObject(dbEntity, objs);
             SubjectSelectItems.Reset();
+            Subject.ResetGetAllDatas();
         }
 
         protected override void UpdateDBObject(IModelEntity<Subject> dbEntity, IEnumerable<Subject> objs)
         {
             base.UpdateDBObject(dbEntity, objs);
             SubjectSelectItems.Reset();
+            Subject.ResetGetAllDatas();
         }
 
         protected override void DeleteDBObject(IModelEntity<Subject> dbEntity, IEnumerable<Subject> objs)
         {
             base.DeleteDBObject(dbEntity, objs);
             SubjectSelectItems.Reset();
+            Subject.ResetGetAllDatas();
         }
 
         public override DataManagerOptions GetDataManagerOptions()

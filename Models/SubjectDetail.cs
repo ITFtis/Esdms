@@ -1,4 +1,5 @@
 ﻿using Dou.Misc.Attr;
+using DouHelper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -30,6 +31,34 @@ namespace Esdms.Models
         [Column(TypeName = "nvarchar")]
         [Display(Name = "專長領域")]
         public string Name { get; set; }
+
+        static object lockGetAllDatas = new object();
+        public static IEnumerable<SubjectDetail> GetAllDatas(int cachetimer = 0)
+        {
+            if (cachetimer == 0) cachetimer = Constant.cacheTime;
+
+            string key = "Esdms.Models.SubjectDetail";
+            var allData = DouHelper.Misc.GetCache<IEnumerable<SubjectDetail>>(cachetimer, key);
+            lock (lockGetAllDatas)
+            {
+                if (allData == null)
+                {
+                    Dou.Models.DB.IModelEntity<SubjectDetail> modle = new Dou.Models.DB.ModelEntity<SubjectDetail>(new EsdmsModelContextExt());
+                    //allData = modle.GetAll().OrderBy(a => a.Rank).ToArray();
+                    allData = modle.GetAll().ToArray();
+
+                    DouHelper.Misc.AddCache(allData, key);
+                }
+            }
+
+            return allData;
+        }
+
+        public static void ResetGetAllDatas()
+        {
+            string key = "Esdms.Models.SubjectDetail";
+            Misc.ClearCache(key);
+        }
     }
 
     public class SubjectDetailSelectItems : SelectItemsClass

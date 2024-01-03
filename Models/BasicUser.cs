@@ -202,6 +202,40 @@ namespace Esdms.Models
                 return BasicUser_License.GetAllDatas().Where(a => a.PId == this.PId).ToList();
             }
         }
+
+        //虛擬欄位 Expertises
+        [Display(Name = "專長")]
+        [ColumnDef(Visible = false, VisibleEdit = false)]
+        public string strExpertises
+        {
+            get
+            {
+                var vs = Expertise.GetAllDatas()
+                        .Where(a => a.PId == this.PId)
+                        .Select(a => new { a.SubjectId, a.SubjectDetailId });
+
+                var G1 = vs.Join(Subject.GetAllDatas(), a => a.SubjectId, b => b.Id, (o, c) => new
+                {
+                    SubjectId = c.Id,
+                    Name1 = c.Name
+                }).Distinct();
+
+                var G2 = vs.Join(SubjectDetail.GetAllDatas(), a => a.SubjectDetailId, b => b.Id, (o, c) => new
+                {
+                    SubjectId = c.SubjectId,
+                    SubjectDetailId = c.Id,
+                    Name2 = c.Name
+                });
+
+                var tmp = G1.GroupJoin(G2, a => a.SubjectId, b => b.SubjectId, (o, c) => new
+                {
+                    o.SubjectId,
+                    str = o.Name1 + string.Format("({0})", string.Join(",", c.Select(a => a.Name2)))
+                });
+
+                return string.Join(", ", tmp.Select(a => a.str));
+            }
+        }
     }
 
     public class BasicUserNameSelectItems : Dou.Misc.Attr.SelectItemsClass
