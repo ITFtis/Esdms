@@ -139,7 +139,7 @@ namespace Esdms.Models
         public string Recommender { get; set; }
 
         [Display(Name = "重覆姓名")]
-        [ColumnDef(VisibleEdit = false,
+        [ColumnDef(Visible = false, VisibleEdit = false,
                 Filter = true, EditType = EditType.Select, SelectItems = "{\"Y\":\"是\",\"N\":\"否\"}")]
         public string DuplicateName { get; }
 

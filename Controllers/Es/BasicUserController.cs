@@ -54,16 +54,21 @@ namespace Esdms.Controllers.Es
 
             //全部欄位排序
             foreach (var field in options.fields)
+            {
                 field.sortable = true;
+                field.visible = false;
+            }
+
+            options.GetFiled("PId").visible = true;
+            options.GetFiled("Name").visible = true;
+            options.GetFiled("Position").visible = true;
 
             options.ctrlFieldAlign = "left";
             options.editformWindowStyle = "modal";
             options.editformWindowClasses = "modal-xl";
             options.editformSize.height = "fixed";
             options.editformSize.width = "auto";
-
-            options.GetFiled("DuplicateName").visible = true;
-
+            
             //共用頁面
             options.editformWindowStyle = "showEditformOnly";
 

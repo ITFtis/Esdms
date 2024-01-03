@@ -73,12 +73,14 @@ namespace Esdms.Controllers.Es
         {
             bool result = false;
 
-            var v = GetModelEntity().GetAll().Where(a => a.PId == f.PId && a.SubjectId == f.SubjectId);
+            var v = GetModelEntity().GetAll()
+                        .Where(a => a.PId == f.PId && a.SubjectId == f.SubjectId 
+                            && a.SubjectDetailId == f.SubjectDetailId);
             if (type == "Add")
             {                
                 if (v.Count() > 0)
                 {
-                    string errorMessage = string.Format("身分證 + 科目類別，不可重複");
+                    string errorMessage = string.Format("專長類別領域，不可重複");
                     throw new Exception(errorMessage);
                 }
             }
