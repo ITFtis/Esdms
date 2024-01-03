@@ -43,7 +43,7 @@ namespace Esdms.Models
 
         [Display(Name = "專案")]
         [ColumnDef(Filter = true,
-            EditType = EditType.TextList, SelectItemsClassNamespace = Esdms.Models.ProjectIntegrateSelectItems.AssemblyQualifiedName,
+            EditType = EditType.TextList, SelectItemsClassNamespace = Esdms.Models.ProjectSelectItems.AssemblyQualifiedName,
             ColSize = 3)]        
         public int? ProjectId { get; set; }        
 

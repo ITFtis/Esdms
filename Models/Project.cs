@@ -21,6 +21,11 @@ namespace Esdms.Models
         [ColumnDef(Visible = false)]
         public int Id { get; set; }
 
+        [StringLength(50)]
+        [Column(TypeName = "nvarchar")]
+        [Display(Name = "委辦單位")]
+        public string CommissionedUnit { get; set; }
+
         [Required]
         [StringLength(50)]
         [Column(TypeName = "nvarchar")]
@@ -28,11 +33,13 @@ namespace Esdms.Models
         public string Name { get; set; }
         
         [Display(Name = "工務二三階單位")]
-        [ColumnDef(Filter = true, Sortable = true, EditType = EditType.Select, 
+        [ColumnDef(Visible = false, VisibleEdit = false, 
+            Filter = true, Sortable = true, EditType = EditType.Select, 
             SelectItemsClassNamespace = Esdms.Models.ProjectUnitSelectItems.AssemblyQualifiedName)]        
-        public string AgencyId { get; set; }
+        public string AgencyId { get; set; }               
 
         [StringLength(50)]
+        [ColumnDef(Visible = false, VisibleEdit = false)]
         [Column(TypeName = "nvarchar")]
         [Display(Name = "執行單位")]
         public string ExecuteUnit { get; set; }

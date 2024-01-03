@@ -553,10 +553,17 @@
             _opt.datas = datas;
 
             _opt.editformSize = { minWidth: 700 };
-            _opt.beforeCreateEditDataForm = function (row, callback) {
+            _opt.beforeCreateEditDataForm = function (row, callback) {                
                 row.PId = PId;
 
                 callback();
+            };
+
+            _opt.afterCreateEditDataForm = function ($container, row) {
+                //加提示字
+                var $p1 = $('div[data-field=Date]').find('label');
+                var remind = '<span class="text-danger fw-lighter pull-right">非必填</span>';
+                $(remind).appendTo($p1);
             };
 
             //實體Dou js
