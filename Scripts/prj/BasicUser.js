@@ -634,9 +634,23 @@
             async: false,
             success: function (data) {
                 if (data.exist) {
-                    var msg = '<span class="text-danger">****zzzz姓名已存在(' + Name + ')，確認是否更改****</span>' + '</br>';
+                    var msg = '<span class="text-danger">****姓名已存在，是否儲存****</span>' + '</br>';
 
-                    result = msg;
+                    //修正 data.basicuser[0].PId
+
+                    var msg = '<ul>';
+                    $.each(data.basicuser, function (index, value) {
+                        var content = '&nbsp&nbsp' + '專家(' + this.PId + ' ' + this.Name + ')'                                      
+                                      + '&nbsp&nbsp' + '職稱(' + this.Position + ')'
+                                      + '&nbsp&nbsp' + '建檔人(' + this.BName + ')'                                      
+                                      + '</br>';
+
+                        msg += '<li>' + content + '</li>';
+                    });
+
+                    msg += '</ul>';
+
+                    result = msg;                    
                 }
             },
             complete: function () {

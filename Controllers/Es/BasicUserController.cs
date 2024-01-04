@@ -158,8 +158,8 @@ namespace Esdms.Controllers.Es
             }
 
             //原身分 + 姓名有異動
-            int n = GetModelEntity().GetAll().Where(a => a.PId != PId && a.Name == Name).Count();
-            return Json(new { exist = n > 0 }, JsonRequestBehavior.AllowGet);
+            var u = GetModelEntity().GetAll().Where(a => a.PId != PId && a.Name == Name);
+            return Json(new { exist = u.Count() > 0, basicuser = u }, JsonRequestBehavior.AllowGet);
         }
 
         private bool ToValidate(BasicUser f, string type)
