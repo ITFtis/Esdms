@@ -640,10 +640,9 @@
 
                     var msg = '<ul>';
                     $.each(data.basicuser, function (index, value) {
-                        var content = '&nbsp&nbsp' + '專家(' + this.PId + ' ' + this.Name + ')'                                      
-                                      + '&nbsp&nbsp' + '職稱(' + this.Position + ')'
-                                      + '&nbsp&nbsp' + '建檔人(' + this.BName + ')'                                      
-                                      + '</br>';
+                        var content = '<a href="#" style="text-decoration: none" onclick = "GoEditSpecificData(\'' + this.PId + '\')">專家(' + this.PId + ' ' + this.Name + ')' + '</a>'
+                                      + '<span class="ps-3">' + '職稱(' + this.Position + ')' + '</span>'
+                                      + '<span class="ps-3">' + '建檔人(' + this.BName + ')' + '</span>';
 
                         msg += '<li>' + content + '</li>';
                     });
@@ -665,4 +664,15 @@
 
         return result;
     }
+
+    
 })
+
+//切換至PId
+function GoEditSpecificData(PId) {
+
+    alert(PId);
+
+    ////trigger清單(新增row)編輯按鈕的，
+    //$_masterTable.DouEditableTable("editSpecificData", row);
+}
