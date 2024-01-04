@@ -224,13 +224,14 @@ namespace Esdms.Models
                 {
                     SubjectId = c.SubjectId,
                     SubjectDetailId = c.Id,
-                    Name2 = c.Name
+                    Name2 = c.Name,
+                    Sort2 = c.Sort
                 });
 
                 var tmp = G1.GroupJoin(G2, a => a.SubjectId, b => b.SubjectId, (o, c) => new
                 {
                     o.SubjectId,
-                    str = o.Name1 + string.Format("({0})", string.Join(",", c.Select(a => a.Name2)))
+                    str = o.Name1 + string.Format("：{0}", string.Join(",", c.OrderBy(a => a.Sort2).Select(a => a.Name2)))
                 });
 
                 return string.Join("</br>", tmp.Select(a => a.str));
