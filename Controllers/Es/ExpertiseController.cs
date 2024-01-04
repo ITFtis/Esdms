@@ -60,7 +60,7 @@ namespace Esdms.Controllers.Es
 
             opts.GetFiled("PId").colsize = 6;
             opts.GetFiled("SubjectId").colsize = 6;
-            opts.GetFiled("SubjectDetailId").colsize = 6;
+            opts.GetFiled("SubjectDetailId").colsize = 12;
 
             opts.GetFiled("Note").colsize = 12;
             opts.GetFiled("Note").datatype = "textarea";
