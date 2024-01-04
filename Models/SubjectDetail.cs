@@ -1,5 +1,6 @@
 ﻿using Dou.Misc.Attr;
 using DouHelper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -32,6 +33,10 @@ namespace Esdms.Models
         [Display(Name = "專長領域")]
         public string Name { get; set; }
 
+        [Display(Name = "排序")]
+        [ColumnDef(Visible = false)]
+        public int Sort { get; set; }
+
         static object lockGetAllDatas = new object();
         public static IEnumerable<SubjectDetail> GetAllDatas(int cachetimer = 0)
         {
@@ -44,8 +49,7 @@ namespace Esdms.Models
                 if (allData == null)
                 {
                     Dou.Models.DB.IModelEntity<SubjectDetail> modle = new Dou.Models.DB.ModelEntity<SubjectDetail>(new EsdmsModelContextExt());
-                    //allData = modle.GetAll().OrderBy(a => a.Rank).ToArray();
-                    allData = modle.GetAll().ToArray();
+                    allData = modle.GetAll().OrderBy(a => a.Sort).ToArray();                    
 
                     DouHelper.Misc.AddCache(allData, key);
                 }
@@ -74,7 +78,7 @@ namespace Esdms.Models
                 {
                     using (var db = new EsdmsModelContextExt())
                     {
-                        _subjectDetails = db.SubjectDetail.ToArray();
+                        _subjectDetails = db.SubjectDetail.OrderBy(a => a.Sort).ToArray();
                     }
                 }
                 return _subjectDetails;
@@ -88,7 +92,8 @@ namespace Esdms.Models
         }
         public override IEnumerable<KeyValuePair<string, object>> GetSelectItems()
         {
-            return SubjectDetails.Select(s => new KeyValuePair<string, object>(s.Id.ToString(), "{\"v\":\"" + s.Name + "\",\"SubjectId\":\"" + s.SubjectId + "\"}"));
+            //return SubjectDetails.Select(s => new KeyValuePair<string, object>(s.Id.ToString(), "{\"v\":\"" + s.Name + "\",\"SubjectId\":\"" + s.SubjectId + "\"}"));
+            return SubjectDetails.Select(s => new KeyValuePair<string, object>(s.Id.ToString(), JsonConvert.SerializeObject(new { v = s.Name, s = s.Sort, SubjectId = s.SubjectId })));
         }
     }
 }

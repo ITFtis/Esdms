@@ -61,7 +61,9 @@ namespace Esdms.Controllers.Es
 
             options.GetFiled("PId").visible = true;
             options.GetFiled("Name").visible = true;
-            options.GetFiled("Position").visible = true;            
+            options.GetFiled("Position").visible = true;
+            //options.GetFiled("BDate").visible = true;
+            options.GetFiled("BName").visible = true;
             options.GetFiled("strExpertises").visible = true;
 
             options.ctrlFieldAlign = "left";

@@ -233,7 +233,7 @@ namespace Esdms.Models
                     str = o.Name1 + string.Format("({0})", string.Join(",", c.Select(a => a.Name2)))
                 });
 
-                return string.Join(", ", tmp.Select(a => a.str));
+                return string.Join("</br>", tmp.Select(a => a.str));
             }
         }
     }
