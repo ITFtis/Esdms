@@ -150,6 +150,14 @@ namespace Esdms.Controllers.Es
         //姓名已存在(true:有)
         public ActionResult ExistName(string PId, string Name)
         {
+            //原身分 + 姓名沒異動
+            int o = GetModelEntity().GetAll().Where(a => a.PId == PId && a.Name == Name).Count();
+            if (o > 0)
+            {
+                return Json(new { exist = false }, JsonRequestBehavior.AllowGet);
+            }
+
+            //原身分 + 姓名有異動
             int n = GetModelEntity().GetAll().Where(a => a.PId != PId && a.Name == Name).Count();
             return Json(new { exist = n > 0 }, JsonRequestBehavior.AllowGet);
         }

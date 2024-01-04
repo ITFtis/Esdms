@@ -345,11 +345,10 @@
         function (row, callback) {
             var PId = $('.field-content [data-fn="PId"]').val();
             var Name = $('.field-content [data-fn="Name"]').val();
-            var exist = ExistName(PId, Name);
+            var msg = ExistName(PId, Name);
 
-            if (exist) {
-                var content = '<span class="text-danger">****姓名已存在(' + Name + ')，確認是否更改****</span>' + '</br>';
-                jspConfirmYesNo($("body"), { content: content }, function (confrim) {
+            if (msg != '') {                
+                jspConfirmYesNo($("body"), { content: msg }, function (confrim) {
                     if (confrim) {
                         //確定
                         transactionDouClientDataToServer(row, $.AppConfigOptions.baseurl + 'BasicUser/Add', callback);
@@ -366,11 +365,10 @@
         function (row, callback) {
             var PId = $('.field-content [data-fn="PId"]').val();
             var Name = $('.field-content [data-fn="Name"]').val();
-            var exist = ExistName(PId, Name);
+            var msg = ExistName(PId, Name);
 
-            if (exist) {                
-                var content = '<span class="text-danger">****姓名已存在(' + Name + ')，確認是否更改****</span>' + '</br>';
-                jspConfirmYesNo($("body"), { content: content }, function (confrim) {
+            if (msg) {                                
+                jspConfirmYesNo($("body"), { content: msg }, function (confrim) {
                     if (confrim) {
                         //確定
                         transactionDouClientDataToServer(row, $.AppConfigOptions.baseurl + 'BasicUser/Update', callback);
@@ -625,7 +623,7 @@
 
     function ExistName(PId, Name) {
 
-        var result = false;
+        var result = '';
 
         helper.misc.showBusyIndicator();
         $.ajax({
@@ -635,7 +633,11 @@
             data: { PId: PId, Name: Name },
             async: false,
             success: function (data) {
-                result = data.exist;                
+                if (data.exist) {
+                    var msg = '<span class="text-danger">****zzzz姓名已存在(' + Name + ')，確認是否更改****</span>' + '</br>';
+
+                    result = msg;
+                }
             },
             complete: function () {
                 helper.misc.hideBusyIndicator();
