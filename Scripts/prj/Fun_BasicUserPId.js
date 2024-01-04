@@ -18,7 +18,7 @@
                     setTimeout(function () {
                         var footer = '<div class="modal-footer justify-content-start"> \
                                           <div class="detail-view-field"> \
-                                             <b>新身分證</b> \
+                                             <b>新身分代碼</b> \
                                           </div> \
                                           <div class="field-content col-sm-3"> \
                                              <input id="newPId" type="text" class="form-control" maxlength="20"> \
@@ -28,7 +28,7 @@
                         $('.modal-dialog .modal-body').append(footer);
 
                         $('#btnUpdatePid').click(function () {
-                            jspConfirmYesNo($("body"), { content: "確認更新身分證資料" }, function (confrim) {
+                            jspConfirmYesNo($("body"), { content: "確認更新身分代碼" }, function (confrim) {
                                 if (confrim) {
 
                                     var PId = value;
@@ -42,13 +42,13 @@
                                         data: { PId: PId, newPId: newPId },
                                         success: function (data) {
                                             if (data.result) {
-                                                jspAlertMsg($("body"), { autoclose: 2000, content: '身分證更新成功!!', classes: 'modal-sm' },
+                                                jspAlertMsg($("body"), { autoclose: 2000, content: '身分代碼更新成功!!', classes: 'modal-sm' },
                                                     function () {
                                                         location.reload();
                                                     });
                                             }
                                             else {
-                                                alert("身分證更新失敗：\n" + data.errorMessage);
+                                                alert("身分代碼更新失敗：\n" + data.errorMessage);
                                             }
                                         },
                                         complete: function () {

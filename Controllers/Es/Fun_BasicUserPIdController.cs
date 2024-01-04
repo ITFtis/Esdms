@@ -16,7 +16,7 @@ using static Esdms.Controllers.Es.Fun_BasicUserPIdController;
 
 namespace Esdms.Controllers.Es
 {
-    [Dou.Misc.Attr.MenuDef(Id = "Fun_BasicUserPId", Name = "客製化-專家身分證", MenuPath = "專家資料", Action = "Index", Index = 100, Func = Dou.Misc.Attr.FuncEnum.None, AllowAnonymous = false)]
+    [Dou.Misc.Attr.MenuDef(Id = "Fun_BasicUserPId", Name = "客製化-專家身分代碼", MenuPath = "專家資料", Action = "Index", Index = 100, Func = Dou.Misc.Attr.FuncEnum.None, AllowAnonymous = false)]
     public class Fun_BasicUserPIdController : AGenericModelController<BasicUser>
     {
         // GET: Fun_BasicUserPId
@@ -49,20 +49,20 @@ namespace Esdms.Controllers.Es
             return _opts;
         }
 
-        //更新身分證
+        //更新身分代碼
         public ActionResult UpdatePId(string PId, string newPId)
         {
-            //驗證新身分證:空值
+            //驗證新身分代碼:空值
             if (string.IsNullOrEmpty(newPId))
             {
                 return Json(new { result = false, errorMessage = string.Format("不可為Null或空值：newPId({0})", newPId) }, JsonRequestBehavior.AllowGet);
             }
 
-            //驗證新身分證:已存在
+            //驗證新身分代碼:已存在
             int n = GetModelEntity().GetAll().Where(a => a.PId == newPId).Count();
             if (n > 0)
             {
-                return Json(new { result = false, errorMessage = string.Format("新身分證已存在，不可更新：newPId({0})", newPId) }, JsonRequestBehavior.AllowGet);
+                return Json(new { result = false, errorMessage = string.Format("新身分代碼已存在，不可更新：newPId({0})", newPId) }, JsonRequestBehavior.AllowGet);
             }
 
             using (var db = new EsdmsModelContextExt())
@@ -86,7 +86,7 @@ namespace Esdms.Controllers.Es
                 int s = db.Database.ExecuteSqlCommand(sql, sqlParameters);
                 if (s == 0)
                 {
-                    return Json(new { result = false, errorMessage = "更新身分證，執行錯誤" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { result = false, errorMessage = "更新身分代碼，執行錯誤" }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {

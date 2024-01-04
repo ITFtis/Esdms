@@ -163,7 +163,7 @@ namespace Esdms.Controllers.Es
             {
                 if (v.Count() > 0)
                 {
-                    string errorMessage = string.Format("身分證已存在:" + f.PId);
+                    string errorMessage = string.Format("身分代碼已存在:" + f.PId);
                     throw new Exception(errorMessage);
                 }
             }

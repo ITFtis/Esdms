@@ -320,9 +320,9 @@
     "TypeId": "Dou.Misc.Attr.MenuDefAttribute, Dou, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null"
   },
   {
-    "Name": "客製化-專家身分證",
+    "Name": "客製化-專家身分代碼",
     "MenuPath": "專家資料",
-    "FullMenuPath": "專家資料/客製化-專家身分證",
+    "FullMenuPath": "專家資料/客製化-專家身分代碼",
     "Index": 100,
     "Desc": null,
     "AllowAnonymous": false,

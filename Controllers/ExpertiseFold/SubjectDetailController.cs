@@ -1,4 +1,5 @@
 ﻿using Dou.Controllers;
+using Dou.Misc;
 using Dou.Models.DB;
 using Esdms.Models;
 using System;
@@ -37,6 +38,17 @@ namespace Esdms.Controllers.ExpertiseFold
             base.DeleteDBObject(dbEntity, objs);
             SubjectDetailSelectItems.Reset();
             SubjectDetail.ResetGetAllDatas();
+        }
+
+        public override DataManagerOptions GetDataManagerOptions()
+        {
+            var opts = base.GetDataManagerOptions();
+
+            //全部欄位排序
+            foreach (var field in opts.fields)
+                field.sortable = true;
+
+            return opts;
         }
 
         protected override Dou.Models.DB.IModelEntity<SubjectDetail> GetModelEntity()
