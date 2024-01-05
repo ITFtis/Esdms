@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
 
+    var id_toTab;
+
     //清單欄位排序(非預設編輯頁)
     //說明: js, controller不可設Index排序(douoptions.fields已實體，順序不再變動)
     if (!douoptions.singleDataEdit) {
@@ -133,6 +135,8 @@
 
         //(tab)切換前
         jTabToggle.on('hide.bs.tab', function (e) {
+            id_toTab = e.relatedTarget.hash;
+
             isChange = false;
             isChangeText = [];
 
@@ -281,8 +285,13 @@
                     }
                     else {
                         //取消
-                        if (isDoing)
+                        if (isDoing) {
+                            //(啟動)tab切換
+                            $('a[href="' + id_toTab + '"]').tab('show');
+                            id_toTab = undefined;
+
                             return;
+                        }
 
                         //取消會轉回清單，不可用
                         //$_nowTabUI.find('.modal-footer').find('.btn-default').trigger("click");
@@ -336,6 +345,8 @@
 
                     isDoing = true;
                 });
+
+                return false;
             }
         });
 
@@ -370,15 +381,33 @@
             if (msg) {                                
                 jspConfirmYesNo($("body"), { content: msg }, function (confrim) {
                     if (confrim) {
-                        //確定
-                        transactionDouClientDataToServer(row, $.AppConfigOptions.baseurl + 'BasicUser/Update', callback);
+                        //確定儲存
+                        if (id_toTab == undefined) {                            
+                            transactionDouClientDataToServer(row, $.AppConfigOptions.baseurl + 'BasicUser/Update', callback);
+                        }
+                        else {
+                            transactionDouClientDataToServer(row, $.AppConfigOptions.baseurl + 'BasicUser/Update', function () {
+                                //(啟動)tab切換
+                                $('a[href="' + id_toTab + '"]').tab('show');
+                                id_toTab = undefined;
+                            });
+                        }
                     }
                 })
             }
             else {
-                //確定
-                transactionDouClientDataToServer(row, $.AppConfigOptions.baseurl + 'BasicUser/Update', callback);
-            }                        
+                //確定儲存
+                if (id_toTab == undefined) {
+                    transactionDouClientDataToServer(row, $.AppConfigOptions.baseurl + 'BasicUser/Update', callback);
+                }
+                else {
+                    transactionDouClientDataToServer(row, $.AppConfigOptions.baseurl + 'BasicUser/Update', function () {
+                        //(啟動)tab切換
+                        $('a[href="' + id_toTab + '"]').tab('show');
+                        id_toTab = undefined;
+                    });
+                }
+            }            
         };
 
     douoptions.afterUpdateServerData = function (row, callback) {
@@ -686,12 +715,13 @@ function GoEditSpecificData(PId) {
         data: { PId: PId },
         async: false,
         success: function (datas) {
-            $('[Role="tablist"]').remove();
-            $("#_table").douTable('tableReload', datas);
 
             //取消(pop window)
             $('.basicusercontroller.data-edit-jspanel').find('.modal-footer .btn.btn-default').first().trigger('click');
 
+            $('[Role="tablist"]').remove();
+            $("#_table").douTable('tableReload', datas);
+            
             //trigger進入編輯頁
             $('.bootstrap-table.basicusercontroller').find('td .btn-update-data-manager').trigger('click');
         },
