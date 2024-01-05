@@ -669,8 +669,10 @@
 
                     msg += '<ul>';
                     $.each(data.basicuser, function (index, value) {
-                        var content = '<a href="#" style="text-decoration: none" onclick = "GoEditSpecificData(\'' + this.PId + '\')">專家(' + this.PId + ' ' + this.Name + ')' + '</a>'
-                                      + '<span class="ps-3">' + '職稱(' + this.Position + ')' + '</span>'
+
+                        var strPosition = this.Position == null ? '' : this.Position;
+
+                        var content = '<a href="#" style="text-decoration: none" onclick = "GoEditSpecificData(\'' + this.PId + '\')">專家(' + this.PId + ' ' + this.Name + ' ' + strPosition + ')' + '</a>'                                      
                                       + '<span class="ps-3">' + '建檔人(' + this.BName + ')' + '</span>';
 
                         msg += '<li class="mt-2">' + content + '</li>';
