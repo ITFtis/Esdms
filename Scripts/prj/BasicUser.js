@@ -638,13 +638,13 @@
 
                     //修正 data.basicuser[0].PId
 
-                    var msg = '<ul>';
+                    msg += '<ul>';
                     $.each(data.basicuser, function (index, value) {
                         var content = '<a href="#" style="text-decoration: none" onclick = "GoEditSpecificData(\'' + this.PId + '\')">專家(' + this.PId + ' ' + this.Name + ')' + '</a>'
                                       + '<span class="ps-3">' + '職稱(' + this.Position + ')' + '</span>'
                                       + '<span class="ps-3">' + '建檔人(' + this.BName + ')' + '</span>';
 
-                        msg += '<li>' + content + '</li>';
+                        msg += '<li class="mt-2">' + content + '</li>';
                     });
 
                     msg += '</ul>';
