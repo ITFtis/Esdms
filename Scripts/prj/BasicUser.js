@@ -671,8 +671,37 @@
 //切換至PId
 function GoEditSpecificData(PId) {
 
-    alert(PId);
+    //alert(PId);
 
-    ////trigger清單(新增row)編輯按鈕的，
-    //$_masterTable.DouEditableTable("editSpecificData", row);
+    $('.modal-dialog .modal-content .modal-footer').find('.取.消').trigger('click');
+
+    //Dou 執行作業
+
+    //重新組Dou清單頁
+    helper.misc.showBusyIndicator();
+    $.ajax({
+        url: app.siteRoot + 'BasicUser/GetBasicUser',
+        datatype: "json",
+        type: "Get",
+        data: { PId: PId },
+        async: false,
+        success: function (datas) {
+            $('[Role="tablist"]').remove();
+            $("#_table").douTable('tableReload', datas);
+
+            //取消(pop window)
+            $('.basicusercontroller.data-edit-jspanel').find('.modal-footer .btn.btn-default').first().trigger('click');
+
+            //trigger進入編輯頁
+            $('.bootstrap-table.basicusercontroller').find('td .btn-update-data-manager').trigger('click');
+        },
+        complete: function () {
+            helper.misc.hideBusyIndicator();
+        },
+        error: function (xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
+            helper.misc.hideBusyIndicator();
+        }
+    });
 }

@@ -4,6 +4,7 @@ using Dou.Models.DB;
 using Esdms.Models;
 using FtisHelperV2.DB.Helpe;
 using FtisHelperV2.DB.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -160,6 +161,16 @@ namespace Esdms.Controllers.Es
             //原身分 + 姓名有異動
             var u = GetModelEntity().GetAll().Where(a => a.PId != PId && a.Name == Name);
             return Json(new { exist = u.Count() > 0, basicuser = u }, JsonRequestBehavior.AllowGet);
+        }
+
+        //取得單筆user
+        public ActionResult GetBasicUser(string PId)
+        {
+            var u = GetModelEntity().GetAll().Where(a => a.PId == PId);
+
+            var jstr = JsonConvert.SerializeObject(u, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            jstr = jstr.Replace(DataManagerScriptHelper.JavaScriptFunctionStringStart, "(").Replace(DataManagerScriptHelper.JavaScriptFunctionStringEnd, ")");
+            return Content(jstr, "application/json");
         }
 
         private bool ToValidate(BasicUser f, string type)
