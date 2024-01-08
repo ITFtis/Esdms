@@ -255,7 +255,7 @@
             //異動處理
             if (isChange) {
                 //互動訊息
-                var msg = '<span class="text-danger">****資料異動****</span>' + '</br>';
+                var msg = '資料異動(' + $_nowTable.instance.settings.title + ')項目：' + '</br>'
                 msg += '<ul>';
                 $.each(isChangeText, function (index, value) {                    
                     msg += '<li class="mt-2">' + value + '</li>';
