@@ -332,3 +332,7 @@ tr:nth-child(4n-1) {
 }
 
 /* Footer END */
+
+.modal-dialog .close.btn-close span {
+    display: none
+}
