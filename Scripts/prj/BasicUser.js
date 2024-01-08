@@ -493,6 +493,12 @@
                 //(no callback)更新dou的rowdata
                 $_d1Table.instance.updateDatas(row);
 
+                if (id_toTab != null) {
+                    //(啟動)tab切換
+                    $('a[href="' + id_toTab + '"]').tab('show');
+                    id_toTab = undefined;
+                }
+
                 ////callback();
             }
 
