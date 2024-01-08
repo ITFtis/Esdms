@@ -25,6 +25,34 @@ namespace Esdms.Models
         [Column(TypeName = "nvarchar")]
         [Display(Name = "類別名稱")]
         public string Name { get; set; }
+
+        [Display(Name = "建檔日期")]
+        [ColumnDef(VisibleEdit = false, ColSize = 3)]
+        public DateTime? BDate { get; set; }
+
+        [Display(Name = "建檔人員編")]
+        [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
+        [StringLength(6)]
+        public string BFno { get; set; }
+
+        [Display(Name = "建檔人姓名")]
+        [ColumnDef(VisibleEdit = false, ColSize = 3)]
+        [StringLength(50)]
+        public string BName { get; set; }
+
+        [Display(Name = "修改日期")]
+        [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
+        public DateTime? UDate { get; set; }
+
+        [Display(Name = "修改人員編")]
+        [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
+        [StringLength(6)]
+        public string UFno { get; set; }
+
+        [Display(Name = "修改人姓名")]
+        [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
+        [StringLength(50)]
+        public string UName { get; set; }
     }
 
     public class ActivityCategorySelectItems : Dou.Misc.Attr.SelectItemsClass

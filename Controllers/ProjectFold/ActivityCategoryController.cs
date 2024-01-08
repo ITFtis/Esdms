@@ -21,12 +21,24 @@ namespace Esdms.Controllers.ProjectFold
 
         protected override void AddDBObject(IModelEntity<ActivityCategory> dbEntity, IEnumerable<ActivityCategory> objs)
         {
+            var f = objs.First();
+
+            f.BDate = DateTime.Now;
+            f.BFno = Dou.Context.CurrentUserBase.Id;
+            f.BName = Dou.Context.CurrentUserBase.Name;
+
             base.AddDBObject(dbEntity, objs);
             ActivityCategorySelectItems.Reset();
         }
 
         protected override void UpdateDBObject(IModelEntity<ActivityCategory> dbEntity, IEnumerable<ActivityCategory> objs)
         {
+            var f = objs.First();
+
+            f.UDate = DateTime.Now;
+            f.UFno = Dou.Context.CurrentUserBase.Id;
+            f.UName = Dou.Context.CurrentUserBase.Name;
+
             base.UpdateDBObject(dbEntity, objs);
             ActivityCategorySelectItems.Reset();
         }
