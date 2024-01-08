@@ -201,9 +201,13 @@ tr:nth-child(4n-1) {
     background-color: var(--tool-bar-bg);
 }
 
-
 .btn-default {
     color: var(--edit-color);
+
+}
+
+.btn-default:hover {
+    color: #000000;
 }
 
 /* Table END */
@@ -215,6 +219,10 @@ tr:nth-child(4n-1) {
 .modal-header {
     background-color: var(--navbar-color) !important;
     color: var(--modal-header-color) !important;
+}
+
+.modal-title{
+    font-weight: bold;
 }
 
 .modal-dialog {
