@@ -48,6 +48,8 @@ namespace Esdms.Controllers.ExpertiseFold
             foreach (var field in opts.fields)
                 field.sortable = true;
 
+            opts.GetFiled("SubjectId").align = "left";
+
             return opts;
         }
 
