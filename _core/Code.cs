@@ -27,5 +27,20 @@ namespace Esdms
 
             return result;
         }
+
+        /// <summary>
+        /// 取得年度
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<KeyValuePair<string, object>> GetYaer()
+        {
+            IEnumerable<KeyValuePair<string, object>> result = new List<KeyValuePair<string, object>>();
+            for (int i = DateTime.Now.Year; i >= 2020; i--)
+            {
+                result = result.Append(new KeyValuePair<string, object>(i.ToString(), i.ToString() + "年度"));
+            }
+
+            return result;
+        }
     }
 }
