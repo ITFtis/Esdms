@@ -19,6 +19,23 @@ namespace Esdms.Controllers.ExpertiseFold
             return View();
         }
 
+        protected override IQueryable<Subject> BeforeIQueryToPagedList(IQueryable<Subject> iquery, params KeyValueParams[] paras)
+        {
+            KeyValueParams ksort = paras.FirstOrDefault((KeyValueParams s) => s.key == "sort");
+            KeyValueParams korder = paras.FirstOrDefault((KeyValueParams s) => s.key == "order");
+            //分頁排序
+            if (ksort.value != null && korder.value != null)
+            {
+            }
+            else
+            {
+                //預設排序                
+                iquery = iquery.OrderBy(a => a.Sort);
+            }
+
+            return base.BeforeIQueryToPagedList(iquery, paras);
+        }
+
         protected override void AddDBObject(IModelEntity<Subject> dbEntity, IEnumerable<Subject> objs)
         {
             base.AddDBObject(dbEntity, objs);
@@ -49,6 +66,7 @@ namespace Esdms.Controllers.ExpertiseFold
                 field.sortable = true;
 
             opts.GetFiled("Sort").visible = true;
+            opts.GetFiled("Sort").align = "left";
 
             return opts;
         }
