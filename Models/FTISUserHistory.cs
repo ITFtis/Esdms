@@ -23,7 +23,7 @@ namespace Esdms.Models
 
         [Display(Name = "身分代碼")]
         [ColumnDef(ColSize = 3)]
-        [StringLength(10)]
+        [StringLength(13)]
         public string PId { get; set; }
 
         [ColumnDef(Display = "部門", EditType = EditType.Select, SelectItemsClassNamespace = DepartmentSelectItems.AssemblyQualifiedName, Filter = true, 

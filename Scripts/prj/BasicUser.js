@@ -76,7 +76,12 @@
         var remind = '<span class="text-danger fw-lighter pull-right">格式(0912******)</span>';
         $(remind).appendTo($p3);
 
-        if (!isAdd) {
+        if (isAdd) {
+            //新增隱藏身分代碼, 由Controler(Add)產出
+            $('.modal-dialog [data-field="PId"]').hide();
+            $('.modal-dialog [data-fn="PId"]').val('-');
+        }
+        else {            
             //主表新增集合沒資料(預設集合)
             var iniObj = { PId: row.PId };
 

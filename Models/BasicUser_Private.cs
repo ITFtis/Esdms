@@ -18,7 +18,7 @@ namespace Esdms.Models
         [Key]
         [Display(Name = "身分代碼")]
         [ColumnDef(ColSize = 3)]
-        [StringLength(10)]
+        [StringLength(13)]
         public string PId { get; set; }
 							
         [Display(Name = "手機號碼")]

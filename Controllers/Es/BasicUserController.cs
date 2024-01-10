@@ -86,6 +86,7 @@ namespace Esdms.Controllers.Es
 
             var f = objs.First();
 
+            f.PId = GenerateHelper.FId(dbEntity.GetAll().ToList());
             f.BDate = DateTime.Now;
             f.BFno = Dou.Context.CurrentUserBase.Id;
             f.BName = Dou.Context.CurrentUserBase.Name;
