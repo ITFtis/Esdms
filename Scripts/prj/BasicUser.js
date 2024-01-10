@@ -63,6 +63,19 @@
         $container.find('.modal-footer button').hide();
         $container.find('.modal-footer').find('.btn-primary').show();
 
+        //加提示字
+        var $p1 = $('div[data-field=OfficePhone]').find('label');
+        var remind = '<span class="text-danger fw-lighter pull-right">格式(02-23****** #123)</span>';
+        $(remind).appendTo($p1);
+
+        var $p2 = $('div[data-field=Fax]').find('label');
+        var remind = '<span class="text-danger fw-lighter pull-right">格式(02-23****** #123)</span>';
+        $(remind).appendTo($p2);
+
+        var $p3 = $('div[data-field=PrivatePhone]').find('label');
+        var remind = '<span class="text-danger fw-lighter pull-right">格式(0912******)</span>';
+        $(remind).appendTo($p3);
+
         if (!isAdd) {
             //主表新增集合沒資料(預設集合)
             var iniObj = { PId: row.PId };
@@ -440,20 +453,7 @@
             ////douHelper.setFieldsDefaultAttribute(_opt.fields);//給預設屬性
 
             _opt.afterCreateEditDataForm = function ($container, row) {
-
-                //加提示字
-                var $p1 = $('div[data-field=OfficePhone]').find('label');
-                var remind = '<span class="text-danger fw-lighter pull-right">格式(02-23****** #123)</span>';
-                $(remind).appendTo($p1);
-
-                var $p2 = $('div[data-field=Fax]').find('label');
-                var remind = '<span class="text-danger fw-lighter pull-right">格式(02-23****** #123)</span>';
-                $(remind).appendTo($p2);
-
-                var $p3 = $('div[data-field=PrivatePhone]').find('label');
-                var remind = '<span class="text-danger fw-lighter pull-right">格式(0912******)</span>';
-                $(remind).appendTo($p3);
-
+                
                 //保留確定按鈕
                 $container.find('.modal-footer button').hide();
                 $container.find('.modal-footer').find('.btn-primary').show();
