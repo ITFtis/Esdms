@@ -78,7 +78,7 @@
 
         //姓名重複判別按鈕        
         var $p4 = $('div[data-field=Name]').find('label');
-        var remind = '<a id="aViewName" href="#" style="text-decoration: none" class="text-danger fw-lighter pull-right">姓名重複判別</a>';
+        var remind = '<span id="aViewName" style="cursor: pointer" href="#" class="badge text-bg-primary fw-lighter pull-right">姓名重複判別</span>';
         $(remind).appendTo($p4);
 
         $("#aViewName").click(function () {            
