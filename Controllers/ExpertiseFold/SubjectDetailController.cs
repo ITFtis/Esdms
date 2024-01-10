@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Esdms.Controllers.ExpertiseFold
 {
-    [Dou.Misc.Attr.MenuDef(Id = "SubjectDetail", Name = "專長領域代碼", MenuPath = "專業項目", Action = "Index", Index = 2, Func = Dou.Misc.Attr.FuncEnum.ALL, AllowAnonymous = false)]
+    [Dou.Misc.Attr.MenuDef(Id = "SubjectDetail", Name = "專長領域", MenuPath = "專長項目", Action = "Index", Index = 2, Func = Dou.Misc.Attr.FuncEnum.ALL, AllowAnonymous = false)]
     public class SubjectDetailController : APaginationModelController<SubjectDetail>
     {
         // GET: SubjectDetail
@@ -49,6 +49,7 @@ namespace Esdms.Controllers.ExpertiseFold
                 field.sortable = true;
 
             opts.GetFiled("SubjectId").align = "left";
+            opts.GetFiled("Sort").visible = true;
 
             return opts;
         }

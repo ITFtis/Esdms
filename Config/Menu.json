@@ -80,9 +80,9 @@
     "TypeId": "Dou.Misc.Attr.MenuDefAttribute, Dou, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null"
   },
   {
-    "Name": "專長類別代碼",
-    "MenuPath": "專業項目",
-    "FullMenuPath": "專業項目/專長類別代碼",
+    "Name": "專長類別",
+    "MenuPath": "專長項目",
+    "FullMenuPath": "專長項目/專長類別",
     "Index": 1,
     "Desc": null,
     "AllowAnonymous": false,
@@ -180,9 +180,9 @@
     "TypeId": "Dou.Misc.Attr.MenuDefAttribute, Dou, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null"
   },
   {
-    "Name": "專長領域代碼",
-    "MenuPath": "專業項目",
-    "FullMenuPath": "專業項目/專長領域代碼",
+    "Name": "專長領域",
+    "MenuPath": "專長項目",
+    "FullMenuPath": "專長項目/專長領域",
     "Index": 2,
     "Desc": null,
     "AllowAnonymous": false,
@@ -200,9 +200,9 @@
     "TypeId": "Dou.Misc.Attr.MenuDefAttribute, Dou, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null"
   },
   {
-    "Name": "專業項目",
+    "Name": "專長項目",
     "MenuPath": "",
-    "FullMenuPath": "專業項目",
+    "FullMenuPath": "專長項目",
     "Index": 3,
     "Desc": null,
     "AllowAnonymous": false,
@@ -211,11 +211,11 @@
     "IsOnlyPath": true,
     "IsPromptUI": false,
     "FromAppend": false,
-    "Target": "專業項目",
+    "Target": "專長項目",
     "ActionController": null,
     "Action": null,
     "ExportCSV": false,
-    "Id": "專業項目",
+    "Id": "專長項目",
     "Remark": null,
     "TypeId": "Dou.Misc.Attr.MenuDefAttribute, Dou, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null"
   },

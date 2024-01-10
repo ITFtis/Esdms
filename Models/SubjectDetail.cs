@@ -11,7 +11,7 @@ using System.Web;
 namespace Esdms.Models
 {
     /// <summary>
-    /// 科目代碼
+    /// 專長領域(D)
     /// </summary>
     [Table("SubjectDetail")]
     public class SubjectDetail
