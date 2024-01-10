@@ -25,6 +25,8 @@ namespace Esdms.Controllers.Es
         protected override IQueryable<BasicUser> BeforeIQueryToPagedList(IQueryable<BasicUser> iquery, params KeyValueParams[] paras)
         {
             var DuplicateName = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "DuplicateName");
+            var SubjectId = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "SubjectId");
+            var SubjectDetailId = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "SubjectDetailId");
             var strExpertises = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "strExpertises");
 
             //是否重複查詢
@@ -47,6 +49,21 @@ namespace Esdms.Controllers.Es
 
                 iquery = iquery.Where(a => v.Any(b => b.Name == a.Name));                
                 iquery = iquery.OrderBy(a => a.Name);                
+            }
+
+            //專長類別查詢(M 下拉) 虛擬欄位
+            if (SubjectId != null)
+            {
+                var enumerable = iquery.AsEnumerable();                
+                enumerable = enumerable.Where(a => a.Expertises.Any(b => b.SubjectId.ToString() == SubjectId));                
+                iquery = enumerable.AsQueryable();                
+            }
+            //專長領域查詢(D 下拉) 虛擬欄位
+            if (SubjectDetailId != null)
+            {
+                var enumerable = iquery.AsEnumerable();
+                enumerable = enumerable.Where(a => a.Expertises.Any(b => b.SubjectDetailId.ToString() == SubjectDetailId));
+                iquery = enumerable.AsQueryable();
             }
 
             //專長領域查詢(文字) 虛擬欄位
@@ -75,7 +92,9 @@ namespace Esdms.Controllers.Es
             options.GetFiled("Name").visible = true;
             options.GetFiled("Position").visible = true;
             //options.GetFiled("BDate").visible = true;
-            options.GetFiled("BName").visible = true;
+            options.GetFiled("BName").visible = true;            
+            options.GetFiled("SubjectId").filter = true;
+            options.GetFiled("SubjectDetailId").filter = true;
             options.GetFiled("strExpertises").visible = true;
             options.GetFiled("strExpertises").filter = true;
 

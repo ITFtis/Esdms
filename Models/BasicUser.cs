@@ -135,12 +135,7 @@ namespace Esdms.Models
         [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
         [StringLength(50)]
         public string Recommender { get; set; }
-
-        [Display(Name = "重覆姓名")]
-        [ColumnDef(Visible = false, VisibleEdit = false,
-                Filter = true, EditType = EditType.Select, SelectItems = "{\"Y\":\"是\",\"N\":\"否\"}")]
-        public string DuplicateName { get; }
-
+        
         //個人資料
         [ColumnDef(Visible = false, VisibleEdit = false)]
         public virtual BasicUser_Private BasicUser_Private 
@@ -201,6 +196,18 @@ namespace Esdms.Models
             }
         }
 
+        //虛擬欄位 SubjectId
+        [Display(Name = "專長類別")]
+        [ColumnDef(EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.SubjectSelectItems.AssemblyQualifiedName,
+            SelectGearingWith = "SubjectDetailId,SubjectId,true", ColSize = 3)]
+        public int? SubjectId { get; }
+
+        //虛擬欄位 SubjectDetailId
+        [Display(Name = "專長領域")]
+        [ColumnDef(EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.SubjectDetailSelectItems.AssemblyQualifiedName,
+            ColSize = 3)]
+        public int? SubjectDetailId { get; }
+
         //虛擬欄位 strExpertises
         [Display(Name = "專長")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
@@ -235,6 +242,12 @@ namespace Esdms.Models
                 return string.Join("</br>", tmp.Select(a => a.str));
             }
         }
+
+        //虛擬欄位 DuplicateName
+        [Display(Name = "重覆姓名")]
+        [ColumnDef(Visible = false, VisibleEdit = false,
+                Filter = true, EditType = EditType.Select, SelectItems = "{\"Y\":\"是\",\"N\":\"否\"}")]
+        public string DuplicateName { get; }
     }
 
     public class BasicUserNameSelectItems : Dou.Misc.Attr.SelectItemsClass
