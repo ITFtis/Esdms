@@ -76,12 +76,30 @@
         var remind = '<span class="text-danger fw-lighter pull-right">格式(0912******)</span>';
         $(remind).appendTo($p3);
 
+        //姓名重複判別按鈕        
+        var $p4 = $('div[data-field=Name]').find('label');
+        var remind = '<a id="aViewName" href="#" style="text-decoration: none" class="text-danger fw-lighter pull-right">姓名重複判別</a>';
+        $(remind).appendTo($p4);
+
+        $("#aViewName").click(function () {            
+            var PId = $('[data-fn="PId"]').val();
+            var Name = $('[data-fn="Name"]').val();
+            var msg = ExistName(PId, Name);
+
+            if (msg != '') {
+                jspAlertMsg($("body"), { autoclose: 5000, content: msg, classes: 'modal-sm' }, null);
+            }
+            else {
+                jspAlertMsg($("body"), { autoclose: 3000, content: "姓名尚未重覆", classes: 'modal-sm' }, null);
+            }
+        });            
+
         if (isAdd) {
             //新增隱藏身分代碼, 由Controler(Add)產出
             $('.modal-dialog [data-field="PId"]').hide();
             $('.modal-dialog [data-fn="PId"]').val('-');
         }
-        else {            
+        else {
             //主表新增集合沒資料(預設集合)
             var iniObj = { PId: row.PId };
 
@@ -275,7 +293,7 @@
                 //互動訊息
                 var msg = '資料異動(' + $_nowTable.instance.settings.title + ')項目：' + '</br>'
                 msg += '<ul>';
-                $.each(isChangeText, function (index, value) {                    
+                $.each(isChangeText, function (index, value) {
                     msg += '<li class="mt-2">' + value + '</li>';
                 })
                 msg += '</ul>';
@@ -366,7 +384,7 @@
             var Name = $('.field-content [data-fn="Name"]').val();
             var msg = ExistName(PId, Name);
 
-            if (msg != '') {                
+            if (msg != '') {
                 jspConfirmYesNo($("body"), { content: msg }, function (confrim) {
                     if (confrim) {
                         //確定
@@ -386,11 +404,11 @@
             var Name = $('.field-content [data-fn="Name"]').val();
             var msg = ExistName(PId, Name);
 
-            if (msg) {                                
+            if (msg) {
                 jspConfirmYesNo($("body"), { content: msg }, function (confrim) {
                     if (confrim) {
                         //確定儲存
-                        if (id_toTab == undefined) {                            
+                        if (id_toTab == undefined) {
                             transactionDouClientDataToServer(row, $.AppConfigOptions.baseurl + 'BasicUser/Update', callback);
                         }
                         else {
@@ -415,7 +433,7 @@
                         id_toTab = undefined;
                     });
                 }
-            }            
+            }
         };
 
     douoptions.afterUpdateServerData = function (row, callback) {
@@ -458,7 +476,7 @@
             ////douHelper.setFieldsDefaultAttribute(_opt.fields);//給預設屬性
 
             _opt.afterCreateEditDataForm = function ($container, row) {
-                
+
                 //保留確定按鈕
                 $container.find('.modal-footer button').hide();
                 $container.find('.modal-footer').find('.btn-primary').show();
@@ -509,7 +527,7 @@
 
             //實體Dou js                                
             $_d1Table = $_d1EditDataContainer.douTable(_opt);
-        });        
+        });
     }
 
     function SetDouDa4(datas, PId) {
@@ -610,7 +628,7 @@
             _opt.datas = datas;
 
             _opt.editformSize = { minWidth: 700 };
-            _opt.beforeCreateEditDataForm = function (row, callback) {                
+            _opt.beforeCreateEditDataForm = function (row, callback) {
                 row.PId = PId;
 
                 callback();
@@ -650,7 +668,7 @@
             $_d8Table = $_d8EditDataContainer.douTable(_opt);
         });
     };
-
+    
     function ExistName(PId, Name) {
 
         var result = '';
