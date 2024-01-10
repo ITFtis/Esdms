@@ -31,8 +31,14 @@ namespace Esdms.Models
         [StringLength(2)]
         public string DCode { get; set; }
 
+        [Display(Name = "年度")]
+        [ColumnDef(EditType = EditType.Select,
+            Filter = true, SelectItemsClassNamespace = Esdms.GetYaerSelectItems.AssemblyQualifiedName, 
+            ColSize = 3)]
+        public int? Year { get; set; }
+
         [Display(Name = "日期")]
-        [ColumnDef(EditType = EditType.Date, ColSize = 3)]
+        [ColumnDef(Visible = false, VisibleEdit = false, EditType = EditType.Date, ColSize = 3)]
         public DateTime? Date { get; set; }
 
         [Display(Name = "會議")]
