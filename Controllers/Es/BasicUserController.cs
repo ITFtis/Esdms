@@ -25,6 +25,9 @@ namespace Esdms.Controllers.Es
         protected override IQueryable<BasicUser> BeforeIQueryToPagedList(IQueryable<BasicUser> iquery, params KeyValueParams[] paras)
         {
             var DuplicateName = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "DuplicateName");
+            var strExpertises = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "strExpertises");
+
+            //是否重複查詢
             if (DuplicateName != null)
             {
                 var v = iquery.GroupBy(a => a.Name)
@@ -44,6 +47,14 @@ namespace Esdms.Controllers.Es
 
                 iquery = iquery.Where(a => v.Any(b => b.Name == a.Name));                
                 iquery = iquery.OrderBy(a => a.Name);                
+            }
+
+            //專長領域查詢(文字) 虛擬欄位
+            if (strExpertises != null)
+            {
+                var enumerable = iquery.AsEnumerable();
+                enumerable = enumerable.Where(a => a.strExpertises.Contains(strExpertises));
+                iquery = enumerable.AsQueryable();
             }
 
             return base.BeforeIQueryToPagedList(iquery, paras);
@@ -66,6 +77,7 @@ namespace Esdms.Controllers.Es
             //options.GetFiled("BDate").visible = true;
             options.GetFiled("BName").visible = true;
             options.GetFiled("strExpertises").visible = true;
+            options.GetFiled("strExpertises").filter = true;
 
             options.ctrlFieldAlign = "left";
             options.editformWindowStyle = "modal";

@@ -67,15 +67,13 @@ namespace Esdms.Models
         public string Fax { get; set; }
 
         [Display(Name = "(辦公)縣市")]
-        [ColumnDef(Filter = true,
-            EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.CitySelectItems.AssemblyQualifiedName,
+        [ColumnDef(EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.CitySelectItems.AssemblyQualifiedName,
             SelectGearingWith = "ZIP,CityCode,true", ColSize = 3)]
         [StringLength(6)]
         public string CityCode { get; set; }        
 
         [Display(Name = "(辦公)鄉鎮市區")]
-        [ColumnDef(Filter = true,
-            EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.TownSelectItems.AssemblyQualifiedName,
+        [ColumnDef(EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.TownSelectItems.AssemblyQualifiedName,
             ColSize = 3)]
         [StringLength(5)]
         public string ZIP { get; set; }
@@ -203,7 +201,7 @@ namespace Esdms.Models
             }
         }
 
-        //虛擬欄位 Expertises
+        //虛擬欄位 strExpertises
         [Display(Name = "專長")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
         public string strExpertises
