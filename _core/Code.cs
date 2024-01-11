@@ -35,7 +35,7 @@ namespace Esdms
         public static IEnumerable<KeyValuePair<string, object>> GetYaer()
         {
             IEnumerable<KeyValuePair<string, object>> result = new List<KeyValuePair<string, object>>();
-            for (int i = DateTime.Now.Year; i >= 2020; i--)
+            for (int i = DateTime.Now.Year - 1911; i >= 110; i--)
             {
                 result = result.Append(new KeyValuePair<string, object>(i.ToString(), i.ToString() + "年度"));
             }
