@@ -82,7 +82,7 @@
             var msg = ExistName(PId, Name);
 
             if (msg != '') {
-                jspAlertMsg($("body"), { autoclose: 5000, content: msg, classes: 'modal-sm' }, null);
+                jspAlertMsg($("body"), { autoclose: 5000, content: msg }, null);
             }
             else {
                 jspAlertMsg($("body"), { autoclose: 3000, content: "姓名尚未重覆", classes: 'modal-sm' }, null);
@@ -667,6 +667,9 @@ function GoEditSpecificData(PId) {
             
             //trigger進入編輯頁
             $('.bootstrap-table.basicusercontroller').find('td .btn-update-data-manager').trigger('click');
+
+            //(alert訊息需自行觸發)trigger dialog button-close
+            $('.modal-dialog .btn-close').trigger('click');
         },
         complete: function () {
             helper.misc.hideBusyIndicator();
