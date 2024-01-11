@@ -91,8 +91,9 @@
 
         if (isAdd) {
             //新增隱藏身分代碼, 由Controler(Add)產出
-            $('.modal-dialog [data-field="PId"]').hide();
-            $('.modal-dialog [data-fn="PId"]').val('-');
+            //$('.modal-dialog [data-field="PId"]').hide();
+            $('.modal-dialog [data-fn="PId"]').prop("disabled", true);
+            $('.modal-dialog [data-fn="PId"]').val('--系統產出--');
         }
         else {
             //主表新增集合沒資料(預設集合)
