@@ -103,7 +103,10 @@ namespace Esdms.Controllers.Es
             options.editformWindowClasses = "modal-xl";
             options.editformSize.height = "fixed";
             options.editformSize.width = "auto";
-            
+
+            options.GetFiled("OfficeAddress").colsize = 6;
+            options.GetFiled("PAddress").colsize = 6;
+
             //共用頁面
             options.editformWindowStyle = "showEditformOnly";
 
@@ -145,11 +148,6 @@ namespace Esdms.Controllers.Es
             //DB沒關聯
             var dbContext = new EsdmsModelContextExt();
 
-            if (obj.BasicUser_Private != null)
-            {
-                Dou.Models.DB.IModelEntity<BasicUser_Private> basicUser_Private = new Dou.Models.DB.ModelEntity<BasicUser_Private>(dbContext);
-                basicUser_Private.Delete(obj.BasicUser_Private);                
-            }
             if (obj.Expertises != null)
             {
                 Dou.Models.DB.IModelEntity<Expertise> expertise = new Dou.Models.DB.ModelEntity<Expertise>(dbContext);

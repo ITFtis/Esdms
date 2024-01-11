@@ -156,7 +156,6 @@
     <Compile Include="Constant.cs" />
     <Compile Include="Controllers\Es\BasicUserController.cs" />
     <Compile Include="Controllers\Es\BasicUser_LicenseController.cs" />
-    <Compile Include="Controllers\Es\BasicUser_PrivateController.cs" />
     <Compile Include="Controllers\Es\ExpertiseController.cs" />
     <Compile Include="Controllers\Es\FTISUserHistoryController.cs" />
     <Compile Include="Controllers\Es\Fun_BasicUserPIdController.cs" />

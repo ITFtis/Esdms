@@ -35,17 +35,12 @@
 
     douoptions.title = '基本資料';
 
-    var $_d1EditDataContainer = undefined;      //Da1s編輯的容器
-
-    var $_d1Table = undefined;  //Da1s Dou實體
-
     //主表(EmpData) 基本資料
     douoptions.afterCreateEditDataForm = function ($container, row) {
 
         var isAdd = JSON.stringify(row) == '{}';
 
         var $_oform = $("#_tabs");
-        $_d1EditDataContainer = $('<div>').appendTo($_oform.parent());
         $_d4EditDataContainer = $('<table>').appendTo($_oform.parent());
         //////意見
         ////$_d5EditDataContainer = $('<table>').appendTo($_oform.parent());
@@ -103,12 +98,6 @@
             //主表新增集合沒資料(預設集合)
             var iniObj = { PId: row.PId };
 
-            //1-1 個人資料
-            if (row.BasicUser_Private == undefined) {
-                row.BasicUser_Private = iniObj;
-            }
-            SetDouDa1(row.BasicUser_Private);
-
             //1-n 專長
             SetDouDa4(row.Expertises, oPId);
 
@@ -132,8 +121,8 @@
 
 
         helper.bootstrap.genBootstrapTabpanel($_d4EditDataContainer.parent(), undefined, undefined,
-            ['基本資料', '個人資料', '專長', '專家參與紀錄'],
-            [$_oform, $_d1EditDataContainer, $_d4EditDataContainer, $_d7EditDataContainer]);
+            ['基本資料', '專長', '專家參與紀錄'],
+            [$_oform, $_d4EditDataContainer, $_d7EditDataContainer]);
 
         //點選的Tab
         var jTabToggle = $('#_tabs').closest('div[class=tab-content]').siblings().find('a[data-toggle="tab"]');
@@ -183,10 +172,6 @@
             var actTab = $(this).html();
             if (actTab == $_masterTable.instance.settings.title) {
                 $_nowTable = $_masterTable;
-                $_nowTabUI = $('#_tabs').closest('div[class=tab-content]').find('.show');
-            }
-            else if (actTab == $_d1Table.instance.settings.title) {
-                $_nowTable = $_d1Table;
                 $_nowTabUI = $('#_tabs').closest('div[class=tab-content]').find('.show');
             }
             else {
@@ -428,9 +413,16 @@
                 }
                 else {
                     transactionDouClientDataToServer(row, $.AppConfigOptions.baseurl + 'BasicUser/Update', function () {
-                        //(啟動)tab切換
-                        $('a[href="' + id_toTab + '"]').tab('show');
-                        id_toTab = undefined;
+
+                        //不做callback，避免tab切換，互相影響
+                        jspAlertMsg($("body"), { autoclose: 2000, content: '基本資料更新成功!!', classes: 'modal-sm' },
+                            function () {
+                                //(啟動)tab切換
+                                $('a[href="' + id_toTab + '"]').tab('show');
+                                id_toTab = undefined;
+
+                                $('html,body').animate({ scrollTop: $_masterTable.offset().top }, "show");
+                            });                        
                     });
                 }
             }
@@ -458,77 +450,6 @@
         $_masterTable.DouEditableTable("editSpecificData", row);
 
     }); //初始dou table
-    function SetDouDa1(datas) {
-        $.getJSON($.AppConfigOptions.baseurl + 'BasicUser_Private/GetDataManagerOptionsJson', function (_opt) { //取model option
-
-            _opt.title = '個人資料';
-
-            //取消自動抓後端資料
-            _opt.tableOptions.url = undefined;
-
-            datas = datas ? [datas] : [{}];
-            _opt.datas = datas;
-
-            _opt.singleDataEdit = true;
-            _opt.editformWindowStyle = $.editformWindowStyle.showEditformOnly;
-
-            //////初始options預設值
-            ////douHelper.setFieldsDefaultAttribute(_opt.fields);//給預設屬性
-
-            _opt.afterCreateEditDataForm = function ($container, row) {
-
-                //保留確定按鈕
-                $container.find('.modal-footer button').hide();
-                $container.find('.modal-footer').find('.btn-primary').show();
-
-                //////加提示字
-                ////var $p1 = $('div[data-field=da01]').find('label');
-                ////var remind = '<span class="text-danger fw-lighter pull-right">同護照英文姓名</span>';
-                ////$(remind).appendTo($p1);
-
-                ////var $p3 = $('div[data-field=da06]').find('label');
-                ////var remind = '<span class="text-danger fw-lighter pull-right">請取整數</span>';
-                ////$(remind).appendTo($p3);
-
-                ////var $p4 = $('div[data-field=da07]').find('label');
-                ////var remind = '<span class="text-danger fw-lighter pull-right">請取整數</span>';
-                ////$(remind).appendTo($p4);
-
-                ////var $p5 = $('div[data-field=da15]').find('label');
-                ////var remind = '<span class="text-danger fw-lighter pull-right">限填數字</span>';
-                ////$(remind).appendTo($p5);
-
-                ////var $p6 = $('div[data-field=da24]').find('label');
-                ////var remind = '<span class="text-danger fw-lighter pull-right">限500字(Ex: 空氣污染防制技術、廢棄物資源化、薄膜水處理技術…)</span>';
-                ////$(remind).appendTo($p6);
-
-                ////var $p7 = $('div[data-field=ProfilePhoto]').find('label');
-                ////var remind = '<span class="text-danger fw-lighter ms-1">可修改無法刪除</span>';
-                ////$(remind).appendTo($p7);
-            }
-
-            _opt.afterUpdateServerData = _opt.afterAddServerData = function (row, callback) {
-                jspAlertMsg($("body"), { autoclose: 2000, content: '個人資料更新成功!!', classes: 'modal-sm' },
-                    function () {
-                        $('html,body').animate({ scrollTop: $_d1Table.offset().top }, "show");
-                    });
-
-                //(no callback)更新dou的rowdata
-                $_d1Table.instance.updateDatas(row);
-
-                if (id_toTab != null) {
-                    //(啟動)tab切換
-                    $('a[href="' + id_toTab + '"]').tab('show');
-                    id_toTab = undefined;
-                }
-
-                ////callback();
-            }
-
-            //實體Dou js                                
-            $_d1Table = $_d1EditDataContainer.douTable(_opt);
-        });
-    }
 
     function SetDouDa4(datas, PId) {
         $.getJSON($.AppConfigOptions.baseurl + 'Expertise/GetDataManagerOptionsJson', function (_opt) { //取model option

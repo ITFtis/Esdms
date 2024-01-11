@@ -22,7 +22,8 @@ namespace Esdms.Models
         public virtual DbSet<ProjectUnit> ProjectUnit { get; set; }
         public virtual DbSet<Project> Project { get; set; }        
         public virtual DbSet<BasicUser> BasicUser { get; set; }       
-        public virtual DbSet<BasicUser_Private> BasicUser_Private { get; set; }
+        //與基本資料合併
+        //public virtual DbSet<BasicUser_Private> BasicUser_Private { get; set; }
         public virtual DbSet<Expertise> Expertise { get; set; }       
         public virtual DbSet<UserHistoryOpinion> UserHistoryOpinion { get; set; }        
         public virtual DbSet<Resume> Resume { get; set; }        
