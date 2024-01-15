@@ -452,6 +452,7 @@
 
     }); //初始dou table
 
+    //專長
     function SetDouDa4(datas, PId) {
         $.getJSON($.AppConfigOptions.baseurl + 'Expertise/GetDataManagerOptionsJson', function (_opt) { //取model option
 
@@ -557,6 +558,7 @@
         });
     };
 
+    //意見
     function SetDouDa5(datas, PId) {
         $.getJSON($.AppConfigOptions.baseurl + 'UserHistoryOpinion/GetDataManagerOptionsJson', function (_opt) { //取model option
 
@@ -580,6 +582,7 @@
         });
     };
 
+    //經歷
     function SetDouDa6(datas, PId) {
         $.getJSON($.AppConfigOptions.baseurl + 'Resume/GetDataManagerOptionsJson', function (_opt) { //取model option
 
@@ -603,6 +606,7 @@
         });
     };
 
+    //專家參與紀錄
     function SetDouDa7(datas, PId) {
         $.getJSON($.AppConfigOptions.baseurl + 'FTISUserHistory/GetDataManagerOptionsJson', function (_opt) { //取model option
 
