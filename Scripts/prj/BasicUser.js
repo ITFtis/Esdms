@@ -494,7 +494,7 @@
                 var isAdd = JSON.stringify(row) == '{}';
                 
                 ///多選
-                var SubjectDetailId = $('.modal-dialog').find("[data-fn=SubjectDetailId]")
+                var SubjectDetailId = $('.expertisecontroller .modal-dialog').find("[data-fn=SubjectDetailId]")
                     .attr('multiple', true).selectpicker({
                         actionsBox: true,
                         selectAllText: '全選',
@@ -505,8 +505,11 @@
                         }
                     });
 
-                var $_modal = $('.expertisecontroller  .modal-dialog');
-                var editformSize = $_d4Table.instance.settings.editformSize;
+                $('.expertisecontroller .modal-dialog').find('[data-fn="SubjectId"] option[value=""]').remove();
+
+                $('.expertisecontroller .modal-dialog').find("[data-fn=SubjectId]").change(function () {
+                    ResetSelectpickerSubjectId();
+                });
             }
 
             //實體Dou js
@@ -659,7 +662,13 @@
         return result;
     }
 
-    
+    function ResetSelectpickerSubjectId() {
+        var SubjectId = $('.modal-dialog').find("[data-fn=SubjectId]").val();
+
+        var $ele = $('.modal-dialog').find("[data-fn=SubjectDetailId]");
+        $ele.find('[data-subjectid!="' + SubjectId + '"]').hide();
+        $ele.selectpicker('refresh').selectpicker('val', '');
+    }
 })
 
 //切換至PId
