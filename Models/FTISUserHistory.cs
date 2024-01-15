@@ -31,6 +31,12 @@ namespace Esdms.Models
         [StringLength(2)]
         public string DCode { get; set; }
 
+        [Display(Name = "會議")]
+        [ColumnDef(Filter = true,
+            EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.ActivityCategorySelectItems.AssemblyQualifiedName,
+            ColSize = 3)]
+        public int? ActivityCategoryId { get; set; }
+
         [Display(Name = "年度")]
         [ColumnDef(EditType = EditType.Select,
             Filter = true, SelectItemsClassNamespace = Esdms.GetYaerSelectItems.AssemblyQualifiedName, 
@@ -39,13 +45,7 @@ namespace Esdms.Models
 
         [Display(Name = "日期")]
         [ColumnDef(Visible = false, VisibleEdit = false, EditType = EditType.Date, ColSize = 3)]
-        public DateTime? Date { get; set; }
-
-        [Display(Name = "會議")]
-        [ColumnDef(Filter = true,
-            EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.ActivityCategorySelectItems.AssemblyQualifiedName,
-            ColSize = 3)]
-        public int? ActivityCategoryId { get; set; }
+        public DateTime? Date { get; set; }        
 
         [Display(Name = "專案")]
         [ColumnDef(Filter = true,
@@ -65,7 +65,7 @@ namespace Esdms.Models
                 if (allData == null)
                 {
                     Dou.Models.DB.IModelEntity<FTISUserHistory> modle = new Dou.Models.DB.ModelEntity<FTISUserHistory>(new EsdmsModelContextExt());
-                    allData = modle.GetAll().ToArray();
+                    allData = modle.GetAll().OrderByDescending(a => a.Id).ToArray();
 
                     DouHelper.Misc.AddCache(allData, key);
                 }

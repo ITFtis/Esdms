@@ -622,11 +622,85 @@
             };
 
             _opt.afterCreateEditDataForm = function ($container, row) {
+
+                var isAdd = row.Id == null;
+
+                $('.ftisuserhistorycontroller .modal-dialog').find('[data-fn="ActivityCategoryId"] option[value=""]').remove();
+
+                //會議：新增－多選。修改－單選
+                if (isAdd) {
+                    ///多選
+                    var ActivityCategoryId = $('.ftisuserhistorycontroller .modal-dialog').find("[data-fn=ActivityCategoryId]")
+                        .attr('multiple', true).selectpicker({
+                            noneSelectedText: '請挑選會議',
+                            actionsBox: true,
+                            selectAllText: '全選',
+                            deselectAllText: '取消已選',
+                            selectedTextFormat: 'count > 1',
+                            countSelectedText: function (sc, all) {
+                                return '會議:挑' + sc + '個'
+                            }
+                        });
+                    
+                    ActivityCategoryId.selectpicker('deselectAll');
+                }
+
                 //加提示字
                 var $p1 = $('div[data-field=Date]').find('label');
                 var remind = '<span class="text-danger fw-lighter pull-right">非必填</span>';
                 $(remind).appendTo($p1);
             };
+
+            _opt.addServerData =
+                function (row, callback) {
+                    var _filed = douHelper.getField($_d7Table.instance.settings.fields, "ActivityCategoryId");
+                    var objs = _filed.editFormtter.getValue.call(_filed, $('.ftisuserhistorycontroller [data-fn="ActivityCategoryId"]'));
+
+                    var rows = [];
+
+
+                    $.each(objs, function (index, value) {
+                        var nrow = jQuery.extend({}, row);
+                        nrow.ActivityCategoryId = this;
+                        rows.push(nrow);
+                    });
+
+                    //沒選會議
+                    if (rows.length == 0) {
+                        rows.push(row);
+                    }                    
+
+                    transactionDouClientDataToServer(rows, $.AppConfigOptions.baseurl + 'FTISUserHistory/Add', function () {
+
+                        //取消(pop window)
+                        $('.ftisuserhistorycontroller.data-edit-jspanel').find('.modal-footer .btn.btn-default').first().trigger('click');
+
+                        jspAlertMsg($("body"), { autoclose: 2000, content: "會議資料新增成功" },
+                            function () {
+                                //重新組Dou清單頁
+                                helper.misc.showBusyIndicator();
+                                $.ajax({
+                                    url: app.siteRoot + 'BasicUser/GetBasicUser',
+                                    datatype: "json",
+                                    type: "Get",
+                                    data: { PId: PId },
+                                    async: false,
+                                    success: function (datas) {
+                                        $_d7EditDataContainer.douTable('destroy');
+                                        SetDouDa7(datas[0].FTISUserHistorys, PId);
+                                    },
+                                    complete: function () {
+                                        helper.misc.hideBusyIndicator();
+                                    },
+                                    error: function (xhr, status, error) {
+                                        var err = eval("(" + xhr.responseText + ")");
+                                        alert(err.Message);
+                                        helper.misc.hideBusyIndicator();
+                                    }
+                                });
+                            });
+                    });
+                };
 
             //實體Dou js
             $_d7Table = $_d7EditDataContainer.douTable(_opt);
@@ -702,6 +776,7 @@
         return result;
     }
 
+    //Reset 專長
     function ResetSelectpickerSubjectId() {
         var SubjectId = $('.modal-dialog').find("[data-fn=SubjectId]").val();
 

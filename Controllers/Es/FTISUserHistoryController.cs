@@ -51,7 +51,7 @@ namespace Esdms.Controllers.Es
             opts.GetFiled("PId").colsize = 6;
             opts.GetFiled("DCode").colsize = 6;
             opts.GetFiled("Year").colsize = 6;
-            opts.GetFiled("ActivityCategoryId").colsize = 6;
+            opts.GetFiled("ActivityCategoryId").colsize = 12;
             opts.GetFiled("ProjectId").colsize = 12;            
 
             return opts;
