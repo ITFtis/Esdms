@@ -487,8 +487,30 @@
             ////    $(remind).appendTo($p2);
             ////};
 
+            
+
+            _opt.afterCreateEditDataForm = function ($container, row) {
+
+                var isAdd = JSON.stringify(row) == '{}';
+                
+                ///多選
+                var SubjectDetailId = $('.modal-dialog').find("[data-fn=SubjectDetailId]")
+                    .attr('multiple', true).selectpicker({
+                        actionsBox: true,
+                        selectAllText: '全選',
+                        deselectAllText: '取消已選',
+                        selectedTextFormat: 'count > 1',
+                        countSelectedText: function (sc, all) {
+                            return '專長:挑' + sc + '個'
+                        }
+                    });
+
+                var $_modal = $('.expertisecontroller  .modal-dialog');
+                var editformSize = $_d4Table.instance.settings.editformSize;
+            }
+
             //實體Dou js
-            $_d4Table = $_d4EditDataContainer.douTable(_opt);
+            $_d4Table = $_d4EditDataContainer.douTable(_opt);            
         });
     };
 
