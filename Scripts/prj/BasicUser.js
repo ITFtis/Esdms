@@ -487,7 +487,41 @@
                         rows.push(nrow);
                     });
 
-                    transactionDouClientDataToServer(rows, $.AppConfigOptions.baseurl + 'Expertise/Add', callback);
+                    if (rows.length == 0) {
+                        alert('尚未挑選專長領域');
+                        return;
+                    }
+
+                    transactionDouClientDataToServer(rows, $.AppConfigOptions.baseurl + 'Expertise/Add', function () {
+
+                        //取消(pop window)
+                        $('.expertisecontroller.data-edit-jspanel').find('.modal-footer .btn.btn-default').first().trigger('click');
+
+                        jspAlertMsg($("body"), { autoclose: 2000, content: "專長資料新增成功" },
+                            function () {
+                                //重新組Dou清單頁
+                                helper.misc.showBusyIndicator();
+                                $.ajax({
+                                    url: app.siteRoot + 'BasicUser/GetBasicUser',
+                                    datatype: "json",
+                                    type: "Get",
+                                    data: { PId: PId },
+                                    async: false,
+                                    success: function (datas) {                                        
+                                        $_d4EditDataContainer.douTable('destroy');
+                                        SetDouDa4(datas[0].Expertises, PId);
+                                    },
+                                    complete: function () {
+                                        helper.misc.hideBusyIndicator();
+                                    },
+                                    error: function (xhr, status, error) {
+                                        var err = eval("(" + xhr.responseText + ")");
+                                        alert(err.Message);
+                                        helper.misc.hideBusyIndicator();
+                                    }
+                                });
+                            });
+                    });
                 };
 
             _opt.afterCreateEditDataForm = function ($container, row) {

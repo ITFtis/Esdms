@@ -54,9 +54,8 @@ namespace Esdms.Models
             {
                 if (allData == null)
                 {
-                    Dou.Models.DB.IModelEntity<Expertise> modle = new Dou.Models.DB.ModelEntity<Expertise>(new EsdmsModelContextExt());
-                    //allData = modle.GetAll().OrderBy(a => a.Rank).ToArray();
-                    allData = modle.GetAll().ToArray();
+                    Dou.Models.DB.IModelEntity<Expertise> modle = new Dou.Models.DB.ModelEntity<Expertise>(new EsdmsModelContextExt());                    
+                    allData = modle.GetAll().OrderBy(a => a.SubjectId).ToArray();
 
                     DouHelper.Misc.AddCache(allData, key);
                 }
