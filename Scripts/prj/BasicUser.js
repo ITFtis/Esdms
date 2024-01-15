@@ -473,43 +473,49 @@
                 callback();
             };
 
-            //_opt.tableOptions.sortName = 'da404';
-            //_opt.tableOptions.sortOrder = 'desc';
+            _opt.addServerData =
+                function (row, callback) {
+                    var _filed = douHelper.getField($_d4Table.instance.settings.fields, "SubjectDetailId");
+                    var objs = _filed.editFormtter.getValue.call(_filed, $('.expertisecontroller [data-fn="SubjectDetailId"]'));
 
-            ////_opt.afterCreateEditDataForm = function ($container, row) {
-            ////    //加提示字
-            ////    var $p1 = $('div[data-field=da404]').find('label');
-            ////    var remind = '<span class="text-danger fw-lighter pull-right">年月(201609)</span>';
-            ////    $(remind).appendTo($p1);
+                    var rows = [];
 
-            ////    var $p2 = $('div[data-field=da405]').find('label');
-            ////    var remind = '<span class="text-danger fw-lighter pull-right">年月(20206)</span>';
-            ////    $(remind).appendTo($p2);
-            ////};
+                    
+                    $.each(objs, function (index, value) {
+                        var nrow = jQuery.extend({}, row);
+                        nrow.SubjectDetailId = this;
+                        rows.push(nrow);
+                    });
 
-            
+                    transactionDouClientDataToServer(rows, $.AppConfigOptions.baseurl + 'Expertise/Add', callback);
+                };
 
             _opt.afterCreateEditDataForm = function ($container, row) {
 
-                var isAdd = JSON.stringify(row) == '{}';
-                
-                ///多選
-                var SubjectDetailId = $('.expertisecontroller .modal-dialog').find("[data-fn=SubjectDetailId]")
-                    .attr('multiple', true).selectpicker({
-                        actionsBox: true,
-                        selectAllText: '全選',
-                        deselectAllText: '取消已選',
-                        selectedTextFormat: 'count > 1',
-                        countSelectedText: function (sc, all) {
-                            return '專長:挑' + sc + '個'
-                        }
-                    });
+                var isAdd = row.Id == null;
 
                 $('.expertisecontroller .modal-dialog').find('[data-fn="SubjectId"] option[value=""]').remove();
+                $('.expertisecontroller .modal-dialog').find('[data-fn="SubjectDetailId"] option[value=""]').remove();
 
-                $('.expertisecontroller .modal-dialog').find("[data-fn=SubjectId]").change(function () {
-                    ResetSelectpickerSubjectId();
-                });
+                //專長領域：新增－多選。修改－單選
+                if (isAdd) {                    
+                    ///多選
+                    var SubjectDetailId = $('.expertisecontroller .modal-dialog').find("[data-fn=SubjectDetailId]")
+                        .attr('multiple', true).selectpicker({
+                            noneSelectedText: '請挑選專長',
+                            actionsBox: true,
+                            selectAllText: '全選',
+                            deselectAllText: '取消已選',
+                            selectedTextFormat: 'count > 1',
+                            countSelectedText: function (sc, all) {
+                                return '專長:挑' + sc + '個'
+                            }
+                        });
+
+                    $('.expertisecontroller .modal-dialog').find("[data-fn=SubjectId]").change(function () {
+                        ResetSelectpickerSubjectId();
+                    });
+                }
             }
 
             //實體Dou js

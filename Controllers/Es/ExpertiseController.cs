@@ -26,8 +26,10 @@ namespace Esdms.Controllers.Es
 
         protected override void AddDBObject(IModelEntity<Expertise> dbEntity, IEnumerable<Expertise> objs)
         {
-            if (!ValidateSave(objs.First(), "Add"))
-                return;
+            //專長類別領域，不可重複
+            objs = objs.Where(a => !GetModelEntity().GetAll().Any(b => b.PId == a.PId 
+                                                        && b.SubjectId == a.SubjectId
+                                                        && b.SubjectDetailId == a.SubjectDetailId)).ToList();
 
             base.AddDBObject(dbEntity, objs);
             Expertise.ResetGetAllDatas();
@@ -35,6 +37,9 @@ namespace Esdms.Controllers.Es
 
         protected override void UpdateDBObject(IModelEntity<Expertise> dbEntity, IEnumerable<Expertise> objs)
         {
+            if (!ValidateSave(objs.First(), "Update"))
+                return;
+
             base.UpdateDBObject(dbEntity, objs);
             Expertise.ResetGetAllDatas();
         }
@@ -68,16 +73,18 @@ namespace Esdms.Controllers.Es
 
             return opts;
         }
-
+        
         private bool ValidateSave(Expertise f, string type)
         {
             bool result = false;
 
             var v = GetModelEntity().GetAll()
-                        .Where(a => a.PId == f.PId && a.SubjectId == f.SubjectId 
+                        .Where(a => a.PId == f.PId && a.SubjectId == f.SubjectId
                             && a.SubjectDetailId == f.SubjectDetailId);
-            if (type == "Add")
-            {                
+            
+            //(Add)使用Linq過濾，不新增
+            if (type == "Update")
+            {
                 if (v.Count() > 0)
                 {
                     string errorMessage = string.Format("專長類別領域，不可重複");
