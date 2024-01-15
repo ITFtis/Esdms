@@ -229,6 +229,14 @@ tr:nth-child(4n-1) {
     margin-top: 1rem !important;
 }
 
+.modal-dialog .dropdown-menu.show {
+    display: contents;
+}
+
+.modal-dialog .dropdown-menu.show .inner.show {
+    background-color: white;
+}
+
 .data-edit-form-group .user-edit-tile,
 .data-edit-form-group .attribute-tile {
     color: var(--navbar-color);
