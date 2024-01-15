@@ -107,6 +107,10 @@ namespace Esdms.Controllers.Es
             options.GetFiled("OfficeAddress").colsize = 6;
             options.GetFiled("PAddress").colsize = 6;
 
+            options.GetFiled("Note").colsize = 12;
+            options.GetFiled("Note").datatype = "textarea";
+            options.GetFiled("Note").textareaheight = 9;
+
             //共用頁面
             options.editformWindowStyle = "showEditformOnly";
 

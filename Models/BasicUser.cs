@@ -116,7 +116,12 @@ namespace Esdms.Models
         [ColumnDef(ColSize = 3)]
         [StringLength(100)]
         public string PAddress { get; set; }
-                
+
+        [Display(Name = "備註")]
+        [ColumnDef(Visible = false, ColSize = 3)]
+        [StringLength(1000)]
+        public string Note { get; set; }
+
         [Display(Name = "國籍")]
         [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
         [StringLength(50)]
