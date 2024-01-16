@@ -35,13 +35,7 @@ namespace Esdms.Models
         [StringLength(50)]
         [Column(TypeName = "nvarchar")]
         [Display(Name = "委辦單位")]
-        public string CommissionedUnit { get; set; }
-
-        [Display(Name = "工務二三階單位")]
-        [ColumnDef(Visible = false, VisibleEdit = false, 
-            Filter = true, Sortable = true, EditType = EditType.Select, 
-            SelectItemsClassNamespace = Esdms.Models.ProjectUnitSelectItems.AssemblyQualifiedName)]        
-        public string AgencyId { get; set; }               
+        public string CommissionedUnit { get; set; }           
 
         [StringLength(50)]
         [ColumnDef(Visible = false, VisibleEdit = false)]

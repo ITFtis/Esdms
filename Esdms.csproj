@@ -168,7 +168,6 @@
     <Compile Include="Controllers\LoggerController.cs" />
     <Compile Include="Controllers\ProjectFold\ActivityCategoryController.cs" />
     <Compile Include="Controllers\ProjectFold\ProjectController.cs" />
-    <Compile Include="Controllers\ProjectFold\ProjectUnitController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SysCode\CategoryController.cs" />
     <Compile Include="Controllers\SysCode\CityController.cs" />
@@ -188,7 +187,6 @@
     <Compile Include="Models\FTISUserHistory.cs" />
     <Compile Include="Models\License.cs" />
     <Compile Include="Models\Project.cs" />
-    <Compile Include="Models\ProjectUnit.cs" />
     <Compile Include="Models\Resume.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Subject.cs" />

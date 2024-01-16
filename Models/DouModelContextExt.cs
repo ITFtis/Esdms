@@ -19,7 +19,6 @@ namespace Esdms.Models
         public virtual DbSet<Subject> Subject { get; set; }
         public virtual DbSet<License> License { get; set; }
         public virtual DbSet<ActivityCategory> ActivityCategory { get; set; }        
-        public virtual DbSet<ProjectUnit> ProjectUnit { get; set; }
         public virtual DbSet<Project> Project { get; set; }        
         public virtual DbSet<BasicUser> BasicUser { get; set; }       
         //與基本資料合併
