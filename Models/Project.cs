@@ -37,12 +37,6 @@ namespace Esdms.Models
         [Display(Name = "委辦單位")]
         public string CommissionedUnit { get; set; }           
 
-        [StringLength(50)]
-        [ColumnDef(Visible = false, VisibleEdit = false)]
-        [Column(TypeName = "nvarchar")]
-        [Display(Name = "執行單位")]
-        public string ExecuteUnit { get; set; }
-
         [Display(Name = "建檔日期")]
         [ColumnDef(VisibleEdit = false, ColSize = 3)]
         public DateTime? BDate { get; set; }
