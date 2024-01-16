@@ -649,6 +649,14 @@
                     ActivityCategoryId.selectpicker('deselectAll');
                 }
 
+                //(下拉)參與紀錄 年度連動專案
+                $('.modal-dialog [data-fn="Year"]').change(function () {
+                    YearGearing();
+                });
+
+                //(下拉)參與紀錄 年度連動專案 ini
+                YearGearing();
+
                 //加提示字
                 var $p1 = $('div[data-field=Date]').find('label');
                 var remind = '<span class="text-danger fw-lighter pull-right">非必填</span>';
@@ -780,13 +788,31 @@
         return result;
     }
 
-    //Reset 專長
+    //專長 Reset
     function ResetSelectpickerSubjectId() {
         var SubjectId = $('.modal-dialog').find("[data-fn=SubjectId]").val();
 
         var $ele = $('.modal-dialog').find("[data-fn=SubjectDetailId]");
         $ele.find('[data-subjectid!="' + SubjectId + '"]').hide();
         $ele.selectpicker('refresh').selectpicker('val', '');
+    }
+
+    //(下拉)參與紀錄 年度連動專案
+    function YearGearing() {        
+        var $select = $('.modal-dialog [data-fn="ProjectId"]').parent().find('datalist');
+        var year = $('.modal-dialog [data-fn="Year"]').val();
+        
+        if (year) {
+            //全關
+            $select.find('option').prop('disabled', true);
+
+            //112年度顯示
+            $select.find('[data-year="' + year + '"]').prop('disabled', false);
+        }
+        else {
+            //全開
+            $select.find('option').prop('disabled', false);
+        }
     }
 })
 
