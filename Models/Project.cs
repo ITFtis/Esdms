@@ -20,18 +20,23 @@ namespace Esdms.Models
         [Display(Name = "Id")]
         [ColumnDef(Visible = false)]
         public int Id { get; set; }
-
-        [StringLength(50)]
-        [Column(TypeName = "nvarchar")]
-        [Display(Name = "委辦單位")]
-        public string CommissionedUnit { get; set; }
+        
+        [Display(Name = "年度")]
+        [ColumnDef(EditType = EditType.Select,
+            Filter = true, SelectItemsClassNamespace = Esdms.GetYaerSelectItems.AssemblyQualifiedName)]
+        public int? Year { get; set; }
 
         [Required]
         [StringLength(50)]
         [Column(TypeName = "nvarchar")]
         [Display(Name = "專案名稱")]
         public string Name { get; set; }
-        
+
+        [StringLength(50)]
+        [Column(TypeName = "nvarchar")]
+        [Display(Name = "委辦單位")]
+        public string CommissionedUnit { get; set; }
+
         [Display(Name = "工務二三階單位")]
         [ColumnDef(Visible = false, VisibleEdit = false, 
             Filter = true, Sortable = true, EditType = EditType.Select, 
