@@ -94,8 +94,9 @@ namespace Esdms.Models
             ProjectIntegrateSelectItems.Reset();
         }
         public override IEnumerable<KeyValuePair<string, object>> GetSelectItems()
-        {
-            return Projects.Select(s => new KeyValuePair<string, object>(s.Id.ToString(), s.Name));
+        {            
+            return Projects.OrderByDescending(a => a.Year)
+                    .Select((s, index) => new KeyValuePair<string, object>(s.Id.ToString(), JsonConvert.SerializeObject(new { v = "(" + s.Year.ToString() + ") " + s.Name, s = index, Year = s.Year })));
         }
     }
 
