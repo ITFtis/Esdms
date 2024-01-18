@@ -5,12 +5,14 @@ using Esdms.Models;
 using FtisHelperV2.DB.Helpe;
 using FtisHelperV2.DB.Model;
 using Newtonsoft.Json;
+using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data;
 
 namespace Esdms.Controllers.Es
 {
@@ -211,9 +213,6 @@ namespace Esdms.Controllers.Es
         //上傳檔案(匯入專家資料)
         public ActionResult UpFile()
         {
-            string url = "";
-            string fileName = "";
-
             try
             {
                 string folder = FileHelper.GetFileFolder(Code.TempUploadFile.匯入專家資料);
@@ -225,14 +224,38 @@ namespace Esdms.Controllers.Es
 
                 HttpPostedFileBase file = Request.Files[0];
                 //檔名'_'，需拿掉(因資料夾分類使用)
-                fileName = Guid.NewGuid().ToString() + "_" + file.FileName.Replace("_", "-");
+                string fileName = Guid.NewGuid().ToString() + "_" + file.FileName.Replace("_", "-");
                 string path = folder + fileName;
                 if (file.ContentLength > 0)
                 {
                     file.SaveAs(path);
                 }
 
-                url = Esdms.Cm.PhysicalToUrl(path);
+                using (var f = new FileStream(path, FileMode.Open, FileAccess.Read))
+                {
+                    byte[] bytes = new byte[f.Length];
+                    f.Read(bytes, 0, (int)f.Length);
+                    f.Position = 0;
+
+                    var workbook = WorkbookFactory.Create(f);
+                    //指定的Sheet
+                    //var sheet = workbook.GetSheetAt(sheetIndex);
+                    //指定為Header的Row
+                    int sheetCount = workbook.NumberOfSheets;
+
+                    //讀第一個Sheet
+                    var sheet = workbook.GetSheetAt(0);
+                    //需要調整讀取每個row->ReadDataTableFromSheet
+                    int titleCol = 2;
+                    var table = ExcelHelper.ExcelToDt(sheet, titleCol - 1);
+
+                    ////過濾：循環添加標題行(excel沒定義的標題)
+                    for (int i = table.Columns.Count; i-- > 0;)
+                        if (table.Columns[i].ColumnName.IndexOf("Column") > -1)
+                            table.Columns.RemoveAt(i);
+
+                    DataTable result = table;
+                }
             }
             catch (Exception ex)
             {
