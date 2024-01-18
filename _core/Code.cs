@@ -7,6 +7,18 @@ namespace Esdms
 {
     public class Code
     {
+        public enum TempUploadFile
+        {
+            none = 0,
+            匯入專家資料 = 1  //瀏覽檔案送出(前)
+        }
+
+        public enum UploadFile
+        {
+            none = 0,
+
+        }
+
         /// <summary>
         /// 部門
         /// </summary>

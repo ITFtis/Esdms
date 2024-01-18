@@ -198,8 +198,11 @@
     <Compile Include="Startup.cs" />
     <Compile Include="_applyClass\CheckYear.cs" />
     <Compile Include="_applyClass\Department.cs" />
+    <Compile Include="_core\AppConfig.cs" />
+    <Compile Include="_core\Cm.cs" />
     <Compile Include="_core\Code.cs" />
     <Compile Include="_core\DateFormat.cs" />
+    <Compile Include="_core\FileHelper.cs" />
     <Compile Include="_core\GenerateHelper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -303,6 +306,7 @@
     <Folder Include="Views\BasicUser_Private\" />
     <Folder Include="Views\ExpertiseDetail\" />
     <Folder Include="Views\Expertise\" />
+    <Folder Include="Views\FileProcessing\" />
     <Folder Include="Views\FTISUserHistory\" />
     <Folder Include="Views\Resume\" />
     <Folder Include="Views\UserHistoryOpinion\" />

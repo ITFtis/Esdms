@@ -440,6 +440,41 @@
 
         //callback();
     }
+    
+    var a = {};
+    a.item = '<span class="btn btn-secondary glyphicon glyphicon-share-alt"> 匯入專家資料</span>';
+    a.event = 'click .glyphicon-share-alt';
+    a.callback = function importBasicUser(evt) {
+        
+        $("#upFile").trigger("click");
+
+        ////var $element = $('body');
+        ////helper.misc.showBusyIndicator($element, { timeout: 300 * 60 * 1000 });
+        ////$.ajax({
+        ////    url: app.siteRoot + 'City/ImportCityRoad',
+        ////    datatype: "json",
+        ////    type: "Get",
+        ////    timeout: 300 * 60 * 1000, //300分
+        ////    success: function (data) {
+        ////        if (data.result) {
+        ////            alert("匯入成功");
+        ////        } else {
+        ////            alert("匯入失敗：\n" + data.errorMessage);
+        ////        }
+        ////    },
+        ////    complete: function () {
+        ////        helper.misc.hideBusyIndicator($element, { timeout: 180000 });
+        ////    },
+        ////    error: function (xhr, status, error) {
+        ////        var err = eval("(" + xhr.responseText + ")");
+        ////        alert(err.Message);
+        ////        helper.misc.hideBusyIndicator($element, { timeout: 180000 });
+        ////    }
+        ////});
+        
+    };
+
+    douoptions.appendCustomToolbars = [a];
 
     var $_masterTable = $("#_table").DouEditableTable(douoptions).on($.dou.events.add, function (e, row) {
 
@@ -451,6 +486,58 @@
         $_masterTable.DouEditableTable("editSpecificData", row);
 
     }); //初始dou table
+
+    var accept = ['.xlsx'];
+    var $iptFile = $('<input id="upFile" type="file" multiple accept=' + accept.join(',') + ' name="upFileReport"  />');
+    $('.glyphicon.glyphicon-share-alt').after($iptFile);
+    $iptFile.hide();
+
+    $iptFile.on("change", function () {
+        //限定檔案大小
+        var maxSize = 10 * 1024 * 1024;  //10MB
+        if (this.files[0].size > maxSize) {
+            alert("檔案大小限制:10MB");
+            return;
+        };
+
+        var fileData = new FormData();
+
+        $.each($("#upFile").get(0).files, function (index, obj) {
+            fileData.append(this.name, obj);
+        });
+
+        var $element = $('body');
+        helper.misc.showBusyIndicator($element, { timeout: 300 * 60 * 1000 });
+        $.ajax({
+            url: app.siteRoot + 'BasicUser/UpFile',
+            datatype: "json",
+            type: "POST",
+            data: fileData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                //清空檔案
+                $("#upFile").val('');
+
+                if (data.result) {
+                    alert("匯入成功");
+                } else {
+                    alert("匯入失敗：\n" + data.errorMessage);
+                }
+
+                helper.misc.hideBusyIndicator();                
+            },
+            complete: function () {
+                helper.misc.hideBusyIndicator();                
+            },
+            error: function (xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                alert(err.Message);
+                helper.misc.hideBusyIndicator();
+            }
+        });
+    });
+
 
     //專長
     function SetDouDa4(datas, PId) {

@@ -7,6 +7,7 @@ using FtisHelperV2.DB.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -205,6 +206,40 @@ namespace Esdms.Controllers.Es
             var jstr = JsonConvert.SerializeObject(u, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             jstr = jstr.Replace(DataManagerScriptHelper.JavaScriptFunctionStringStart, "(").Replace(DataManagerScriptHelper.JavaScriptFunctionStringEnd, ")");
             return Content(jstr, "application/json");
+        }
+
+        //上傳檔案(匯入專家資料)
+        public ActionResult UpFile()
+        {
+            string url = "";
+            string fileName = "";
+
+            try
+            {
+                string folder = FileHelper.GetFileFolder(Code.TempUploadFile.匯入專家資料);
+
+                if (!Directory.Exists(folder))
+                {
+                    Directory.CreateDirectory(folder);
+                }
+
+                HttpPostedFileBase file = Request.Files[0];
+                //檔名'_'，需拿掉(因資料夾分類使用)
+                fileName = Guid.NewGuid().ToString() + "_" + file.FileName.Replace("_", "-");
+                string path = folder + fileName;
+                if (file.ContentLength > 0)
+                {
+                    file.SaveAs(path);
+                }
+
+                url = Esdms.Cm.PhysicalToUrl(path);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = false, errorMessage = ex.Message });
+            }
+
+            return Json(new { result = true }, JsonRequestBehavior.AllowGet);
         }
 
         private bool ToValidate(BasicUser f, string type)
