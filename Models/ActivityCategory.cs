@@ -20,10 +20,17 @@ namespace Esdms.Models
         [ColumnDef(Visible = false)]
         public int Id { get; set; }
 
+        [Required]                
+        [Display(Name = "會議類別")]
+        [ColumnDef(EditType = EditType.Select,
+            Filter = true, SelectItemsClassNamespace = Esdms.Models.ActivityCategoryTypeSelectItems.AssemblyQualifiedName,
+            ColSize = 3)]
+        public int Type { get; set; }
+
         [Required]
         [StringLength(50)]
         [Column(TypeName = "nvarchar")]
-        [Display(Name = "類別名稱")]
+        [Display(Name = "會議名稱")]
         public string Name { get; set; }
 
         [Display(Name = "建檔日期")]
@@ -83,6 +90,16 @@ namespace Esdms.Models
         public override IEnumerable<KeyValuePair<string, object>> GetSelectItems()
         {
             return ActivityCategorys.Select(s => new KeyValuePair<string, object>(s.Id.ToString(), s.Name));
+        }
+    }
+
+    public class ActivityCategoryTypeSelectItems : Dou.Misc.Attr.SelectItemsClass
+    {        
+        public const string AssemblyQualifiedName = "Esdms.Models.ActivityCategoryTypeSelectItems, Esdms";
+
+        public override IEnumerable<KeyValuePair<string, object>> GetSelectItems()
+        {            
+            return Code.GetActivityCategoryType().Select(s => new KeyValuePair<string, object>(s.Key, s.Value));
         }
     }
 }

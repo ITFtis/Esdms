@@ -42,5 +42,19 @@ namespace Esdms
 
             return result;
         }
+
+        /// <summary>
+        /// 會議類別
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<KeyValuePair<string, object>> GetActivityCategoryType()
+        {
+            IEnumerable<KeyValuePair<string, object>> result = new List<KeyValuePair<string, object>>();
+
+            result = result.Append(new KeyValuePair<string, object>("1", "會內"));
+            result = result.Append(new KeyValuePair<string, object>("2", "會外"));
+
+            return result;
+        }
     }
 }
