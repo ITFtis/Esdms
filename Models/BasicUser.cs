@@ -99,14 +99,14 @@ namespace Esdms.Models
         public string OfficeAddress { get; set; }
 
         [Display(Name = "(住家)縣市")]
-        [ColumnDef(Filter = true,
+        [ColumnDef(
             EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.CitySelectItems.AssemblyQualifiedName,
             SelectGearingWith = "PZIP,PCityCode,true", ColSize = 3)]
         [StringLength(6)]
         public string PCityCode { get; set; }
 
         [Display(Name = "(住家)鄉鎮市區")]
-        [ColumnDef(Filter = true,
+        [ColumnDef(
             EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.TownSelectItems.AssemblyQualifiedName,
             ColSize = 3)]
         [StringLength(5)]
