@@ -30,8 +30,14 @@ namespace Esdms.Models
             ColSize = 3)]
         [StringLength(2)]
         public string DCode { get; set; }
+        
+        [Display(Name = "會議類別")]
+        [ColumnDef(Filter = true,
+            EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.ActivityCategoryTypeSelectItems.AssemblyQualifiedName,
+            SelectGearingWith = "ActivityCategoryId,ActivityCategoryType,true", ColSize = 3)]        
+        public int? ActivityCategoryType { get; set; }
 
-        [Display(Name = "會議")]
+        [Display(Name = "會議名稱")]
         [ColumnDef(Filter = true,
             EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.ActivityCategorySelectItems.AssemblyQualifiedName,
             ColSize = 3)]

@@ -629,6 +629,7 @@
 
                 var isAdd = row.Id == null;
 
+                $('.ftisuserhistorycontroller .modal-dialog').find('[data-fn="ActivityCategoryType"] option[value=""]').remove();
                 $('.ftisuserhistorycontroller .modal-dialog').find('[data-fn="ActivityCategoryId"] option[value=""]').remove();
 
                 //會議：新增－多選。修改－單選
@@ -647,6 +648,10 @@
                         });
                     
                     ActivityCategoryId.selectpicker('deselectAll');
+
+                    $('.ftisuserhistorycontroller .modal-dialog').find("[data-fn=ActivityCategoryType]").change(function () {
+                        ResetSelectpickerActivityCategoryType();
+                    });
                 }
 
                 //(下拉)參與紀錄 年度連動專案
@@ -794,6 +799,15 @@
 
         var $ele = $('.modal-dialog').find("[data-fn=SubjectDetailId]");
         $ele.find('[data-subjectid!="' + SubjectId + '"]').hide();
+        $ele.selectpicker('refresh').selectpicker('val', '');
+    }
+
+    //參與紀錄 會議
+    function ResetSelectpickerActivityCategoryType() {
+        var ActivityCategoryType = $('.modal-dialog').find("[data-fn=ActivityCategoryType]").val();
+
+        var $ele = $('.modal-dialog').find("[data-fn=ActivityCategoryId]");
+        $ele.find('[data-activitycategorytype!="' + ActivityCategoryType + '"]').hide();
         $ele.selectpicker('refresh').selectpicker('val', '');
     }
 

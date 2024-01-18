@@ -1,4 +1,5 @@
 ﻿using Dou.Misc.Attr;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -88,8 +89,8 @@ namespace Esdms.Models
             _activityCategorys = null;
         }
         public override IEnumerable<KeyValuePair<string, object>> GetSelectItems()
-        {
-            return ActivityCategorys.Select(s => new KeyValuePair<string, object>(s.Id.ToString(), s.Name));
+        {            
+            return ActivityCategorys.Select(s => new KeyValuePair<string, object>(s.Id.ToString(), JsonConvert.SerializeObject(new { v = s.Name, ActivityCategoryType = s.Type })));
         }
     }
 
