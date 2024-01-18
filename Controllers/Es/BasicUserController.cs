@@ -13,6 +13,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data;
+using System.Data.Entity;
+using DouHelper;
 
 namespace Esdms.Controllers.Es
 {
@@ -215,8 +217,8 @@ namespace Esdms.Controllers.Es
         {
             try
             {
+                //步驟1.上傳檔案
                 string folder = FileHelper.GetFileFolder(Code.TempUploadFile.匯入專家資料);
-
                 if (!Directory.Exists(folder))
                 {
                     Directory.CreateDirectory(folder);
@@ -231,6 +233,8 @@ namespace Esdms.Controllers.Es
                     file.SaveAs(path);
                 }
 
+                //步驟2.讀取檔案(excel失敗)
+                DataTable dt = null;
                 using (var f = new FileStream(path, FileMode.Open, FileAccess.Read))
                 {
                     byte[] bytes = new byte[f.Length];
@@ -254,8 +258,90 @@ namespace Esdms.Controllers.Es
                         if (table.Columns[i].ColumnName.IndexOf("Column") > -1)
                             table.Columns.RemoveAt(i);
 
-                    DataTable result = table;
+                    dt = table;
                 }
+
+                if (dt == null)
+                {
+                    return Json(new { result = false, errorMessage = "步驟2.讀取檔案(excel失敗)" });
+                }
+
+                //步驟3.儲存檔案
+                //標題
+                Dictionary<string, int> dic = new Dictionary<string, int>();
+                for(int i = 0;i< dt.Columns.Count; i++)
+                {                    
+                    string name = dt.Columns[i].ColumnName;
+                    if (name.Contains("_Name")) { dic.Add("_Name", i); continue; }
+                    if (name.Contains("_Sex")) { dic.Add("_Sex", i); continue; }
+                    if (name.Contains("_CategoryId")) { dic.Add("_CategoryId", i); continue; }
+                    if (name.Contains("_OnJob")) { dic.Add("_OnJob", i); continue; }
+                    if (name.Contains("_UnitName")) { dic.Add("_UnitName", i); continue; }
+                    if (name.Contains("_Position")) { dic.Add("_Position", i); continue; }
+                    if (name.Contains("_SubjectDetailId")) { dic.Add("_SubjectDetailId", i); continue; }
+                }
+                
+                int cc = 0;
+                var dbContext = new EsdmsModelContextExt();
+                Dou.Models.DB.IModelEntity<BasicUser> basicUser = new Dou.Models.DB.ModelEntity<BasicUser>(dbContext);
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    cc++;
+                    if (cc > 3) break;
+
+                    //_Name,_Sex,_CategoryId,_OnJob,_UnitName,_Position,_SubjectDetailId
+                    string name = !dic.ContainsKey("_Name") ? "" : row.ItemArray[dic["_Name"]].ToString();
+                    string sex = !dic.ContainsKey("_Sex") ? "" : row.ItemArray[dic["_Sex"]].ToString();
+                    string categoryId = !dic.ContainsKey("_CategoryId") ? "" : row.ItemArray[dic["_CategoryId"]].ToString();
+                    string reset_onJob = !dic.ContainsKey("_OnJob") ? "" : row.ItemArray[dic["_OnJob"]].ToString();
+                    string unitName = !dic.ContainsKey("_UnitName") ? "" : row.ItemArray[dic["_UnitName"]].ToString();
+                    string position = !dic.ContainsKey("_Position") ? "" : row.ItemArray[dic["_Position"]].ToString();
+                    string subjectDetailId = !dic.ContainsKey("_SubjectDetailId") ? "" : row.ItemArray[dic["_SubjectDetailId"]].ToString();
+
+                    if (name == "")
+                        continue;
+
+                    //(1)儲存basicUser
+                    var v = Code.GetOnJob().Where(a => a.Value.ToString() == reset_onJob);
+                    string onJob = v.Count() == 0 ? "" : v.FirstOrDefault().Key;
+
+                    var data = basicUser.GetAll().Where(a => a.Name == name).FirstOrDefault();
+                    if (data == null)
+                    {
+                        //新增
+                        Esdms.Models.BasicUser nuser = new Esdms.Models.BasicUser();
+                        nuser.Name = name;
+                        nuser.Sex = 100; //////
+                        nuser.CategoryId = 100;//////
+                        nuser.OnJob = onJob;///////
+                        nuser.UnitName = unitName;
+                        nuser.Position = position;                        
+                        nuser.PId = GenerateHelper.FId(basicUser.GetAll().ToList());
+                        nuser.BDate = DateTime.Now;
+                        nuser.BFno = Dou.Context.CurrentUserBase.Id;
+                        nuser.BName = Dou.Context.CurrentUserBase.Name;                                                
+
+                        basicUser.Add(nuser);                        
+                    }
+                    else
+                    {
+                        //修改
+                        data.Name = name;
+                        data.Sex = 100; //////
+                        data.CategoryId = 100;//////
+                        data.OnJob = onJob;///////
+                        data.UnitName = unitName;
+                        data.Position = position;
+                        data.UDate = DateTime.Now;
+                        data.UFno = Dou.Context.CurrentUserBase.Id;
+                        data.UName = Dou.Context.CurrentUserBase.Name;
+
+                        basicUser.Update(data);
+                    }                    
+                }
+
+                BasicUserNameSelectItems.Reset();                
             }
             catch (Exception ex)
             {

@@ -28,7 +28,6 @@ namespace Esdms.Models
         [StringLength(40)]
         public string Name { get; set; }
         
-        [Required]
         [Display(Name = "性別")]
         [ColumnDef(EditType = EditType.Select, SelectItems = "{\"1\":\"男\",\"2\":\"女\"}",
             ColSize = 3)]        
@@ -41,7 +40,8 @@ namespace Esdms.Models
         public int? CategoryId { get; set; }
 
         [Display(Name = "在職狀況")]
-        [ColumnDef(EditType = EditType.Select, SelectItems = "{\"OJ1\":\"在職\",\"OJ2\":\"退休\"}",
+        [ColumnDef(EditType = EditType.Select,
+            Filter = true, SelectItemsClassNamespace = Esdms.GetOnJobSelectItems.AssemblyQualifiedName,
             ColSize = 3)]
         [StringLength(10)]
         public string OnJob { get; set; }

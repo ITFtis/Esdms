@@ -520,6 +520,7 @@
                 $("#upFile").val('');
 
                 if (data.result) {
+                    $('.bootstrap-table').find('.btn-confirm').trigger('click');
                     alert("匯入成功");
                 } else {
                     alert("匯入失敗：\n" + data.errorMessage);

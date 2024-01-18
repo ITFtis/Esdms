@@ -20,18 +20,18 @@ namespace Esdms
             string FId = "";
             string title = "S" + DateFormat.ToDate8(DateTime.Now);
 
-            //13碼(S20240110001) S20240110 + 001
-            var zz = u.Where(a => a.PId.Length == 12).ToList();
-            var v = u.Where(a => a.PId.Length == 12).
+            //14碼(S202401100001) S20240110 + 0001
+            var zz = u.Where(a => a.PId.Length == 13).ToList();
+            var v = u.Where(a => a.PId.Length == 13).
                 Where(a => a.PId.Substring(0, 9) == title);
 
             int max = 1;
             if (v.Count() > 0)
             {
-                max = v.Select(a => int.Parse(a.PId.Substring(9, 3))).Max() + 1;
+                max = v.Select(a => int.Parse(a.PId.Substring(9, 4))).Max() + 1;
             }
             
-            FId = title + max.ToString().PadLeft(3, '0');
+            FId = title + max.ToString().PadLeft(4, '0');
 
             return FId;
         }

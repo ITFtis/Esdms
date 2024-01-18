@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dou.Misc.Attr;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -68,5 +70,36 @@ namespace Esdms
 
             return result;
         }
+
+        /// <summary>
+        /// 在職
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<KeyValuePair<string, object>> GetOnJob()
+        {
+            IEnumerable<KeyValuePair<string, object>> result = new List<KeyValuePair<string, object>>();
+
+            result = result.Append(new KeyValuePair<string, object>("OJ1", "在職"));
+            result = result.Append(new KeyValuePair<string, object>("OJ2", "退休"));
+
+            return result;
+        }
     }
+
+    #region  下拉
+
+    /// <summary>
+    /// 在職
+    /// </summary>
+    public class GetOnJobSelectItems : SelectItemsClass
+    {
+        public const string AssemblyQualifiedName = "Esdms.GetOnJobSelectItems, Esdms";
+
+        public override IEnumerable<KeyValuePair<string, object>> GetSelectItems()
+        {
+            return Code.GetOnJob().Select(a => new KeyValuePair<string, object>(a.Key, a.Value));
+        }
+    }
+
+    #endregion
 }
