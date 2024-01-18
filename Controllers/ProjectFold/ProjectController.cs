@@ -58,6 +58,8 @@ namespace Esdms.Controllers.ProjectFold
             foreach (var field in opts.fields)
                 field.sortable = true;
 
+            opts.GetFiled("Year").align = "left";
+
             return opts;
         }
 

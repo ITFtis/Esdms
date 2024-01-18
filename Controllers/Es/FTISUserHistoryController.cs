@@ -54,7 +54,12 @@ namespace Esdms.Controllers.Es
             opts.GetFiled("ActivityCategoryType").colsize = 6;
             opts.GetFiled("ActivityCategoryCommissionedUnit").colsize = 6;
             opts.GetFiled("ActivityCategoryId").colsize = 12;
-            opts.GetFiled("ProjectId").colsize = 12;            
+            opts.GetFiled("ProjectId").colsize = 12;
+
+            opts.GetFiled("ActivityCategoryType").align = "left";
+            opts.GetFiled("ActivityCategoryId").align = "left";
+            opts.GetFiled("Year").align = "left";
+            opts.GetFiled("ProjectId").align = "left";
 
             return opts;
         }

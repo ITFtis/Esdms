@@ -71,6 +71,9 @@ namespace Esdms.Controllers.Es
             opts.GetFiled("Note").datatype = "textarea";
             opts.GetFiled("Note").textareaheight = 9;
 
+            opts.GetFiled("SubjectId").align = "left";
+            opts.GetFiled("SubjectDetailId").align = "left";
+
             return opts;
         }
         
