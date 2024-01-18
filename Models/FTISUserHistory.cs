@@ -10,7 +10,7 @@ using System.Web;
 namespace Esdms.Models
 {
     /// <summary>
-    /// Ftis活動計畫參與
+    /// 專家參與紀錄
     /// </summary>
     [Table("FTISUserHistory")]
     public class FTISUserHistory
@@ -42,6 +42,12 @@ namespace Esdms.Models
             EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.ActivityCategorySelectItems.AssemblyQualifiedName,
             ColSize = 3)]
         public int? ActivityCategoryId { get; set; }
+
+        [StringLength(50)]
+        [Column(TypeName = "nvarchar")]
+        [Display(Name = "會議委辦單位")]
+        [ColumnDef(ColSize = 3)]
+        public string ActivityCategoryCommissionedUnit { get; set; }
 
         [Display(Name = "年度")]
         [ColumnDef(EditType = EditType.Select,

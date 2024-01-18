@@ -631,10 +631,9 @@
 
                 $('.ftisuserhistorycontroller .modal-dialog').find('[data-fn="ActivityCategoryType"] option[value=""]').remove();
                 $('.ftisuserhistorycontroller .modal-dialog').find('[data-fn="ActivityCategoryId"] option[value=""]').remove();
-
-                //會議：新增－多選。修改－單選
+                
                 if (isAdd) {
-                    ///多選
+                    //會議名稱：新增－多選。修改－單選
                     var ActivityCategoryId = $('.ftisuserhistorycontroller .modal-dialog').find("[data-fn=ActivityCategoryId]")
                         .attr('multiple', true).selectpicker({
                             noneSelectedText: '請挑選會議',
@@ -647,12 +646,12 @@
                             }
                         });
                     
-                    ActivityCategoryId.selectpicker('deselectAll');
-
-                    $('.ftisuserhistorycontroller .modal-dialog').find("[data-fn=ActivityCategoryType]").change(function () {
-                        ResetSelectpickerActivityCategoryType();
-                    });
+                    ActivityCategoryId.selectpicker('deselectAll');                    
                 }
+
+                //參與紀錄 會議類別change事件
+                ChangeActivityCategoryType(isAdd);
+                
 
                 //(下拉)參與紀錄 年度連動專案
                 $('.modal-dialog [data-fn="Year"]').change(function () {
@@ -809,6 +808,34 @@
         var $ele = $('.modal-dialog').find("[data-fn=ActivityCategoryId]");
         $ele.find('[data-activitycategorytype!="' + ActivityCategoryType + '"]').hide();
         $ele.selectpicker('refresh').selectpicker('val', '');
+    }
+
+    //參與紀錄 會議類別change事件
+    function ChangeActivityCategoryType(isAdd) {
+        $('.ftisuserhistorycontroller .modal-dialog').find("[data-fn=ActivityCategoryType]").change(function () {
+            if (isAdd) {
+                //會議名稱：新增－多選
+                ResetSelectpickerActivityCategoryType();
+            }
+
+            //1.會內2.會外資料填寫
+            var type = $('.modal-dialog [data-fn="ActivityCategoryType"]').val();
+            if (type == 1) {
+                $('.modal-dialog  [data-field="ActivityCategoryCommissionedUnit"]').hide();
+                $('.modal-dialog  [data-field="Year"]').show();
+                $('.modal-dialog  [data-field="ProjectId"]').show();
+
+                ActivityCategoryCommissionedUnit = $('[data-fn="ActivityCategoryCommissionedUnit"]').val('');                
+            }
+            else if (type == 2) {
+                $('.modal-dialog  [data-field="ActivityCategoryCommissionedUnit"]').show();
+                $('.modal-dialog  [data-field="Year"]').hide();
+                $('.modal-dialog  [data-field="ProjectId"]').hide();
+
+                Year = $('[data-fn="Year"]').val('');
+                ProjectId = $('[data-fn="ProjectId"]').val('');
+            }
+        });
     }
 
     //(下拉)參與紀錄 年度連動專案

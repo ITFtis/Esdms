@@ -175,7 +175,7 @@ namespace Esdms.Models
             }
         }
 
-        //意見
+        //意見(隱藏)
         [NotMapped]
         public virtual ICollection<UserHistoryOpinion> UserHistoryOpinions
         {
@@ -185,7 +185,7 @@ namespace Esdms.Models
             }
         }
 
-        //經歷
+        //經歷(隱藏)
         [NotMapped]
         public virtual ICollection<Resume> Resumes
         {
@@ -195,7 +195,7 @@ namespace Esdms.Models
             }
         }
 
-        //Ftis活動計畫參與
+        //專家參與紀錄
         [NotMapped]
         public virtual ICollection<FTISUserHistory> FTISUserHistorys
         {
@@ -205,7 +205,7 @@ namespace Esdms.Models
             }
         }
 
-        //證照
+        //證照(隱藏)
         [NotMapped]
         public virtual ICollection<BasicUser_License> BasicUser_Licenses
         {
