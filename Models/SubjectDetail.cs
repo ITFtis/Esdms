@@ -32,6 +32,11 @@ namespace Esdms.Models
         [Column(TypeName = "nvarchar")]
         [Display(Name = "專長領域")]
         public string Name { get; set; }
+        
+        [StringLength(40)]
+        [Column(TypeName = "nvarchar")]
+        [Display(Name = "匯入代碼")]
+        public string DCode { get; set; }
 
         [Display(Name = "排序")]
         [ColumnDef(Visible = false)]
