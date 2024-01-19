@@ -442,8 +442,8 @@
     }
     
     var a = {};
-    a.item = '<span class="btn btn-secondary glyphicon glyphicon-share-alt"> 匯入專家資料</span>';
-    a.event = 'click .glyphicon-share-alt';
+    a.item = '<span class="btn btn-secondary glyphicon glyphicon-open-file"> 匯入專家資料</span>';
+    a.event = 'click .glyphicon-open-file';
     a.callback = function importBasicUser(evt) {
         
         $("#upFile").trigger("click");
@@ -489,7 +489,7 @@
 
     var accept = ['.xlsx'];
     var $iptFile = $('<input id="upFile" type="file" multiple accept=' + accept.join(',') + ' name="upFileReport"  />');
-    $('.glyphicon.glyphicon-share-alt').after($iptFile);
+    $('.glyphicon.glyphicon-open-file').after($iptFile);
     $iptFile.hide();
 
     $iptFile.on("change", function () {

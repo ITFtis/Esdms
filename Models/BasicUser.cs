@@ -34,14 +34,14 @@ namespace Esdms.Models
         public int? Sex { get; set; }
 
         [Display(Name = "人員類別")]
-        [ColumnDef(Filter = true, 
+        [ColumnDef(
             EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.CategorySelectItems.AssemblyQualifiedName,
             ColSize = 3)]        
         public int? CategoryId { get; set; }
 
         [Display(Name = "在職狀況")]
         [ColumnDef(EditType = EditType.Select,
-            Filter = true, SelectItemsClassNamespace = Esdms.GetOnJobSelectItems.AssemblyQualifiedName,
+            SelectItemsClassNamespace = Esdms.GetOnJobSelectItems.AssemblyQualifiedName,
             ColSize = 3)]
         [StringLength(10)]
         public string OnJob { get; set; }
