@@ -281,14 +281,16 @@ namespace Esdms.Controllers.Es
                     if (name.Contains("_SubjectDetailId")) { dic.Add("_SubjectDetailId", i); continue; }
                 }
                 
-                int cc = 0;
+                //int cc = 0;
                 var dbContext = new EsdmsModelContextExt();
                 Dou.Models.DB.IModelEntity<BasicUser> basicUser = new Dou.Models.DB.ModelEntity<BasicUser>(dbContext);
+                Dou.Models.DB.IModelEntity<Expertise> expertise = new Dou.Models.DB.ModelEntity<Expertise>(dbContext);
+                Dou.Models.DB.IModelEntity<SubjectDetail> subjectDetail = new Dou.Models.DB.ModelEntity<SubjectDetail>(dbContext);
+                var m_subjectDetail = subjectDetail.GetAll().ToList();
 
                 foreach (DataRow row in dt.Rows)
                 {
-                    cc++;
-                    if (cc > 3) break;
+                    //cc++; if (cc > 3) break;
 
                     //_Name,_Sex,_CategoryId,_OnJob,_UnitName,_Position,_SubjectDetailId
                     string name = !dic.ContainsKey("_Name") ? "" : row.ItemArray[dic["_Name"]].ToString();
@@ -297,7 +299,7 @@ namespace Esdms.Controllers.Es
                     string ___onJob = !dic.ContainsKey("_OnJob") ? "" : row.ItemArray[dic["_OnJob"]].ToString();
                     string unitName = !dic.ContainsKey("_UnitName") ? "" : row.ItemArray[dic["_UnitName"]].ToString();
                     string position = !dic.ContainsKey("_Position") ? "" : row.ItemArray[dic["_Position"]].ToString();
-                    string subjectDetailId = !dic.ContainsKey("_SubjectDetailId") ? "" : row.ItemArray[dic["_SubjectDetailId"]].ToString();
+                    string ___subjectDetailId = !dic.ContainsKey("_SubjectDetailId") ? "" : row.ItemArray[dic["_SubjectDetailId"]].ToString();
 
                     if (name == "")
                         continue;
@@ -312,7 +314,7 @@ namespace Esdms.Controllers.Es
                     var v3 = Code.GetOnJob().Where(a => a.Value.ToString() == ___onJob);
                     string onJob = v3.Count() == 0 ? null : v3.FirstOrDefault().Key;
 
-
+                    var subjectDetailId = m_subjectDetail.Where(a => ___subjectDetailId.Split(',').Any(b => b == a.DCode)).ToList();
 
                     var data = basicUser.GetAll().Where(a => a.Name == name).FirstOrDefault();
                     if (data == null)
@@ -331,7 +333,19 @@ namespace Esdms.Controllers.Es
                         nuser.BFno = Dou.Context.CurrentUserBase.Id;
                         nuser.BName = Dou.Context.CurrentUserBase.Name;                                                
 
-                        basicUser.Add(nuser);                        
+                        basicUser.Add(nuser);
+
+                        //新增時，會加入專長                        
+                        if (subjectDetailId.Count > 0)
+                        {
+                            var Expertises = subjectDetailId.Select(a => new Expertise
+                            {
+                                PId = nuser.PId,
+                                SubjectId = a.SubjectId,
+                                SubjectDetailId = a.Id,
+                            });
+                            expertise.Add(Expertises);
+                        }
                     }
                     else
                     {
@@ -350,7 +364,9 @@ namespace Esdms.Controllers.Es
                     }                    
                 }
 
-                BasicUserNameSelectItems.Reset();                
+                //清除 catch
+                BasicUserNameSelectItems.Reset();
+                Expertise.ResetGetAllDatas();
             }
             catch (Exception ex)
             {
