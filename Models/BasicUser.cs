@@ -29,9 +29,9 @@ namespace Esdms.Models
         public string Name { get; set; }
         
         [Display(Name = "性別")]
-        [ColumnDef(EditType = EditType.Select, SelectItems = "{\"1\":\"男\",\"2\":\"女\"}",
+        [ColumnDef(EditType = EditType.Select, SelectItemsClassNamespace = Esdms.GetSexSelectItems.AssemblyQualifiedName,
             ColSize = 3)]        
-        public int Sex { get; set; }
+        public int? Sex { get; set; }
 
         [Display(Name = "人員類別")]
         [ColumnDef(Filter = true, 

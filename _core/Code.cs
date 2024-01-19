@@ -72,6 +72,20 @@ namespace Esdms
         }
 
         /// <summary>
+        /// 性別
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<KeyValuePair<string, object>> GetSex()
+        {
+            IEnumerable<KeyValuePair<string, object>> result = new List<KeyValuePair<string, object>>();
+
+            result = result.Append(new KeyValuePair<string, object>("1", "男"));
+            result = result.Append(new KeyValuePair<string, object>("2", "女"));
+
+            return result;
+        }
+
+        /// <summary>
         /// 在職
         /// </summary>
         /// <returns></returns>
@@ -87,6 +101,19 @@ namespace Esdms
     }
 
     #region  下拉
+
+    /// <summary>
+    /// 性別
+    /// </summary>
+    public class GetSexSelectItems : SelectItemsClass
+    {
+        public const string AssemblyQualifiedName = "Esdms.GetSexSelectItems, Esdms";
+
+        public override IEnumerable<KeyValuePair<string, object>> GetSelectItems()
+        {
+            return Code.GetSex().Select(a => new KeyValuePair<string, object>(a.Key, a.Value));
+        }
+    }
 
     /// <summary>
     /// 在職

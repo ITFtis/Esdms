@@ -292,9 +292,9 @@ namespace Esdms.Controllers.Es
 
                     //_Name,_Sex,_CategoryId,_OnJob,_UnitName,_Position,_SubjectDetailId
                     string name = !dic.ContainsKey("_Name") ? "" : row.ItemArray[dic["_Name"]].ToString();
-                    string sex = !dic.ContainsKey("_Sex") ? "" : row.ItemArray[dic["_Sex"]].ToString();
-                    string categoryId = !dic.ContainsKey("_CategoryId") ? "" : row.ItemArray[dic["_CategoryId"]].ToString();
-                    string reset_onJob = !dic.ContainsKey("_OnJob") ? "" : row.ItemArray[dic["_OnJob"]].ToString();
+                    string ___sex = !dic.ContainsKey("_Sex") ? "" : row.ItemArray[dic["_Sex"]].ToString();
+                    string ___categoryId = !dic.ContainsKey("_CategoryId") ? "" : row.ItemArray[dic["_CategoryId"]].ToString();
+                    string ___onJob = !dic.ContainsKey("_OnJob") ? "" : row.ItemArray[dic["_OnJob"]].ToString();
                     string unitName = !dic.ContainsKey("_UnitName") ? "" : row.ItemArray[dic["_UnitName"]].ToString();
                     string position = !dic.ContainsKey("_Position") ? "" : row.ItemArray[dic["_Position"]].ToString();
                     string subjectDetailId = !dic.ContainsKey("_SubjectDetailId") ? "" : row.ItemArray[dic["_SubjectDetailId"]].ToString();
@@ -303,21 +303,30 @@ namespace Esdms.Controllers.Es
                         continue;
 
                     //(1)儲存basicUser
-                    var v = Code.GetOnJob().Where(a => a.Value.ToString() == reset_onJob);
-                    string onJob = v.Count() == 0 ? "" : v.FirstOrDefault().Key;
+                    var v1 = Code.GetSex().Where(a => a.Value.ToString() == ___sex);
+                    int? sex = v1.Count() == 0 ? (int?)null : int.Parse(v1.FirstOrDefault().Key);
+
+                    var v2 = CategorySelectItems.Categorys.Where(a => a.Name == ___categoryId);
+                    int? categoryId = v2.Count() == 0 ? (int?)null : v2.FirstOrDefault().Id;
+
+                    var v3 = Code.GetOnJob().Where(a => a.Value.ToString() == ___onJob);
+                    string onJob = v3.Count() == 0 ? null : v3.FirstOrDefault().Key;
+
+
 
                     var data = basicUser.GetAll().Where(a => a.Name == name).FirstOrDefault();
                     if (data == null)
                     {
                         //新增
                         Esdms.Models.BasicUser nuser = new Esdms.Models.BasicUser();
-                        nuser.Name = name;
-                        nuser.Sex = 100; //////
-                        nuser.CategoryId = 100;//////
-                        nuser.OnJob = onJob;///////
-                        nuser.UnitName = unitName;
-                        nuser.Position = position;                        
                         nuser.PId = GenerateHelper.FId(basicUser.GetAll().ToList());
+
+                        nuser.Name = name;
+                        nuser.Sex = sex;
+                        nuser.CategoryId = categoryId;
+                        nuser.OnJob = onJob;
+                        nuser.UnitName = unitName;
+                        nuser.Position = position;                                                
                         nuser.BDate = DateTime.Now;
                         nuser.BFno = Dou.Context.CurrentUserBase.Id;
                         nuser.BName = Dou.Context.CurrentUserBase.Name;                                                
@@ -328,9 +337,9 @@ namespace Esdms.Controllers.Es
                     {
                         //修改
                         data.Name = name;
-                        data.Sex = 100; //////
-                        data.CategoryId = 100;//////
-                        data.OnJob = onJob;///////
+                        data.Sex = sex;
+                        data.CategoryId = categoryId;
+                        data.OnJob = onJob;
                         data.UnitName = unitName;
                         data.Position = position;
                         data.UDate = DateTime.Now;
