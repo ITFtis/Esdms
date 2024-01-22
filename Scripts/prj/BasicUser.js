@@ -492,6 +492,9 @@
     $('.glyphicon.glyphicon-open-file').after($iptFile);
     $iptFile.hide();
 
+    var $sample = $('<a class="btn btn-secondary" href = "' + app.siteRoot + 'DocsWeb/Sample/(Sample)專家資料匯入範本.xlsx">匯入範本</a>');
+    $('.glyphicon.glyphicon-open-file').after($sample);
+
     $iptFile.on("change", function () {
         //限定檔案大小
         var maxSize = 10 * 1024 * 1024;  //10MB
