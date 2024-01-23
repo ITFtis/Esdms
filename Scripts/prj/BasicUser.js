@@ -912,19 +912,26 @@
             //1.會內2.會外資料填寫
             var type = $('.modal-dialog [data-fn="ActivityCategoryType"]').val();
             if (type == 1) {
-                $('.modal-dialog  [data-field="ActivityCategoryCommissionedUnit"]').hide();
+                $('.modal-dialog  [data-field="ActivityCategoryJoinNum"]').hide();
                 $('.modal-dialog  [data-field="Year"]').show();
                 $('.modal-dialog  [data-field="ProjectId"]').show();
+                $('.modal-dialog  [data-field="OutYear"]').hide();
 
-                ActivityCategoryCommissionedUnit = $('[data-fn="ActivityCategoryCommissionedUnit"]').val('');                
+                //預設值
+                $('.modal-dialog  [data-field="ActivityCategoryId"] label').text('會議名稱')
+                $('[data-fn="ActivityCategoryJoinNum"]').val('');
+                $('[data-fn="OutYear"]').val('');
             }
             else if (type == 2) {
-                $('.modal-dialog  [data-field="ActivityCategoryCommissionedUnit"]').show();
+                $('.modal-dialog  [data-field="ActivityCategoryJoinNum"]').show();
                 $('.modal-dialog  [data-field="Year"]').hide();
                 $('.modal-dialog  [data-field="ProjectId"]').hide();
+                $('.modal-dialog  [data-field="OutYear"]').show();
 
-                Year = $('[data-fn="Year"]').val('');
-                ProjectId = $('[data-fn="ProjectId"]').val('');
+                //預設值
+                $('.modal-dialog  [data-field="ActivityCategoryId"] label').text('會議委辦單位')
+                $('[data-fn="Year"]').val('');
+                $('[data-fn="ProjectId"]').val('');
             }
         });
     }

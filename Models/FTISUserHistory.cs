@@ -37,17 +37,21 @@ namespace Esdms.Models
             SelectGearingWith = "ActivityCategoryId,ActivityCategoryType,true", ColSize = 3)]        
         public int? ActivityCategoryType { get; set; }
 
+        [Display(Name = "會外年度")]
+        [ColumnDef(EditType = EditType.Select,
+            Filter = true, SelectItemsClassNamespace = Esdms.GetYaerSelectItems.AssemblyQualifiedName,
+            ColSize = 3)]
+        public int? OutYear { get; set; }
+
         [Display(Name = "會議名稱")]
         [ColumnDef(Filter = true,
             EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.ActivityCategorySelectItems.AssemblyQualifiedName,
             ColSize = 3)]
         public int? ActivityCategoryId { get; set; }
-
-        [StringLength(50)]
-        [Column(TypeName = "nvarchar")]
-        [Display(Name = "會議委辦單位")]
+                
+        [Display(Name = "參與次數")]
         [ColumnDef(ColSize = 3)]
-        public string ActivityCategoryCommissionedUnit { get; set; }
+        public int? ActivityCategoryJoinNum { get; set; }
 
         [Display(Name = "年度")]
         [ColumnDef(EditType = EditType.Select,
