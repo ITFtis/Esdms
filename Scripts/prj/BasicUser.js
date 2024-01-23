@@ -492,7 +492,7 @@
     $('.glyphicon.glyphicon-open-file').after($iptFile);
     $iptFile.hide();
 
-    var $sample = $('<a class="btn btn-secondary" href = "' + app.siteRoot + 'DocsWeb/Sample/(Sample)專家資料匯入範本.xlsx">匯入範本</a>');
+    var $sample = $('<a class="btn btn-secondary" href = "' + app.siteRoot + 'DocsWeb/Sample/(Sample)範本專家資料匯入.xlsx">下載範本</a>');
     $('.glyphicon.glyphicon-open-file').after($sample);
 
     $iptFile.on("change", function () {
