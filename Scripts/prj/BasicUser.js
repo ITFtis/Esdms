@@ -1,6 +1,9 @@
 ﻿$(document).ready(function () {
 
     var id_toTab;
+    //特定角色使用功能
+    var adminRoles = ['admin', 'ftisadmin'];
+    var adminUsed = loginRoles.some(r => adminRoles.includes(r));
 
     //清單欄位排序(非預設編輯頁)
     //說明: js, controller不可設Index排序(douoptions.fields已實體，順序不再變動)
@@ -447,13 +450,9 @@
     a.callback = function importBasicUser(evt) {        
         $("#upFile").trigger("click");                
     };
-
+    
     //特定角色使用功能
-    var specRoles = ['admin', 'ftisadmin'];
-    var canUsed = loginRoles.some(r => specRoles.includes(r));
-
-    //if (aryRole.indexOf)
-    if (canUsed) {
+    if (adminUsed) {
         douoptions.appendCustomToolbars = [a];
     }
 
@@ -739,6 +738,11 @@
                 var $p1 = $('div[data-field=Date]').find('label');
                 var remind = '<span class="text-danger fw-lighter pull-right">非必填</span>';
                 $(remind).appendTo($p1);
+
+                //特定角色使用功能
+                if (!adminUsed) {
+                    $('.modal-dialog [data-field="ActivityCategoryType"] option[value="2"]').hide();
+                }
             };
 
             _opt.addServerData =
@@ -793,7 +797,7 @@
                 };
 
             //實體Dou js
-            $_d7Table = $_d7EditDataContainer.douTable(_opt);
+            $_d7Table = $_d7EditDataContainer.douTable(_opt);            
         });
     };
 
