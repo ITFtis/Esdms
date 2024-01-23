@@ -1,4 +1,4 @@
-﻿<script src="~/Scripts/prj/BasicUser.js?v=20240119001"></script>
+﻿<script src="~/Scripts/prj/BasicUser.js?v=20240123001"></script>
 @using Dou.Misc.Extension
 @Html.MenuMap()
 @Html.DataManagerOptionsJavascript(null, "douoptions")
@@ -31,6 +31,16 @@
         text-decoration: underline !important;
     }
 </style>
+
+@{ 
+    List<Dou.Models.RoleUser> r = ViewBag.Roles;
+
+    <script>
+
+        var loginRoles = @Html.Raw(Json.Encode(r.Select(a => a.RoleId)));        
+    </script>
+    
+}
 
 <div id="_tabs">
     <table id="_table"></table>

@@ -15,6 +15,7 @@ using System.Web.Mvc;
 using System.Data;
 using System.Data.Entity;
 using DouHelper;
+using Dou.Models;
 
 namespace Esdms.Controllers.Es
 {
@@ -24,6 +25,9 @@ namespace Esdms.Controllers.Es
         // GET: BasicUser
         public ActionResult Index()
         {
+            List<RoleUser> roles = Dou.Context.CurrentUser<User>().GetUserRoles();
+            ViewBag.Roles = roles;
+
             return View();
         }
 

@@ -444,37 +444,18 @@
     var a = {};
     a.item = '<span class="btn btn-secondary glyphicon glyphicon-open-file"> 匯入專家資料</span>';
     a.event = 'click .glyphicon-open-file';
-    a.callback = function importBasicUser(evt) {
-        
-        $("#upFile").trigger("click");
-
-        ////var $element = $('body');
-        ////helper.misc.showBusyIndicator($element, { timeout: 300 * 60 * 1000 });
-        ////$.ajax({
-        ////    url: app.siteRoot + 'City/ImportCityRoad',
-        ////    datatype: "json",
-        ////    type: "Get",
-        ////    timeout: 300 * 60 * 1000, //300分
-        ////    success: function (data) {
-        ////        if (data.result) {
-        ////            alert("匯入成功");
-        ////        } else {
-        ////            alert("匯入失敗：\n" + data.errorMessage);
-        ////        }
-        ////    },
-        ////    complete: function () {
-        ////        helper.misc.hideBusyIndicator($element, { timeout: 180000 });
-        ////    },
-        ////    error: function (xhr, status, error) {
-        ////        var err = eval("(" + xhr.responseText + ")");
-        ////        alert(err.Message);
-        ////        helper.misc.hideBusyIndicator($element, { timeout: 180000 });
-        ////    }
-        ////});
-        
+    a.callback = function importBasicUser(evt) {        
+        $("#upFile").trigger("click");                
     };
 
-    douoptions.appendCustomToolbars = [a];
+    //特定角色使用功能
+    var specRoles = ['admin', 'ftisadmin'];
+    var canUsed = loginRoles.some(r => specRoles.includes(r));
+
+    //if (aryRole.indexOf)
+    if (canUsed) {
+        douoptions.appendCustomToolbars = [a];
+    }
 
     var $_masterTable = $("#_table").DouEditableTable(douoptions).on($.dou.events.add, function (e, row) {
 
@@ -487,61 +468,63 @@
 
     }); //初始dou table
 
-    var accept = ['.xlsx'];
-    var $iptFile = $('<input id="upFile" type="file" multiple accept=' + accept.join(',') + ' name="upFileReport"  />');
-    $('.glyphicon.glyphicon-open-file').after($iptFile);
-    $iptFile.hide();
+    //特定角色使用功能
+    if ($('.glyphicon.glyphicon-open-file').length > 0) {
+        var accept = ['.xlsx'];
+        var $iptFile = $('<input id="upFile" type="file" multiple accept=' + accept.join(',') + ' name="upFileReport"  />');
+        $('.glyphicon.glyphicon-open-file').after($iptFile);
+        $iptFile.hide();
 
-    var $sample = $('<a class="btn btn-secondary" href = "' + app.siteRoot + 'DocsWeb/Sample/(Sample)範本專家資料匯入.xlsx">下載範本</a>');
-    $('.glyphicon.glyphicon-open-file').after($sample);
+        var $sample = $('<a class="btn btn-secondary" href = "' + app.siteRoot + 'DocsWeb/Sample/(Sample)範本專家資料匯入.xlsx">下載範本</a>');
+        $('.glyphicon.glyphicon-open-file').after($sample);
 
-    $iptFile.on("change", function () {
-        //限定檔案大小
-        var maxSize = 10 * 1024 * 1024;  //10MB
-        if (this.files[0].size > maxSize) {
-            alert("檔案大小限制:10MB");
-            return;
-        };
+        $iptFile.on("change", function () {
+            //限定檔案大小
+            var maxSize = 10 * 1024 * 1024;  //10MB
+            if (this.files[0].size > maxSize) {
+                alert("檔案大小限制:10MB");
+                return;
+            };
 
-        var fileData = new FormData();
+            var fileData = new FormData();
 
-        $.each($("#upFile").get(0).files, function (index, obj) {
-            fileData.append(this.name, obj);
-        });
+            $.each($("#upFile").get(0).files, function (index, obj) {
+                fileData.append(this.name, obj);
+            });
 
-        var $element = $('body');
-        helper.misc.showBusyIndicator($element, { timeout: 300 * 60 * 1000 });
-        $.ajax({
-            url: app.siteRoot + 'BasicUser/UpFile',
-            datatype: "json",
-            type: "POST",
-            data: fileData,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                //清空檔案
-                $("#upFile").val('');
+            var $element = $('body');
+            helper.misc.showBusyIndicator($element, { timeout: 300 * 60 * 1000 });
+            $.ajax({
+                url: app.siteRoot + 'BasicUser/UpFile',
+                datatype: "json",
+                type: "POST",
+                data: fileData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    //清空檔案
+                    $("#upFile").val('');
 
-                if (data.result) {
-                    $('.bootstrap-table').find('.btn-confirm').trigger('click');
-                    alert("匯入成功");
-                } else {
-                    alert("匯入失敗：\n" + data.errorMessage);
+                    if (data.result) {
+                        $('.bootstrap-table').find('.btn-confirm').trigger('click');
+                        alert("匯入成功");
+                    } else {
+                        alert("匯入失敗：\n" + data.errorMessage);
+                    }
+
+                    helper.misc.hideBusyIndicator();
+                },
+                complete: function () {
+                    helper.misc.hideBusyIndicator();
+                },
+                error: function (xhr, status, error) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    alert(err.Message);
+                    helper.misc.hideBusyIndicator();
                 }
-
-                helper.misc.hideBusyIndicator();                
-            },
-            complete: function () {
-                helper.misc.hideBusyIndicator();                
-            },
-            error: function (xhr, status, error) {
-                var err = eval("(" + xhr.responseText + ")");
-                alert(err.Message);
-                helper.misc.hideBusyIndicator();
-            }
+            });
         });
-    });
-
+    }
 
     //專長
     function SetDouDa4(datas, PId) {
