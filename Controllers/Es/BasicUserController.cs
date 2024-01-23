@@ -250,7 +250,7 @@ namespace Esdms.Controllers.Es
                     //讀第一個Sheet
                     var sheet = workbook.GetSheetAt(0);
                     //需要調整讀取每個row->ReadDataTableFromSheet
-                    int titleCol = 2;
+                    int titleCol = 1;
                     var table = ExcelHelper.ExcelToDt(sheet, titleCol - 1);
 
                     ////過濾：循環添加標題行(excel沒定義的標題)
@@ -268,37 +268,63 @@ namespace Esdms.Controllers.Es
 
                 //步驟3.儲存檔案
                 //標題
+                int outYear = 0;                
                 Dictionary<string, int> dic = new Dictionary<string, int>();
-                for(int i = 0;i< dt.Columns.Count; i++)
-                {                    
-                    string name = dt.Columns[i].ColumnName;
-                    if (name.Contains("_Name")) { dic.Add("_Name", i); continue; }
-                    if (name.Contains("_Sex")) { dic.Add("_Sex", i); continue; }
-                    if (name.Contains("_CategoryId")) { dic.Add("_CategoryId", i); continue; }
-                    if (name.Contains("_OnJob")) { dic.Add("_OnJob", i); continue; }
-                    if (name.Contains("_UnitName")) { dic.Add("_UnitName", i); continue; }
-                    if (name.Contains("_Position")) { dic.Add("_Position", i); continue; }
-                    if (name.Contains("_SubjectDetailId")) { dic.Add("_SubjectDetailId", i); continue; }
+                for (int index = 0; index < dt.Columns.Count; index++)
+                {
+                    string name = dt.Columns[index].ColumnName;
+                    if (name.Contains("_Add")) { dic.Add("_Add", index); continue; }
+                    if (name.Contains("_Name")) { dic.Add("_Name", index); continue; }
+                    if (name.Contains("_Sex")) { dic.Add("_Sex", index); continue; }
+                    if (name.Contains("_CategoryId")) { dic.Add("_CategoryId", index); continue; }
+                    if (name.Contains("_OnJob")) { dic.Add("_OnJob", index); continue; }
+                    if (name.Contains("_UnitName")) { dic.Add("_UnitName", index); continue; }
+                    if (name.Contains("_Position")) { dic.Add("_Position", index); continue; }
+                    if (name.Contains("_Env_")) 
+                    { 
+                        dic.Add("_Env_", index);
+                        if (name.Split('_').Length == 3)
+                        {
+                            int.TryParse(name.Split('_')[2], out outYear);
+                        }
+                        continue; 
+                    }
+                    if (name.Contains("_Eng_")) { dic.Add("_Eng_", index); continue; }
+                    if (name.Contains("_Ida_")) { dic.Add("_Ida_", index); continue; }
+                    if (name.Contains("_SubjectDetailId")) { dic.Add("_SubjectDetailId", index); continue; }
                 }
                 
                 //int cc = 0;
                 var dbContext = new EsdmsModelContextExt();
                 Dou.Models.DB.IModelEntity<BasicUser> basicUser = new Dou.Models.DB.ModelEntity<BasicUser>(dbContext);
                 Dou.Models.DB.IModelEntity<Expertise> expertise = new Dou.Models.DB.ModelEntity<Expertise>(dbContext);
-                Dou.Models.DB.IModelEntity<SubjectDetail> subjectDetail = new Dou.Models.DB.ModelEntity<SubjectDetail>(dbContext);
+                Dou.Models.DB.IModelEntity<FTISUserHistory> fTISUserHistory = new Dou.Models.DB.ModelEntity<FTISUserHistory>(dbContext);
+                Dou.Models.DB.IModelEntity<SubjectDetail> subjectDetail = new Dou.Models.DB.ModelEntity<SubjectDetail>(dbContext);                
+                Dou.Models.DB.IModelEntity<ActivityCategory> activityCategory = new Dou.Models.DB.ModelEntity<ActivityCategory>(dbContext);
+
                 var m_subjectDetail = subjectDetail.GetAll().ToList();
 
                 foreach (DataRow row in dt.Rows)
                 {
                     //cc++; if (cc > 3) break;
 
-                    //_Name,_Sex,_CategoryId,_OnJob,_UnitName,_Position,_SubjectDetailId
+                    //_Env_ooo,_Eng_ooo,_Ida_ooo
+                    //_Add,_Name,_Sex,_CategoryId,_OnJob,_UnitName,_Position,_SubjectDetailId
+                    string _Add = !dic.ContainsKey("_Add") ? "" : row.ItemArray[dic["_Add"]].ToString();
+                    if (_Add.ToUpper() == "N")
+                    {
+                        continue;
+                    }
+
                     string name = !dic.ContainsKey("_Name") ? "" : row.ItemArray[dic["_Name"]].ToString();
                     string ___sex = !dic.ContainsKey("_Sex") ? "" : row.ItemArray[dic["_Sex"]].ToString();
                     string ___categoryId = !dic.ContainsKey("_CategoryId") ? "" : row.ItemArray[dic["_CategoryId"]].ToString();
                     string ___onJob = !dic.ContainsKey("_OnJob") ? "" : row.ItemArray[dic["_OnJob"]].ToString();
                     string unitName = !dic.ContainsKey("_UnitName") ? "" : row.ItemArray[dic["_UnitName"]].ToString();
                     string position = !dic.ContainsKey("_Position") ? "" : row.ItemArray[dic["_Position"]].ToString();
+                    string ___env = !dic.ContainsKey("_Env_") ? "" : row.ItemArray[dic["_Env_"]].ToString();
+                    string ___eng = !dic.ContainsKey("_Eng_") ? "" : row.ItemArray[dic["_Eng_"]].ToString();
+                    string ___ida = !dic.ContainsKey("_Ida_") ? "" : row.ItemArray[dic["_Ida_"]].ToString();
                     string ___subjectDetailId = !dic.ContainsKey("_SubjectDetailId") ? "" : row.ItemArray[dic["_SubjectDetailId"]].ToString();
 
                     if (name == "")
@@ -312,10 +338,23 @@ namespace Esdms.Controllers.Es
                     int? categoryId = v2.Count() == 0 ? (int?)null : v2.FirstOrDefault().Id;
 
                     var v3 = Code.GetOnJob().Where(a => a.Value.ToString() == ___onJob);
-                    string onJob = v3.Count() == 0 ? null : v3.FirstOrDefault().Key;
+                    string onJob = v3.Count() == 0 ? null : v3.FirstOrDefault().Key;                    
+
+                    //環境部
+                    int env_num = 0;                    
+                    int.TryParse(___env, out env_num);
+
+                    //能源署
+                    int eng_num = 0;
+                    int.TryParse(___eng, out eng_num);
+
+                    //產發署
+                    int ida_num = 0;
+                    int.TryParse(___ida, out ida_num);
 
                     var subjectDetailId = m_subjectDetail.Where(a => ___subjectDetailId.Split(',').Any(b => b == a.DCode)).ToList();
 
+                    string rPId = "";
                     var data = basicUser.GetAll().Where(a => a.Name == name).FirstOrDefault();
                     if (data == null)
                     {
@@ -334,8 +373,9 @@ namespace Esdms.Controllers.Es
                         nuser.BName = Dou.Context.CurrentUserBase.Name;                                                
 
                         basicUser.Add(nuser);
+                        rPId = nuser.PId;
 
-                        //新增時，會加入專長                        
+                        //「新增」時，會加入專長                        
                         if (subjectDetailId.Count > 0)
                         {
                             var Expertises = subjectDetailId.Select(a => new Expertise
@@ -345,7 +385,7 @@ namespace Esdms.Controllers.Es
                                 SubjectDetailId = a.Id,
                             });
                             expertise.Add(Expertises);
-                        }
+                        }                        
                     }
                     else
                     {
@@ -361,12 +401,90 @@ namespace Esdms.Controllers.Es
                         data.UName = Dou.Context.CurrentUserBase.Name;
 
                         basicUser.Update(data);
-                    }                    
+                        rPId = data.PId;
+                    }
+
+                    if (rPId != "")
+                    {
+                        #region  更新專家參與紀錄(會外)
+                        //(1)環境部
+                        var envId = activityCategory.GetAll().Where(a => a.Type == 2)
+                                        .Where(a => a.Name.Contains("環境部")).FirstOrDefault().Id;
+                        var h1 = fTISUserHistory.GetAll()
+                                .Where(a => a.PId == rPId
+                                    && a.OutYear == outYear && a.ActivityCategoryId == envId).FirstOrDefault();
+
+                        if (h1 == null)
+                        {
+                            FTISUserHistory addHistory1 = new FTISUserHistory();
+                            addHistory1.PId = rPId;
+                            addHistory1.ActivityCategoryType = 2;    //會外
+                            addHistory1.ActivityCategoryId = envId;
+                            addHistory1.ActivityCategoryJoinNum = env_num;
+                            addHistory1.OutYear = outYear;
+                            fTISUserHistory.Add(addHistory1);
+                        }
+                        else
+                        {
+                            h1.ActivityCategoryJoinNum = env_num;
+                            fTISUserHistory.Update(h1);
+                        }
+
+                        //(2)能源署
+                        var engId = activityCategory.GetAll().Where(a => a.Type == 2)
+                                        .Where(a => a.Name.Contains("能源署")).FirstOrDefault().Id;
+                        var h2 = fTISUserHistory.GetAll()
+                                .Where(a => a.PId == rPId
+                                    && a.OutYear == outYear && a.ActivityCategoryId == engId).FirstOrDefault();
+
+                        if (h2 == null)
+                        {
+                            FTISUserHistory addHistory1 = new FTISUserHistory();
+                            addHistory1.PId = rPId;
+                            addHistory1.ActivityCategoryType = 2;    //會外
+                            addHistory1.ActivityCategoryId = engId;
+                            addHistory1.ActivityCategoryJoinNum = eng_num;
+                            addHistory1.OutYear = outYear;
+                            fTISUserHistory.Add(addHistory1);
+                        }
+                        else
+                        {
+                            h2.ActivityCategoryJoinNum = eng_num;
+                            fTISUserHistory.Update(h2);
+                        }
+
+                        //(3)產發署
+                        var idaId = activityCategory.GetAll().Where(a => a.Type == 2)
+                                        .Where(a => a.Name.Contains("產發署")).FirstOrDefault().Id;
+                        var h3 = fTISUserHistory.GetAll()
+                                .Where(a => a.PId == rPId
+                                    && a.OutYear == outYear && a.ActivityCategoryId == idaId).FirstOrDefault();
+
+                        if (h3 == null)
+                        {
+                            FTISUserHistory addHistory1 = new FTISUserHistory();
+                            addHistory1.PId = rPId;
+                            addHistory1.ActivityCategoryType = 2;    //會外
+                            addHistory1.ActivityCategoryId = idaId;
+                            addHistory1.ActivityCategoryJoinNum = ida_num;
+                            addHistory1.OutYear = outYear;
+                            fTISUserHistory.Add(addHistory1);
+                        }
+                        else
+                        {
+                            h3.ActivityCategoryJoinNum = ida_num;
+                            fTISUserHistory.Update(h3);
+                        }
+                        
+                        #endregion                        
+                    }
+
                 }
 
                 //清除 catch
                 BasicUserNameSelectItems.Reset();
                 Expertise.ResetGetAllDatas();
+                FTISUserHistory.ResetGetAllDatas();
             }
             catch (Exception ex)
             {
