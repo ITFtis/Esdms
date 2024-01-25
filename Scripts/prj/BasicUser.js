@@ -903,6 +903,7 @@
                 $('.modal-dialog  [data-field="Year"]').show();
                 $('.modal-dialog  [data-field="ProjectId"]').show();
                 $('.modal-dialog  [data-field="OutYear"]').hide();
+                $('.modal-dialog  [data-field="DCode"]').show();
 
                 //預設值
                 $('.modal-dialog  [data-field="ActivityCategoryId"] label').text('會議名稱')
@@ -914,11 +915,13 @@
                 $('.modal-dialog  [data-field="Year"]').hide();
                 $('.modal-dialog  [data-field="ProjectId"]').hide();
                 $('.modal-dialog  [data-field="OutYear"]').show();
+                $('.modal-dialog  [data-field="DCode"]').hide();
 
                 //預設值
                 $('.modal-dialog  [data-field="ActivityCategoryId"] label').text('會議委辦單位')
                 $('[data-fn="Year"]').val('');
                 $('[data-fn="ProjectId"]').val('');
+                $('[data-fn="DCode"]').val('');
             }
         });
     }

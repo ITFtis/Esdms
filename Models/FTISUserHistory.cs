@@ -24,18 +24,19 @@ namespace Esdms.Models
         [Display(Name = "身分代碼")]
         [ColumnDef(ColSize = 3)]
         [StringLength(13)]
-        public string PId { get; set; }
-
-        [ColumnDef(Display = "部門", EditType = EditType.Select, SelectItemsClassNamespace = DepartmentSelectItems.AssemblyQualifiedName, Filter = true, 
-            ColSize = 3)]
-        [StringLength(2)]
-        public string DCode { get; set; }
+        public string PId { get; set; }        
         
         [Display(Name = "會議類別")]
         [ColumnDef(Filter = true,
             EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.ActivityCategoryTypeSelectItems.AssemblyQualifiedName,
             SelectGearingWith = "ActivityCategoryId,ActivityCategoryType,true", ColSize = 3)]        
         public int? ActivityCategoryType { get; set; }
+        
+        [Display(Name = "會議名稱")]
+        [ColumnDef(Filter = true,
+            EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.ActivityCategorySelectItems.AssemblyQualifiedName,
+            ColSize = 3)]
+        public int? ActivityCategoryId { get; set; }
 
         [Display(Name = "會外年度")]
         [ColumnDef(EditType = EditType.Select,
@@ -43,13 +44,12 @@ namespace Esdms.Models
             ColSize = 3)]
         public int? OutYear { get; set; }
 
-        [Display(Name = "會議名稱")]
-        [ColumnDef(Filter = true,
-            EditType = EditType.Select, SelectItemsClassNamespace = Esdms.Models.ActivityCategorySelectItems.AssemblyQualifiedName,
+        [ColumnDef(Display = "部門", EditType = EditType.Select, SelectItemsClassNamespace = DepartmentSelectItems.AssemblyQualifiedName, Filter = true,
             ColSize = 3)]
-        public int? ActivityCategoryId { get; set; }
-                
-        [Display(Name = "參與次數")]
+        [StringLength(2)]
+        public string DCode { get; set; }
+
+        [Display(Name = "評選次數")]
         [ColumnDef(ColSize = 3)]
         public int? ActivityCategoryJoinNum { get; set; }
 
