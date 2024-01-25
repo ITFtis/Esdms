@@ -367,11 +367,12 @@ namespace Esdms.Controllers.Es
                         nuser.PId = GenerateHelper.FId(basicUser.GetAll().ToList());
 
                         nuser.Name = name;
-                        nuser.Sex = sex;
-                        nuser.CategoryId = categoryId;
-                        nuser.OnJob = onJob;
-                        nuser.UnitName = unitName;
-                        nuser.Position = position;                                                
+                        //excel有欄位顯示才設定
+                        if (dic.ContainsKey("_Sex")) nuser.Sex = sex;
+                        if (dic.ContainsKey("_CategoryId")) nuser.CategoryId = categoryId;
+                        if (dic.ContainsKey("_OnJob")) nuser.OnJob = onJob;
+                        if (dic.ContainsKey("_UnitName")) nuser.UnitName = unitName;
+                        if (dic.ContainsKey("_Position")) nuser.Position = position;                                                
                         nuser.BDate = DateTime.Now;
                         nuser.BFno = Dou.Context.CurrentUserBase.Id;
                         nuser.BName = Dou.Context.CurrentUserBase.Name;                                                
@@ -394,12 +395,12 @@ namespace Esdms.Controllers.Es
                     else
                     {
                         //修改
-                        data.Name = name;
-                        data.Sex = sex;
-                        data.CategoryId = categoryId;
-                        data.OnJob = onJob;
-                        data.UnitName = unitName;
-                        data.Position = position;
+                        ////data.Name = name;  (where name)，不需要修改
+                        if (dic.ContainsKey("_Sex")) data.Sex = sex;
+                        if (dic.ContainsKey("_CategoryId")) data.CategoryId = categoryId;
+                        if (dic.ContainsKey("_OnJob")) data.OnJob = onJob;
+                        if (dic.ContainsKey("_UnitName")) data.UnitName = unitName;
+                        if (dic.ContainsKey("_Position")) data.Position = position;
                         data.UDate = DateTime.Now;
                         data.UFno = Dou.Context.CurrentUserBase.Id;
                         data.UName = Dou.Context.CurrentUserBase.Name;
@@ -411,75 +412,85 @@ namespace Esdms.Controllers.Es
                     if (rPId != "")
                     {
                         #region  更新專家參與紀錄(會外)
+                        
                         //(1)環境部
-                        var envId = activityCategory.GetAll().Where(a => a.Type == 2)
+                        if (dic.ContainsKey("_Env_"))
+                        {
+                            var envId = activityCategory.GetAll().Where(a => a.Type == 2)
                                         .Where(a => a.Name.Contains("環境部")).FirstOrDefault().Id;
-                        var h1 = fTISUserHistory.GetAll()
-                                .Where(a => a.PId == rPId
-                                    && a.OutYear == outYear && a.ActivityCategoryId == envId).FirstOrDefault();
+                            var h1 = fTISUserHistory.GetAll()
+                                    .Where(a => a.PId == rPId
+                                        && a.OutYear == outYear && a.ActivityCategoryId == envId).FirstOrDefault();
 
-                        if (h1 == null)
-                        {
-                            FTISUserHistory addHistory1 = new FTISUserHistory();
-                            addHistory1.PId = rPId;
-                            addHistory1.ActivityCategoryType = 2;    //會外
-                            addHistory1.ActivityCategoryId = envId;
-                            addHistory1.ActivityCategoryJoinNum = env_num;
-                            addHistory1.OutYear = outYear;
-                            fTISUserHistory.Add(addHistory1);
-                        }
-                        else
-                        {
-                            h1.ActivityCategoryJoinNum = env_num;
-                            fTISUserHistory.Update(h1);
+                            if (h1 == null)
+                            {
+                                FTISUserHistory addHistory1 = new FTISUserHistory();
+                                addHistory1.PId = rPId;
+                                addHistory1.ActivityCategoryType = 2;    //會外
+                                addHistory1.ActivityCategoryId = envId;
+                                addHistory1.ActivityCategoryJoinNum = env_num;
+                                addHistory1.OutYear = outYear;
+                                fTISUserHistory.Add(addHistory1);
+                            }
+                            else
+                            {
+                                h1.ActivityCategoryJoinNum = env_num;
+                                fTISUserHistory.Update(h1);
+                            }
                         }
 
                         //(2)能源署
-                        var engId = activityCategory.GetAll().Where(a => a.Type == 2)
+                        if (dic.ContainsKey("_Eng_"))
+                        {
+                            var engId = activityCategory.GetAll().Where(a => a.Type == 2)
                                         .Where(a => a.Name.Contains("能源署")).FirstOrDefault().Id;
-                        var h2 = fTISUserHistory.GetAll()
-                                .Where(a => a.PId == rPId
-                                    && a.OutYear == outYear && a.ActivityCategoryId == engId).FirstOrDefault();
+                            var h2 = fTISUserHistory.GetAll()
+                                    .Where(a => a.PId == rPId
+                                        && a.OutYear == outYear && a.ActivityCategoryId == engId).FirstOrDefault();
 
-                        if (h2 == null)
-                        {
-                            FTISUserHistory addHistory1 = new FTISUserHistory();
-                            addHistory1.PId = rPId;
-                            addHistory1.ActivityCategoryType = 2;    //會外
-                            addHistory1.ActivityCategoryId = engId;
-                            addHistory1.ActivityCategoryJoinNum = eng_num;
-                            addHistory1.OutYear = outYear;
-                            fTISUserHistory.Add(addHistory1);
-                        }
-                        else
-                        {
-                            h2.ActivityCategoryJoinNum = eng_num;
-                            fTISUserHistory.Update(h2);
+                            if (h2 == null)
+                            {
+                                FTISUserHistory addHistory1 = new FTISUserHistory();
+                                addHistory1.PId = rPId;
+                                addHistory1.ActivityCategoryType = 2;    //會外
+                                addHistory1.ActivityCategoryId = engId;
+                                addHistory1.ActivityCategoryJoinNum = eng_num;
+                                addHistory1.OutYear = outYear;
+                                fTISUserHistory.Add(addHistory1);
+                            }
+                            else
+                            {
+                                h2.ActivityCategoryJoinNum = eng_num;
+                                fTISUserHistory.Update(h2);
+                            }
                         }
 
                         //(3)產發署
-                        var idaId = activityCategory.GetAll().Where(a => a.Type == 2)
+                        if (dic.ContainsKey("_Ida_"))
+                        {
+                            var idaId = activityCategory.GetAll().Where(a => a.Type == 2)
                                         .Where(a => a.Name.Contains("產發署")).FirstOrDefault().Id;
-                        var h3 = fTISUserHistory.GetAll()
-                                .Where(a => a.PId == rPId
-                                    && a.OutYear == outYear && a.ActivityCategoryId == idaId).FirstOrDefault();
+                            var h3 = fTISUserHistory.GetAll()
+                                    .Where(a => a.PId == rPId
+                                        && a.OutYear == outYear && a.ActivityCategoryId == idaId).FirstOrDefault();
 
-                        if (h3 == null)
-                        {
-                            FTISUserHistory addHistory1 = new FTISUserHistory();
-                            addHistory1.PId = rPId;
-                            addHistory1.ActivityCategoryType = 2;    //會外
-                            addHistory1.ActivityCategoryId = idaId;
-                            addHistory1.ActivityCategoryJoinNum = ida_num;
-                            addHistory1.OutYear = outYear;
-                            fTISUserHistory.Add(addHistory1);
+                            if (h3 == null)
+                            {
+                                FTISUserHistory addHistory1 = new FTISUserHistory();
+                                addHistory1.PId = rPId;
+                                addHistory1.ActivityCategoryType = 2;    //會外
+                                addHistory1.ActivityCategoryId = idaId;
+                                addHistory1.ActivityCategoryJoinNum = ida_num;
+                                addHistory1.OutYear = outYear;
+                                fTISUserHistory.Add(addHistory1);
+                            }
+                            else
+                            {
+                                h3.ActivityCategoryJoinNum = ida_num;
+                                fTISUserHistory.Update(h3);
+                            }
                         }
-                        else
-                        {
-                            h3.ActivityCategoryJoinNum = ida_num;
-                            fTISUserHistory.Update(h3);
-                        }
-                        
+
                         #endregion                        
                     }
 
