@@ -68,6 +68,10 @@ namespace Esdms
                 var dataRow = table.NewRow();
                 for (int j = row.FirstCellNum; j <= cellCount; j++)
                 {
+                    //(欄位數量,0起)超過(dataRow數量)，break
+                    if (j >= dataRow.ItemArray.Count())
+                        break;
+
                     var cell = row.GetCell(j);
                     if (cell != null)
                     {
