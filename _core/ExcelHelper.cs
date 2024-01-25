@@ -13,6 +13,7 @@ using NPOI.POIFS;
 using NPOI.Util;
 using NPOI.SS.Util;
 using NPOI.SS.UserModel;
+using NPOI.SS.Formula.Functions;
 
 namespace Esdms
 {
@@ -86,6 +87,16 @@ namespace Esdms
                 if (!isEmptyRow)
                     table.Rows.Add(dataRow);
             }
+
+            //隱藏欄位跳過 if(sheet.IsColumnHidden(j)
+            for (int s = table.Columns.Count - 1; s >= 0; s--)
+            {
+                if (sheet.IsColumnHidden(s))
+                {
+                    table.Columns.RemoveAt(s);
+                }
+            }
+
             return table;
         }
     }
