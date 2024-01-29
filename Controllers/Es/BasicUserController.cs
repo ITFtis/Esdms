@@ -34,10 +34,13 @@ namespace Esdms.Controllers.Es
         protected override IQueryable<BasicUser> BeforeIQueryToPagedList(IQueryable<BasicUser> iquery, params KeyValueParams[] paras)
         {
             KeyValueParams ksort = paras.FirstOrDefault((KeyValueParams s) => s.key == "sort");
+            KeyValueParams korder = paras.FirstOrDefault((KeyValueParams s) => s.key == "order");
+
             var DuplicateName = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "DuplicateName");
             var SubjectId = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "SubjectId");
             var SubjectDetailId = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "SubjectDetailId");
             var strExpertises = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "strExpertises");
+            var vmTotalFTISJoinNum = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "vmTotalFTISJoinNum");
 
             //是否重複查詢
             if (DuplicateName != null)
@@ -84,10 +87,27 @@ namespace Esdms.Controllers.Es
                 iquery = enumerable.AsQueryable();
             }
 
+            //排序
             if (ksort.value == null)
             {
                 //預設排序
                 iquery = iquery.OrderByDescending(a => a.PId);
+            }
+            else if (ksort.value.ToString() == "vmFTISJoinNum")
+            {
+                string sort = ksort.value.ToString();
+                string order = korder.value.ToString();
+                var enumerable = iquery.AsEnumerable();
+
+                if (order == "asc")
+                {
+                    enumerable = enumerable.OrderBy(a => a.vmTotalFTISJoinNum);
+                }
+                else if (order == "desc")
+                {
+                    enumerable = enumerable.OrderByDescending(a => a.vmTotalFTISJoinNum);
+                }  
+                iquery = enumerable.AsQueryable();
             }
 
             return base.BeforeIQueryToPagedList(iquery, paras);
@@ -115,6 +135,7 @@ namespace Esdms.Controllers.Es
             options.GetFiled("strExpertises").visible = true;
             options.GetFiled("strExpertises").filter = true;
             options.GetFiled("vmFTISJoinNum").visible = true;
+            //options.GetFiled("vmTotalFTISJoinNum").visible = true;
 
             options.ctrlFieldAlign = "left";
             options.editformWindowStyle = "modal";

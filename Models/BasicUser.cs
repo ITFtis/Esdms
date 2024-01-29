@@ -295,6 +295,23 @@ namespace Esdms.Models
             }
         }
 
+        //虛擬欄位 vmTotalFTISJoinNum
+        [Display(Name = "評選(總)次數")]
+        [ColumnDef(Visible = false, VisibleEdit = false)]
+        public int vmTotalFTISJoinNum
+        {
+            get
+            {
+                //近3年資料
+                int n = 3;
+                int sYear = DateTime.Now.Year - 1911 - n;
+                var datas = FTISUserHistory.GetAllDatas().Where(a => a.PId == this.PId && a.ActivityCategoryType == 2)
+                            .Where(a => a.OutYear >= sYear);
+
+                return datas.Sum(a => a.ActivityCategoryJoinNum == null ? 0 : (int)a.ActivityCategoryJoinNum);
+            }
+        }
+
         //虛擬欄位 DuplicateName
         [Display(Name = "重覆姓名")]
         [ColumnDef(Visible = false, VisibleEdit = false,
