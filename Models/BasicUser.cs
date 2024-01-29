@@ -262,6 +262,35 @@ namespace Esdms.Models
             }
         }
 
+        //虛擬欄位 vmFTISJoinNum
+        [Display(Name = "評選次數")]
+        [ColumnDef(Visible = false, VisibleEdit = false)]
+        public string vmFTISJoinNum
+        {
+            get
+            {
+                var datas = FTISUserHistory.GetAllDatas().Where(a => a.PId == this.PId)
+                            .GroupJoin(ActivityCategorySelectItems.ActivityCategorys, a => a.ActivityCategoryId, b => b.Id, (o, c) => new
+                            {
+                                o.OutYear, o.ActivityCategoryJoinNum,
+                                ActName = c.FirstOrDefault() == null ? "": c.FirstOrDefault().Name,
+                                ActId = c.FirstOrDefault() == null ? int.MaxValue : c.FirstOrDefault().Id,
+                            });
+
+                var datasGroup = datas.Select(a => a.OutYear).Distinct().ToList();
+
+                var tmp = datasGroup.GroupJoin(datas, a => a, b => b.OutYear, (o, c) => new
+                            {
+                                str = string.Format("{0}年(共<span class='text-primary'>{1}</span>次)：{2}", 
+                                                o,
+                                                c.Sum(p => p.ActivityCategoryJoinNum),
+                                                string.Join(",", c.OrderBy(p => p.ActId).Select(p => p.ActName + "(" + p.ActivityCategoryJoinNum + "次)")))
+                            });
+
+                return string.Join("</br>", tmp.Select(a => a.str));
+            }
+        }
+
         //虛擬欄位 DuplicateName
         [Display(Name = "重覆姓名")]
         [ColumnDef(Visible = false, VisibleEdit = false,

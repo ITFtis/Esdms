@@ -114,6 +114,7 @@ namespace Esdms.Controllers.Es
             options.GetFiled("SubjectDetailId").filter = true;
             options.GetFiled("strExpertises").visible = true;
             options.GetFiled("strExpertises").filter = true;
+            options.GetFiled("vmFTISJoinNum").visible = true;
 
             options.ctrlFieldAlign = "left";
             options.editformWindowStyle = "modal";
