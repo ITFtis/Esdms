@@ -269,7 +269,11 @@ namespace Esdms.Models
         {
             get
             {
-                var datas = FTISUserHistory.GetAllDatas().Where(a => a.PId == this.PId)
+                //近3年資料
+                int n = 3;
+                int sYear = DateTime.Now.Year - 1911 - n;
+                var datas = FTISUserHistory.GetAllDatas().Where(a => a.PId == this.PId && a.ActivityCategoryType == 2)
+                            .Where(a => a.OutYear >= sYear)
                             .GroupJoin(ActivityCategorySelectItems.ActivityCategorys, a => a.ActivityCategoryId, b => b.Id, (o, c) => new
                             {
                                 o.OutYear, o.ActivityCategoryJoinNum,
