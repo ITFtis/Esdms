@@ -33,6 +33,7 @@ namespace Esdms.Controllers.Es
 
         protected override IQueryable<BasicUser> BeforeIQueryToPagedList(IQueryable<BasicUser> iquery, params KeyValueParams[] paras)
         {
+            KeyValueParams ksort = paras.FirstOrDefault((KeyValueParams s) => s.key == "sort");
             var DuplicateName = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "DuplicateName");
             var SubjectId = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "SubjectId");
             var SubjectDetailId = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "SubjectDetailId");
@@ -83,6 +84,12 @@ namespace Esdms.Controllers.Es
                 iquery = enumerable.AsQueryable();
             }
 
+            if (ksort.value == null)
+            {
+                //預設排序
+                iquery = iquery.OrderByDescending(a => a.PId);
+            }
+
             return base.BeforeIQueryToPagedList(iquery, paras);
         }
 
@@ -96,12 +103,13 @@ namespace Esdms.Controllers.Es
                 field.sortable = true;
                 field.visible = false;
             }
-
-            options.GetFiled("PId").visible = true;
+            
             options.GetFiled("Name").visible = true;
+            options.GetFiled("UnitName").visible = true;
+            options.GetFiled("UnitName").title = "單位(系所)";
             options.GetFiled("Position").visible = true;
             //options.GetFiled("BDate").visible = true;
-            options.GetFiled("BName").visible = true;            
+            //options.GetFiled("BName").visible = true;            
             options.GetFiled("SubjectId").filter = true;
             options.GetFiled("SubjectDetailId").filter = true;
             options.GetFiled("strExpertises").visible = true;
