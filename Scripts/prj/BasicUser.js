@@ -906,7 +906,8 @@
                 $('.modal-dialog  [data-field="DCode"]').show();
 
                 //預設值
-                $('.modal-dialog  [data-field="ActivityCategoryId"] label').text('會議名稱')
+                $('.modal-dialog  [data-field="ActivityCategoryId"] label').text('會議名稱');
+                $('.modal-dialog').find('[data-fn="ActivityCategoryId"]').selectpicker({ noneSelectedText: '請挑選會議名稱' }).selectpicker('refresh')
                 $('[data-fn="ActivityCategoryJoinNum"]').val('');
                 $('[data-fn="OutYear"]').val('');
             }
@@ -918,7 +919,8 @@
                 $('.modal-dialog  [data-field="DCode"]').hide();
 
                 //預設值
-                $('.modal-dialog  [data-field="ActivityCategoryId"] label').text('會議委辦單位')
+                $('.modal-dialog  [data-field="ActivityCategoryId"] label').text('會議委辦單位');
+                $('.modal-dialog').find('[data-fn="ActivityCategoryId"]').selectpicker({ noneSelectedText: '請挑選委辦單位' }).selectpicker('refresh')
                 $('[data-fn="Year"]').val('');
                 $('[data-fn="ProjectId"]').val('');
                 $('[data-fn="DCode"]').val('');
