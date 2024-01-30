@@ -443,17 +443,53 @@
 
         //callback();
     }
-    
-    var a = {};
-    a.item = '<span class="btn btn-secondary glyphicon glyphicon-open-file"> 匯入專家資料</span>';
-    a.event = 'click .glyphicon-open-file';
-    a.callback = function importBasicUser(evt) {        
+
+    //清單匯出
+    var b = {};
+    b.item = '<span class="btn btn-secondary glyphicon glyphicon-download-alt"> 匯出清單</span>';
+    b.event = 'click .glyphicon-download-alt';
+    b.callback = function importQdate(evt) {
+
+        alert('a123');
+
+        ////helper.misc.showBusyIndicator();
+        ////$.ajax({
+        ////    url: app.siteRoot + 'Emp/ExportPPtPromote',
+        ////    datatype: "json",
+        ////    type: "Post",
+        ////    data: { "Fnos": aryCheck },
+        ////    success: function (data) {
+        ////        if (data.result) {
+        ////            location.href = app.siteRoot + data.url;
+        ////            //alert("產出晉升簡報成功：");
+        ////        } else {
+        ////            alert("產出晉升簡報失敗：\n" + data.errorMessage);
+        ////        }
+        ////    },
+        ////    complete: function () {
+        ////        helper.misc.hideBusyIndicator();
+        ////    },
+        ////    error: function (xhr, status, error) {
+        ////        var err = eval("(" + xhr.responseText + ")");
+        ////        alert(err.Message);
+        ////        helper.misc.hideBusyIndicator();
+        ////    }
+        ////});
+    };
+
+    var ad1 = {};
+    ad1.item = '<span class="btn btn-secondary glyphicon glyphicon-open-file"> 匯入專家資料</span>';
+    ad1.event = 'click .glyphicon-open-file';
+    ad1.callback = function importBasicUser(evt) {        
         $("#upFile").trigger("click");                
     };
     
     //特定角色使用功能
     if (adminUsed) {
-        douoptions.appendCustomToolbars = [a];
+        douoptions.appendCustomToolbars = [b, ad1];
+    }
+    else {
+        douoptions.appendCustomToolbars = [b];
     }
 
     douoptions.queryFilter = function (params, callback) {
