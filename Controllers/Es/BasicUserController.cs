@@ -16,6 +16,7 @@ using System.Data;
 using System.Data.Entity;
 using DouHelper;
 using Dou.Models;
+using System.Data.Entity.Infrastructure;
 
 namespace Esdms.Controllers.Es
 {
@@ -33,24 +34,33 @@ namespace Esdms.Controllers.Es
 
         protected override IQueryable<BasicUser> BeforeIQueryToPagedList(IQueryable<BasicUser> iquery, params KeyValueParams[] paras)
         {
-            KeyValueParams ksort = paras.FirstOrDefault((KeyValueParams s) => s.key == "sort");
-            KeyValueParams korder = paras.FirstOrDefault((KeyValueParams s) => s.key == "order");
+            iquery = GetOutputData(iquery, paras);
 
-            var DuplicateName = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "DuplicateName");
-            var SubjectId = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "SubjectId");
-            var SubjectDetailId = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "SubjectDetailId");
-            var strExpertises = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "strExpertises");
-            var vmTotalFTISJoinNum = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "vmTotalFTISJoinNum");
+            return base.BeforeIQueryToPagedList(iquery, paras);
+        }
 
-            //是否重複查詢
-            if (DuplicateName != null)
+        private IQueryable<BasicUser> GetOutputData(IQueryable<BasicUser> iquery, params KeyValueParams[] paras)
+        {
+            //---1.查詢---
+            var Name = KeyValue.GetFilterParaValue(paras, "Name");
+            var DuplicateName = KeyValue.GetFilterParaValue(paras, "DuplicateName");
+            var SubjectId = KeyValue.GetFilterParaValue(paras, "SubjectId");
+            var SubjectDetailId = KeyValue.GetFilterParaValue(paras, "SubjectDetailId");
+            var strExpertises = KeyValue.GetFilterParaValue(paras, "strExpertises");
+
+            if (!string.IsNullOrEmpty(Name))
+            {
+                iquery = iquery.Where(a => a.Name == Name);
+            }
+            //是否重複查詢            
+            if (!string.IsNullOrEmpty(DuplicateName))
             {
                 var v = iquery.GroupBy(a => a.Name)
                         .Select(a => new
                         {
                             Name = a.Key,
                             Count = a.Count(),
-                        });               
+                        });
                 if (DuplicateName == "Y")
                 {
                     v = v.Where(a => a.Count > 1);
@@ -58,37 +68,40 @@ namespace Esdms.Controllers.Es
                 else
                 {
                     v = v.Where(a => a.Count == 1);
-                }                
+                }
 
-                iquery = iquery.Where(a => v.Any(b => b.Name == a.Name));                
-                iquery = iquery.OrderBy(a => a.Name);                
+                iquery = iquery.Where(a => v.Any(b => b.Name == a.Name));
+                iquery = iquery.OrderBy(a => a.Name);
             }
 
-            //專長類別查詢(M 下拉) 虛擬欄位
-            if (SubjectId != null)
-            {
-                var enumerable = iquery.AsEnumerable();                
-                enumerable = enumerable.Where(a => a.Expertises.Any(b => b.SubjectId.ToString() == SubjectId));                
-                iquery = enumerable.AsQueryable();                
-            }
-            //專長領域查詢(D 下拉) 虛擬欄位
-            if (SubjectDetailId != null)
+            //專長類別查詢(M 下拉) 虛擬欄位            
+            if (!string.IsNullOrEmpty(SubjectId))
             {
                 var enumerable = iquery.AsEnumerable();
-                var SubjectDetailIds = SubjectDetailId.Split(',');                
+                enumerable = enumerable.Where(a => a.Expertises.Any(b => b.SubjectId.ToString() == SubjectId));
+                iquery = enumerable.AsQueryable();
+            }
+            //專長領域查詢(D 下拉) 虛擬欄位            
+            if (!string.IsNullOrEmpty(SubjectDetailId))
+            {
+                var enumerable = iquery.AsEnumerable();
+                var SubjectDetailIds = SubjectDetailId.Split(',');
                 enumerable = enumerable.Where(a => a.Expertises.Any(b => SubjectDetailIds.Any(p => p == b.SubjectDetailId.ToString())));
                 iquery = enumerable.AsQueryable();
             }
 
-            //專長領域查詢(文字) 虛擬欄位
-            if (strExpertises != null)
+            //專長領域查詢(文字) 虛擬欄位            
+            if (!string.IsNullOrEmpty(strExpertises))
             {
                 var enumerable = iquery.AsEnumerable();
                 enumerable = enumerable.Where(a => a.strExpertises.Contains(strExpertises));
                 iquery = enumerable.AsQueryable();
             }
 
-            //排序
+            //---2.排序---
+            KeyValueParams ksort = paras.FirstOrDefault((KeyValueParams s) => s.key == "sort");
+            KeyValueParams korder = paras.FirstOrDefault((KeyValueParams s) => s.key == "order");
+
             if (ksort.value == null)
             {
                 //預設排序
@@ -107,11 +120,11 @@ namespace Esdms.Controllers.Es
                 else if (order == "desc")
                 {
                     enumerable = enumerable.OrderByDescending(a => a.vmTotalFTISJoinNum);
-                }  
+                }
                 iquery = enumerable.AsQueryable();
             }
 
-            return base.BeforeIQueryToPagedList(iquery, paras);
+            return iquery;
         }
 
         public override DataManagerOptions GetDataManagerOptions()
