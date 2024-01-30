@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI.WebControls;
 using Microsoft.Reporting.WebForms;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace Esdms
 {
@@ -108,8 +109,8 @@ namespace Esdms
                 dr["姓名"] = data.Name;
                 dr["單位系所"] = data.UnitName;
                 dr["職稱"] = data.Position;
-                dr["專長"] = data.strExpertises;
-                dr["評選次數"] = data.vmFTISJoinNum;
+                dr["專長"] = HtmlHelper.RemoveHtmlTag(data.strExpertises);
+                dr["評選次數"] = HtmlHelper.RemoveHtmlTag(data.vmFTISJoinNum);                
 
                 dt.Rows.Add(dr);
             }
