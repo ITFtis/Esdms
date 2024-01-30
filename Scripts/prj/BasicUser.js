@@ -456,6 +456,13 @@
         douoptions.appendCustomToolbars = [a];
     }
 
+    douoptions.queryFilter = function (params, callback) {
+        var SubjectDetailId = params.find(a => a.key == "SubjectDetailId");
+        SubjectDetailId.value = SubjectDetailId.value.join(',');
+
+        callback();
+    }
+
     var $_masterTable = $("#_table").DouEditableTable(douoptions).on($.dou.events.add, function (e, row) {
 
         //錨點
@@ -466,6 +473,25 @@
         $_masterTable.DouEditableTable("editSpecificData", row);
 
     }); //初始dou table
+
+    $('[data-fn="SubjectDetailId"] option[value=""]').remove();
+    //多選
+    var $SubjectDetailId = $('.filter-toolbar-plus').find("[data-fn=SubjectDetailId]")
+        .attr('multiple', true).selectpicker({
+            noneSelectedText: '請挑選專長領域',
+            actionsBox: true,
+            selectAllText: '全選',
+            deselectAllText: '取消已選',
+            selectedTextFormat: 'count > 1',
+            countSelectedText: function (sc, all) {
+                return '專長領域:挑' + sc + '個'
+            }
+        });
+
+    $('[data-fn="SubjectId"]').change(function () {
+        $SubjectDetailId.selectpicker('deselectAll');
+        RestSelectpickerSubjectId();
+    })
 
     //特定角色使用功能
     if ($('.glyphicon.glyphicon-open-file').length > 0) {
@@ -868,6 +894,15 @@
         });
 
         return result;
+    }
+
+    //專家清單查詢 專長領域
+    function RestSelectpickerSubjectId() {
+        var SubjectId = $('.filter-toolbar-plus').find("[data-fn=SubjectId]").val();
+
+        var $ele = $('.filter-toolbar-plus').find("[data-fn=SubjectDetailId]");
+        $ele.find('[data-subjectid!="' + SubjectId + '"]').hide();
+        $ele.selectpicker('refresh');//.selectpicker('val', '');
     }
 
     //專長 Reset

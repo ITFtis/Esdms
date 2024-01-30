@@ -75,7 +75,8 @@ namespace Esdms.Controllers.Es
             if (SubjectDetailId != null)
             {
                 var enumerable = iquery.AsEnumerable();
-                enumerable = enumerable.Where(a => a.Expertises.Any(b => b.SubjectDetailId.ToString() == SubjectDetailId));
+                var SubjectDetailIds = SubjectDetailId.Split(',');                
+                enumerable = enumerable.Where(a => a.Expertises.Any(b => SubjectDetailIds.Any(p => p == b.SubjectDetailId.ToString())));
                 iquery = enumerable.AsQueryable();
             }
 
