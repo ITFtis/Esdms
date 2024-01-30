@@ -39,6 +39,26 @@ namespace Esdms.Controllers.Es
             return base.BeforeIQueryToPagedList(iquery, paras);
         }
 
+        //匯出清單
+        public ActionResult ExportList(params KeyValueParams[] paras)
+        {
+            var iquery = GetModelEntity().GetAll();
+            iquery = GetOutputData(iquery, paras);
+            var datas = iquery.ToList();
+
+            Rpt_BasicUserList rep = new Rpt_BasicUserList();
+            string url = rep.Export(datas, ".docx");
+
+            if (url == "")
+            {
+                return Json(new { result = false, errorMessage = rep.ErrorMessage }, JsonRequestBehavior.AllowGet);                
+            }
+            else
+            {
+                return Json(new { result = true, url = url }, JsonRequestBehavior.AllowGet);
+            }            
+        }
+
         private IQueryable<BasicUser> GetOutputData(IQueryable<BasicUser> iquery, params KeyValueParams[] paras)
         {
             //---1.查詢---
@@ -102,7 +122,7 @@ namespace Esdms.Controllers.Es
             KeyValueParams ksort = paras.FirstOrDefault((KeyValueParams s) => s.key == "sort");
             KeyValueParams korder = paras.FirstOrDefault((KeyValueParams s) => s.key == "order");
 
-            if (ksort.value == null)
+            if (ksort == null || ksort.value == null)
             {
                 //預設排序
                 iquery = iquery.OrderByDescending(a => a.PId);

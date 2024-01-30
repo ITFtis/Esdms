@@ -449,32 +449,34 @@
     b.item = '<span class="btn btn-secondary glyphicon glyphicon-download-alt"> 匯出清單</span>';
     b.event = 'click .glyphicon-download-alt';
     b.callback = function importQdate(evt) {
+        var conditions = GetFilterParams($_masterTable)
+        var paras;
+        if (conditions.length > 0) {
+            paras = { key: 'filter', value: JSON.stringify(conditions) };
+        }
 
-        alert('a123');
-
-        ////helper.misc.showBusyIndicator();
-        ////$.ajax({
-        ////    url: app.siteRoot + 'Emp/ExportPPtPromote',
-        ////    datatype: "json",
-        ////    type: "Post",
-        ////    data: { "Fnos": aryCheck },
-        ////    success: function (data) {
-        ////        if (data.result) {
-        ////            location.href = app.siteRoot + data.url;
-        ////            //alert("產出晉升簡報成功：");
-        ////        } else {
-        ////            alert("產出晉升簡報失敗：\n" + data.errorMessage);
-        ////        }
-        ////    },
-        ////    complete: function () {
-        ////        helper.misc.hideBusyIndicator();
-        ////    },
-        ////    error: function (xhr, status, error) {
-        ////        var err = eval("(" + xhr.responseText + ")");
-        ////        alert(err.Message);
-        ////        helper.misc.hideBusyIndicator();
-        ////    }
-        ////});
+        helper.misc.showBusyIndicator();
+        $.ajax({
+            url: app.siteRoot + 'BasicUser/ExportList',
+            datatype: "json",
+            type: "POST",
+            data: { paras: [paras] },
+            success: function (data) {
+                if (data.result) {
+                    location.href = app.siteRoot + data.url;
+                } else {
+                    alert("查詢失敗：\n" + data.errorMessage);
+                }
+            },
+            complete: function () {
+                helper.misc.hideBusyIndicator();
+            },
+            error: function (xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                alert(err.Message);
+                helper.misc.hideBusyIndicator();
+            }
+        });
     };
 
     var ad1 = {};
