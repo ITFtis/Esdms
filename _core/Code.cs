@@ -12,7 +12,8 @@ namespace Esdms
         public enum TempUploadFile
         {
             none = 0,
-            匯入專家資料 = 1  //瀏覽檔案送出(前)
+            匯入專家資料 = 1,  //瀏覽檔案送出(前)
+            匯出專家清單 = 2
         }
 
         public enum UploadFile

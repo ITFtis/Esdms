@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Source_BasicUser" targetNamespace="http://tempuri.org/Source_BasicUser.xsd" xmlns:mstns="http://tempuri.org/Source_BasicUser.xsd" xmlns="http://tempuri.org/Source_BasicUser.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Source_BasicUser" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="Source_BasicUser" msprop:Generator_DataSetName="Source_BasicUser">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BasicUser" msprop:Generator_RowEvHandlerName="BasicUserRowChangeEventHandler" msprop:Generator_RowDeletedName="BasicUserRowDeleted" msprop:Generator_RowDeletingName="BasicUserRowDeleting" msprop:Generator_RowEvArgName="BasicUserRowChangeEvent" msprop:Generator_TablePropName="BasicUser" msprop:Generator_RowChangedName="BasicUserRowChanged" msprop:Generator_RowChangingName="BasicUserRowChanging" msprop:Generator_TableClassName="BasicUserDataTable" msprop:Generator_RowClassName="BasicUserRow" msprop:Generator_TableVarName="tableBasicUser" msprop:Generator_UserTableName="BasicUser">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="姓名" msprop:Generator_ColumnPropNameInRow="姓名" msprop:Generator_ColumnPropNameInTable="姓名Column" msprop:Generator_ColumnVarNameInTable="column姓名" msprop:Generator_UserColumnName="姓名" type="xs:string" minOccurs="0" />
+              <xs:element name="單位系所" msprop:Generator_ColumnPropNameInRow="單位系所" msprop:Generator_ColumnPropNameInTable="單位系所Column" msprop:Generator_ColumnVarNameInTable="column單位系所" msprop:Generator_UserColumnName="單位系所" type="xs:string" minOccurs="0" />
+              <xs:element name="職稱" msprop:Generator_ColumnPropNameInRow="職稱" msprop:Generator_ColumnPropNameInTable="職稱Column" msprop:Generator_ColumnVarNameInTable="column職稱" msprop:Generator_UserColumnName="職稱" type="xs:string" minOccurs="0" />
+              <xs:element name="專長" msprop:Generator_ColumnPropNameInRow="專長" msprop:Generator_ColumnPropNameInTable="專長Column" msprop:Generator_ColumnVarNameInTable="column專長" msprop:Generator_UserColumnName="專長" type="xs:string" minOccurs="0" />
+              <xs:element name="評選次數" msprop:Generator_ColumnPropNameInRow="評選次數" msprop:Generator_ColumnPropNameInTable="評選次數Column" msprop:Generator_ColumnVarNameInTable="column評選次數" msprop:Generator_UserColumnName="評選次數" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
