@@ -45,7 +45,10 @@ namespace Esdms
                 var dtData = GetMasterBasicUser(datas);
 
                 if (dtData.Rows.Count == 0)
-                    return "專家清單-無資料匯出";
+                {
+                    _errorMessage = "專家清單-無資料匯出";
+                    return "";
+                }
 
                 reportViewer.LocalReport.DataSources.Add(new ReportDataSource("MasterBasicUser", dtData));                               
 
