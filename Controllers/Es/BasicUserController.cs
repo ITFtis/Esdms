@@ -40,8 +40,23 @@ namespace Esdms.Controllers.Es
         }
 
         //匯出清單
-        public ActionResult ExportList(params KeyValueParams[] paras)
+        public ActionResult ExportList(string sort, string order, params KeyValueParams[] paras)
         {
+            if (sort != null)
+            {
+                KeyValueParams k = new KeyValueParams();
+                k.key = "sort"; 
+                k.value = sort;
+                paras = paras.Concat(new KeyValueParams[1] { k }).ToArray();
+            }
+            if (order != null)
+            {
+                KeyValueParams k = new KeyValueParams();
+                k.key = "order";
+                k.value = order;
+                paras = paras.Concat(new KeyValueParams[1] { k }).ToArray();
+            }
+
             var iquery = GetModelEntity().GetAll();
             iquery = GetOutputData(iquery, paras);
             var datas = iquery.ToList();
@@ -135,11 +150,11 @@ namespace Esdms.Controllers.Es
 
                 if (order == "asc")
                 {
-                    enumerable = enumerable.OrderBy(a => a.vmTotalFTISJoinNum);
+                    enumerable = enumerable.OrderBy(a => a.vmTotalFTISJoinNum).ThenBy(a => a.Name);//order by name(清單第一欄位排序)
                 }
                 else if (order == "desc")
                 {
-                    enumerable = enumerable.OrderByDescending(a => a.vmTotalFTISJoinNum);
+                    enumerable = enumerable.OrderByDescending(a => a.vmTotalFTISJoinNum).ThenBy(a => a.Name);//order by name(清單第一欄位排序)
                 }
                 iquery = enumerable.AsQueryable();
             }

@@ -455,12 +455,15 @@
             paras = { key: 'filter', value: JSON.stringify(conditions) };
         }
 
+        var sortName = $_masterTable.bootstrapTable('getOptions').sortName;
+        var sortOrder = $_masterTable.bootstrapTable('getOptions').sortOrder;
+
         helper.misc.showBusyIndicator();
         $.ajax({
             url: app.siteRoot + 'BasicUser/ExportList',
             datatype: "json",
             type: "POST",
-            data: { paras: [paras] },
+            data: { paras: [paras], sort: sortName, order: sortOrder },
             success: function (data) {
                 if (data.result) {
                     location.href = app.siteRoot + data.url;
