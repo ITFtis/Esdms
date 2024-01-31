@@ -59,8 +59,6 @@ namespace Esdms.Controllers.ProjectFold
                 field.sortable = true;
 
             opts.GetFiled("Year").align = "left";
-            opts.GetFiled("Name").visible = false;
-            opts.GetFiled("strName").visible = true;
 
             return opts;
         }

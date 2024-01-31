@@ -64,17 +64,6 @@ namespace Esdms.Models
         [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
         [StringLength(50)]
         public string UName { get; set; }
-
-        //虛擬欄位 strName
-        [Display(Name = "專案名稱")]
-        [ColumnDef(Visible = false, VisibleEdit = false)]
-        public string strName
-        {
-            get
-            {
-                return string.Format("({0}) {1}", this.Year.ToString(), this.Name);                
-            }                
-        }
     }
 
     //專案自行新增
