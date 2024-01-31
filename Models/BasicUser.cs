@@ -255,7 +255,7 @@ namespace Esdms.Models
                 var tmp = G1.GroupJoin(G2, a => a.SubjectId, b => b.SubjectId, (o, c) => new
                 {
                     o.SubjectId,
-                    str = o.Name1 + string.Format("：{0}", string.Join(", ", c.OrderBy(a => a.Sort2).Select(a => a.Name2)))
+                    str = o.Name1 + string.Format("：{0}", string.Join("<span class='badge bg-info text-wrap'>;</span> ", c.OrderBy(a => a.Sort2).Select(a => a.Name2)))
                 });
 
                 return string.Join("</br>", tmp.Select(a => a.str));
