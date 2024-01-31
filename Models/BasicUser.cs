@@ -255,7 +255,7 @@ namespace Esdms.Models
                 var tmp = G1.GroupJoin(G2, a => a.SubjectId, b => b.SubjectId, (o, c) => new
                 {
                     o.SubjectId,
-                    str = o.Name1 + string.Format("：{0}", string.Join("<span class='badge bg-info text-wrap'>;</span> ", c.OrderBy(a => a.Sort2).Select(a => a.Name2)))
+                    str = o.Name1 + string.Format("：{0}", string.Join("<span class='badge bg-info text-wrap'>; </span> ", c.OrderBy(a => a.Sort2).Select(a => a.Name2)))
                 });
 
                 return string.Join("</br>", tmp.Select(a => a.str));
@@ -288,7 +288,7 @@ namespace Esdms.Models
                                 str = string.Format("{0}年(共<span class='text-primary'>{1}</span>次)：{2}", 
                                                 o,
                                                 c.Sum(p => p.ActivityCategoryJoinNum),
-                                                string.Join(",", c.OrderBy(p => p.ActId).Select(p => p.ActName + "(" + p.ActivityCategoryJoinNum + "次)")))
+                                                string.Join(",", c.OrderBy(p => p.ActId).Select(p => p.ActName + "(" + p.ActivityCategoryJoinNum + ")")))
                             });
 
                 return string.Join("</br>", tmp.Select(a => a.str));
