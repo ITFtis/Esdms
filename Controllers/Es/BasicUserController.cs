@@ -29,6 +29,25 @@ namespace Esdms.Controllers.Es
             List<RoleUser> roles = Dou.Context.CurrentUser<User>().GetUserRoles();
             ViewBag.Roles = roles;
 
+            string path = Server.MapPath("~/Data/vPower.json");
+            if (System.IO.File.Exists(path))
+            {
+                List<Esdms.vPower> items = null;
+
+                using (StreamReader r = new StreamReader(path))
+                {
+                    string json = r.ReadToEnd();
+                    items = JsonConvert.DeserializeObject<List<Esdms.vPower>>(json);
+                }
+
+                var v = items.Where(a => a.empno == Dou.Context.CurrentUserBase.Id).FirstOrDefault();
+                if (v != null)
+                {
+                    string ss = v.empno;
+                    ViewBag.VPower = v.vpower.Split(',').ToArray();
+                }
+            }
+
             return View();
         }
 

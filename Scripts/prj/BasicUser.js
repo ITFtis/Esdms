@@ -448,7 +448,7 @@
     var b = {};
     b.item = '<span class="btn btn-secondary glyphicon glyphicon-download-alt"> 匯出清單</span>';
     b.event = 'click .glyphicon-download-alt';
-    b.callback = function importQdate(evt) {
+    b.callback = function exportQdate(evt) {
         var conditions = GetFilterParams($_masterTable)
         var paras;
         if (conditions.length > 0) {
@@ -590,6 +590,22 @@
                 }
             });
         });
+    }
+
+    //特定帳號顯示功能(vPower.json)
+    //匯出功能
+    $('.glyphicon-download-alt').css("display", "none");
+    if (aryVPower != null) {
+        //json原編(有)
+        if (aryVPower.indexOf('2') > -1) {
+            $('.glyphicon-download-alt').css("display", "block");
+        }
+    }
+    else {
+        //json原編(無)
+        if (adminUsed) {
+            $('.glyphicon-download-alt').css("display", "block");
+        }
     }
 
     //專長

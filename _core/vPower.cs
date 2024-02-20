@@ -9,6 +9,9 @@ namespace Esdms
     {
         public int serial { get; set; }
         public string empno { get; set; }
+        /// <summary>
+        /// 1.篩選功能 2.匯出功能
+        /// </summary>
         public string vpower { get; set; }
     }
 }

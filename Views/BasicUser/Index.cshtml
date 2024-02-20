@@ -1,4 +1,4 @@
-﻿<script src="~/Scripts/prj/BasicUser.js?v=20240130001"></script>
+﻿<script src="~/Scripts/prj/BasicUser.js?v=20240220001"></script>
 <script src="~/Scripts/prj/baseb.js?v=20240130001"></script>
 @using Dou.Misc.Extension
 @Html.MenuMap()
@@ -40,9 +40,13 @@
 
         var loginRoles = @Html.Raw(Json.Encode(r.Select(a => a.RoleId)));        
     </script>
-    
+
 }
 
 <div id="_tabs">
     <table id="_table"></table>
 </div>
+
+<script>
+    var aryVPower = JSON.parse('@Html.Raw(Json.Encode(ViewBag.VPower))');
+</script>
