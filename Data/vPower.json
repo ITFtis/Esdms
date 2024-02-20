@@ -1,0 +1,187 @@
+[
+  {
+	  "serial": 1,
+    "empno": "00027",
+    "vpower": "1,2"
+  },
+  {
+    "serial": 2,
+    "empno": "00578",
+    "vpower": "1,2"
+  },
+  {
+	"serial": 3,
+    "empno": "00838",
+    "vpower": "1,2"
+  },
+  {
+    "serial": 4,
+    "empno": "00898",
+    "vpower": "1,2"
+  },
+  {
+	"serial": 5,
+    "empno": "00412",
+    "vpower": "1,2"
+  },
+  {
+    "serial": 6,
+    "empno": "00014",
+    "vpower": "1,2"
+  },
+  {
+	"serial": 7,
+    "empno": "00411",
+    "vpower": "1,2"
+  },
+  {
+    "serial": 8,
+    "empno": "00436",
+    "vpower": "1,2"
+  },
+  {
+	"serial": 9,
+    "empno": "00006",
+    "vpower": "1"
+  },
+  {
+    "serial": 10,
+    "empno": "00458",
+    "vpower": "1"
+  },
+  {
+	"serial": 11,
+    "empno": "01283",
+    "vpower": "1"
+  },
+  {
+    "serial": 12,
+    "empno": "01429",
+    "vpower": "1"
+  },
+  {
+	"serial": 13,
+    "empno": "01653",
+    "vpower": "1"
+  },
+  {
+    "serial": 14,
+    "empno": "01743",
+    "vpower": "1"
+  },
+  {
+	"serial": 15,
+    "empno": "01760",
+    "vpower": "1"
+  },
+  {
+    "serial": 16,
+    "empno": "01779",
+    "vpower": "1"
+  },
+  {
+	"serial": 17,
+    "empno": "01801",
+    "vpower": "1"
+  },
+  {
+    "serial": 18,
+    "empno": "01808",
+    "vpower": "1"
+  },
+  {
+	"serial": 19,
+    "empno": "01847",
+    "vpower": "1"
+  },
+  {
+    "serial": 20,
+    "empno": "01858",
+    "vpower": "1"
+  },
+  {
+	"serial": 21,
+    "empno": "01868",
+    "vpower": "1"
+  },
+  {
+    "serial": 22,
+    "empno": "01869",
+    "vpower": "1"
+  },
+  {
+	"serial": 23,
+    "empno": "01881",
+    "vpower": "1"
+  },
+  {
+    "serial": 24,
+    "empno": "00448",
+    "vpower": "1"
+  },
+  {
+	"serial": 25,
+    "empno": "00531",
+    "vpower": "1"
+  },
+  {
+    "serial": 26,
+    "empno": "00547",
+    "vpower": "1"
+  },
+  {
+	"serial": 27,
+    "empno": "00705",
+    "vpower": "1"
+  },
+  {
+    "serial": 28,
+    "empno": "00867",
+    "vpower": "1"
+  },
+  {
+	"serial": 29,
+    "empno": "00891",
+    "vpower": "1"
+  },
+  {
+    "serial": 30,
+    "empno": "01557",
+    "vpower": "1"
+  },
+  {
+	"serial": 31,
+    "empno": "01732",
+    "vpower": "1"
+  },
+  {
+    "serial": 32,
+    "empno": "01758",
+    "vpower": "1"
+  },
+  {
+	"serial": 33,
+    "empno": "01769",
+    "vpower": "1"
+  },
+  {
+    "serial": 34,
+    "empno": "01771",
+    "vpower": "1"
+  },
+  {
+	"serial": 35,
+    "empno": "01786",
+    "vpower": "1"
+  },
+  {
+    "serial": 36,
+    "empno": "01822",
+    "vpower": "1"
+  },
+  {
+    "serial": 37,
+    "empno": "01843",
+    "vpower": "1"
+  },  
+]

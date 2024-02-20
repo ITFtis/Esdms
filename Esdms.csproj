@@ -254,6 +254,7 @@
     <Compile Include="_core\FileHelper.cs" />
     <Compile Include="_core\GenerateHelper.cs" />
     <Compile Include="_core\HtmlHelper.cs" />
+    <Compile Include="_core\vPower.cs" />
     <Compile Include="_report\Rpt_BasicUserList.cs" />
     <Compile Include="_report\_ReportClass.cs" />
   </ItemGroup>
@@ -291,6 +292,7 @@
     <Content Include="Report\Source_BasicUser.xsc">
       <DependentUpon>Source_BasicUser.xsd</DependentUpon>
     </Content>
+    <Content Include="Data\vPower.json" />
     <None Include="Report\Source_BasicUser.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -377,7 +379,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Data\" />
     <Folder Include="DocsWeb\Sample\" />
     <Folder Include="Docs\" />
     <Folder Include="Images\" />
