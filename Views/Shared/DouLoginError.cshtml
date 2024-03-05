@@ -3,6 +3,18 @@
     ViewBag.Title = "DouLoginError";
 }
 <div style="display:flex; justify-content:center; align-items:center; flex-direction:column;height:100%">
-    <h3>@Model.Name 您好</h3>
-    <h2><b style="color:red">系統目前測試中，尚未開放使用</b></h2>
+    <h2>@Model.Name 您好</h2>
+    <h2>
+        @{
+            //嘗試登入失試-尚未授權
+            if (ViewBag.ErrorMessage.IndexOf("尚未授權") > -1)
+            {
+                <b style="color:red">如需使用，請洽使用直屬主管，謝謝</b>
+            }
+            else
+            {
+                <b style="color:red">@ViewBag.ErrorMessage</b>
+                }
+            }            
+    </h2>    
 </div>
