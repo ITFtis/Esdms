@@ -41,147 +41,22 @@
   },
   {
     "serial": 9,
-    "empno": "F00006",
-    "vpower": "1"
+    "empno": "F01760",
+    "vpower": "1,2"
   },
   {
     "serial": 10,
-    "empno": "F00458",
-    "vpower": "1"
+    "empno": "F01801",
+    "vpower": "1,2"
   },
   {
     "serial": 11,
-    "empno": "F01283",
-    "vpower": "1"
+    "empno": "F00448",
+    "vpower": "1,2"
   },
   {
     "serial": 12,
-    "empno": "F01429",
-    "vpower": "1"
-  },
-  {
-    "serial": 13,
-    "empno": "F01653",
-    "vpower": "1"
-  },
-  {
-    "serial": 14,
-    "empno": "F01743",
-    "vpower": "1"
-  },
-  {
-    "serial": 15,
-    "empno": "F01760",
-    "vpower": "1"
-  },
-  {
-    "serial": 16,
-    "empno": "F01779",
-    "vpower": "1"
-  },
-  {
-    "serial": 17,
-    "empno": "F01801",
-    "vpower": "1"
-  },
-  {
-    "serial": 18,
-    "empno": "F01808",
-    "vpower": "1"
-  },
-  {
-    "serial": 19,
-    "empno": "F01847",
-    "vpower": "1"
-  },
-  {
-    "serial": 20,
-    "empno": "F01858",
-    "vpower": "1"
-  },
-  {
-    "serial": 21,
-    "empno": "F01868",
-    "vpower": "1"
-  },
-  {
-    "serial": 22,
-    "empno": "F01869",
-    "vpower": "1"
-  },
-  {
-    "serial": 23,
-    "empno": "F01881",
-    "vpower": "1"
-  },
-  {
-    "serial": 24,
-    "empno": "F00448",
-    "vpower": "1"
-  },
-  {
-    "serial": 25,
-    "empno": "F00531",
-    "vpower": "1"
-  },
-  {
-    "serial": 26,
-    "empno": "F00547",
-    "vpower": "1"
-  },
-  {
-    "serial": 27,
-    "empno": "F00705",
-    "vpower": "1"
-  },
-  {
-    "serial": 28,
-    "empno": "F00867",
-    "vpower": "1"
-  },
-  {
-    "serial": 29,
-    "empno": "F00891",
-    "vpower": "1"
-  },
-  {
-    "serial": 30,
-    "empno": "F01557",
-    "vpower": "1"
-  },
-  {
-    "serial": 31,
-    "empno": "F01732",
-    "vpower": "1"
-  },
-  {
-    "serial": 32,
-    "empno": "F01758",
-    "vpower": "1"
-  },
-  {
-    "serial": 33,
-    "empno": "F01769",
-    "vpower": "1"
-  },
-  {
-    "serial": 34,
-    "empno": "F01771",
-    "vpower": "1"
-  },
-  {
-    "serial": 35,
-    "empno": "F01786",
-    "vpower": "1"
-  },
-  {
-    "serial": 36,
-    "empno": "F01822",
-    "vpower": "1"
-  },
-  {
-    "serial": 37,
-    "empno": "F01843",
-    "vpower": "1"
+    "empno": "F01644",
+    "vpower": "1,2"
   }
 ]
