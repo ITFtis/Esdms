@@ -785,8 +785,7 @@
 
                 var isAdd = row.Id == null;
 
-                $('.ftisuserhistorycontroller .modal-dialog').find('[data-fn="ActivityCategoryType"] option[value=""]').remove();
-                $('.ftisuserhistorycontroller .modal-dialog').find('[data-fn="ActivityCategoryId"] option[value=""]').remove();
+                $('.ftisuserhistorycontroller .modal-dialog').find('[data-fn="ActivityCategoryType"] option[value=""]').remove();                
                 
                 if (isAdd) {
                     //會議名稱：新增－多選。修改－單選
@@ -801,13 +800,13 @@
                                 return '會議:挑' + sc + '個'
                             }
                         });
-                    
-                    ActivityCategoryId.selectpicker('deselectAll');                    
+
+                    $('.ftisuserhistorycontroller .modal-dialog').find('[data-fn="ActivityCategoryId"] option[value=""]').remove();
+                    ActivityCategoryId.selectpicker('deselectAll').selectpicker('val', '');                    
                 }
 
-                //參與紀錄 會議類別change事件
-                ChangeActivityCategoryType(isAdd);
-                
+                //會議類別綁定事件(Change)
+                ChangeActivityCategoryType();                                
 
                 //(下拉)參與紀錄 年度連動專案
                 $('.modal-dialog [data-fn="Year"]').change(function () {
@@ -880,7 +879,7 @@
                 };
 
             //實體Dou js
-            $_d7Table = $_d7EditDataContainer.douTable(_opt);            
+            $_d7Table = $_d7EditDataContainer.douTable(_opt);
         });
     };
 
@@ -980,44 +979,85 @@
         $ele.selectpicker('refresh').selectpicker('val', '');
     }
 
-    //參與紀錄 會議類別change事件
-    function ChangeActivityCategoryType(isAdd) {
+    //參與紀錄 會議類別綁定事件(Change)
+    function ChangeActivityCategoryType() {
         $('.ftisuserhistorycontroller .modal-dialog').find("[data-fn=ActivityCategoryType]").change(function () {
-            if (isAdd) {
-                //會議名稱：新增－多選
-                ResetSelectpickerActivityCategoryType();
+            var multiple = $('.ftisuserhistorycontroller .modal-dialog').find("[data-fn=ActivityCategoryId]").attr('multiple');
+
+            //change會議類別 SetUI
+            SetUIChangeActivityCategory(multiple);
+
+            if ($('.ftisuserhistorycontroller .modal-dialog').find("[data-fn=ActivityCategoryType]").is(":focus")) {
+                //change會議類別 SetValue
+                SetValueChangeActivityCategory(multiple);
+            } 
+        })
+    }
+
+    //參與紀錄 => change會議類別 SetUI
+    function SetUIChangeActivityCategory(multiple) {
+        //1.會內2.會外資料填寫
+        var type = $('.modal-dialog [data-fn="ActivityCategoryType"]').val();
+        if (type == 1) {
+            $('.modal-dialog  [data-field="ActivityCategoryJoinNum"]').hide();
+            $('.modal-dialog  [data-field="Year"]').show();
+            $('.modal-dialog  [data-field="ProjectId"]').show();
+            $('.modal-dialog  [data-field="OutYear"]').hide();
+            $('.modal-dialog  [data-field="DCode"]').show();
+
+            //預設值
+            $('.modal-dialog  [data-field="ActivityCategoryId"] label').text('會議名稱');
+        }
+        else if (type == 2) {
+            $('.modal-dialog  [data-field="ActivityCategoryJoinNum"]').show();
+            $('.modal-dialog  [data-field="Year"]').hide();
+            $('.modal-dialog  [data-field="ProjectId"]').hide();
+            $('.modal-dialog  [data-field="OutYear"]').show();
+            $('.modal-dialog  [data-field="DCode"]').hide();
+
+            //預設值
+            $('.modal-dialog  [data-field="ActivityCategoryId"] label').text('會議委辦單位');
+        }
+
+        if (multiple != null) {
+            ResetSelectpickerActivityCategoryType();
+        }
+    }
+
+    //參與紀錄 => change會議類別 SetValue
+    function SetValueChangeActivityCategory(multiple) {        
+        //1.會內2.會外資料填寫
+        var type = $('.modal-dialog [data-fn="ActivityCategoryType"]').val();
+        if (type == 1) {
+            //預設值                        
+            if (multiple == null) {
+                //單選
+                $('.modal-dialog').find('[data-fn="ActivityCategoryId"]').val('');
             }
-
-            //1.會內2.會外資料填寫
-            var type = $('.modal-dialog [data-fn="ActivityCategoryType"]').val();
-            if (type == 1) {
-                $('.modal-dialog  [data-field="ActivityCategoryJoinNum"]').hide();
-                $('.modal-dialog  [data-field="Year"]').show();
-                $('.modal-dialog  [data-field="ProjectId"]').show();
-                $('.modal-dialog  [data-field="OutYear"]').hide();
-                $('.modal-dialog  [data-field="DCode"]').show();
-
-                //預設值
-                $('.modal-dialog  [data-field="ActivityCategoryId"] label').text('會議名稱');
+            else {
+                //多選
                 $('.modal-dialog').find('[data-fn="ActivityCategoryId"]').selectpicker({ noneSelectedText: '請挑選會議名稱' }).selectpicker('refresh')
-                $('[data-fn="ActivityCategoryJoinNum"]').val('');
-                $('[data-fn="OutYear"]').val('');
+                $('.modal-dialog').find('[data-fn="ActivityCategoryId"]').selectpicker('deselectAll').selectpicker('val', '');
             }
-            else if (type == 2) {
-                $('.modal-dialog  [data-field="ActivityCategoryJoinNum"]').show();
-                $('.modal-dialog  [data-field="Year"]').hide();
-                $('.modal-dialog  [data-field="ProjectId"]').hide();
-                $('.modal-dialog  [data-field="OutYear"]').show();
-                $('.modal-dialog  [data-field="DCode"]').hide();
-
-                //預設值
-                $('.modal-dialog  [data-field="ActivityCategoryId"] label').text('會議委辦單位');
+            
+            $('[data-fn="ActivityCategoryJoinNum"]').val('');
+            $('[data-fn="OutYear"]').val('');
+        }
+        else if (type == 2) {
+            //預設值                        
+            if (multiple == null) {
+                //單選
+                $('.modal-dialog').find('[data-fn="ActivityCategoryId"]').val('');
+            }
+            else {
+                //多選
                 $('.modal-dialog').find('[data-fn="ActivityCategoryId"]').selectpicker({ noneSelectedText: '請挑選委辦單位' }).selectpicker('refresh')
-                $('[data-fn="Year"]').val('');
-                $('[data-fn="ProjectId"]').val('');
-                $('[data-fn="DCode"]').val('');
-            }
-        });
+                $('.modal-dialog').find('[data-fn="ActivityCategoryId"]').selectpicker('deselectAll').selectpicker('val', '');
+            }            
+            $('[data-fn="Year"]').val('');
+            $('[data-fn="ProjectId"]').val('');
+            $('[data-fn="DCode"]').val('');
+        }        
     }
 
     //(下拉)參與紀錄 年度連動專案
