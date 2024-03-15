@@ -216,6 +216,8 @@ namespace Esdms.Controllers.Es
             options.editformSize.height = "fixed";
             options.editformSize.width = "auto";
 
+            options.GetFiled("OfficeEmail").colsize = 6;
+            options.GetFiled("PrivateEmail").colsize = 6;
             options.GetFiled("OfficeAddress").colsize = 6;
             options.GetFiled("PAddress").colsize = 6;
 

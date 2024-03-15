@@ -61,6 +61,11 @@ namespace Esdms.Models
         [StringLength(20)]
         public string OfficePhone { get; set; }
 
+        [Display(Name = "辦公室電話2")]
+        [ColumnDef(ColSize = 3)]
+        [StringLength(20)]
+        public string OfficePhone2 { get; set; }
+
         [Display(Name = "手機號碼")]
         [ColumnDef(ColSize = 3)]
         [StringLength(30)]
