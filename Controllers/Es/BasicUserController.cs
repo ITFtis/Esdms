@@ -109,7 +109,7 @@ namespace Esdms.Controllers.Es
 
             if (!string.IsNullOrEmpty(Name))
             {
-                iquery = iquery.Where(a => a.Name == Name);
+                iquery = iquery.Where(a => a.Name.IndexOf(Name) > -1);
             }
             //是否重複查詢            
             if (!string.IsNullOrEmpty(DuplicateName))
