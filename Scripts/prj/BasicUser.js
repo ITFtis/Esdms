@@ -512,6 +512,55 @@
         callback();
     }
 
+    douoptions.tableOptions.onLoadSuccess = function (datas) {
+        //alert('123');        
+        if (datas && datas.rows.length == 0) {
+            //條件顯示：無符合資料
+            var aryFilter = [];
+
+            var conditions = GetFilterParams($_masterTable);
+            $.each(conditions, function (index, v) {
+                if (v.value) {                    
+                    switch (v.key) {
+                        case "Name":
+                            aryFilter.push("姓名(" + v.value + ")");
+                            break;
+                        case "strExpertises":
+                            aryFilter.push("專長(" + v.value + ")");
+                            break;
+                        case "SubjectId":
+                            var s = $('.fixed-table-toolbar').find('[data-fn="SubjectId"] option[value=' + v.value + ']').text();
+                            aryFilter.push("專長類別(" + s + ")");
+                            break;
+                        case "SubjectDetailId":
+                            var ary = [];
+                            $.each(v.value.split(','), function (a, text) {
+                                ary.push($('.fixed-table-toolbar').find('[data-fn="SubjectDetailId"] option[value=' + text + ']').text());
+                            })
+                            aryFilter.push("專長領域(" + ary.join('、') + ")");
+                            break;
+                        case "DuplicateName":
+                            var s = '';
+                            if (v.value == "Y") {
+                                s = "是";
+                            }
+                            else if (v.value == "N") {
+                                s = "否";
+                            }
+
+                            aryFilter.push("重覆姓名(" + s + ")");
+                            break;
+                    }
+                }
+            });
+
+            if (aryFilter.length > 0) {
+                var str = aryFilter.join(' ,') + '</br>' + '  無符合資料';
+                $('.no-records-found td').html("篩選條件：" + str);
+            }
+        }
+    }
+
     var $_masterTable = $("#_table").DouEditableTable(douoptions).on($.dou.events.add, function (e, row) {
 
         //錨點
