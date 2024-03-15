@@ -4,7 +4,7 @@
     //特定角色使用功能
     var adminRoles = ['admin', 'ftisadmin'];
     var adminUsed = loginRoles.some(r => adminRoles.includes(r));
-
+    
     //清單欄位排序(非預設編輯頁)
     //說明: js, controller不可設Index排序(douoptions.fields已實體，順序不再變動)
     if (!douoptions.singleDataEdit) {
@@ -40,7 +40,7 @@
 
     //主表(EmpData) 基本資料
     douoptions.afterCreateEditDataForm = function ($container, row) {
-
+        
         var isAdd = JSON.stringify(row) == '{}';
 
         var $_oform = $("#_tabs");
@@ -91,6 +91,14 @@
                 jspAlertMsg($("body"), { autoclose: 3000, content: "姓名尚未重覆", classes: 'modal-sm' }, null);
             }
         });            
+
+        if (IsView) {
+            $(".modal-dialog input").prop("disabled", true);
+            $(".modal-dialog select").prop("disabled", true);
+            $(".modal-dialog textarea").prop("disabled", true);
+            $(".modal-dialog .modal-footer").hide();
+            $("#aViewName").hide();
+        }
 
         if (isAdd) {
             //新增隱藏身分代碼, 由Controler(Add)產出
@@ -614,6 +622,12 @@
 
             _opt.title = '專長';
 
+            if (IsView) {
+                _opt.addable = false;
+                _opt.editable = false;
+                _opt.deleteable = false;
+            }
+
             //取消自動抓後端資料
             _opt.tableOptions.url = undefined;
 
@@ -767,6 +781,12 @@
         $.getJSON($.AppConfigOptions.baseurl + 'FTISUserHistory/GetDataManagerOptionsJson', function (_opt) { //取model option
 
             _opt.title = '專家參與紀錄';
+
+            if (IsView) {
+                _opt.addable = false;
+                _opt.editable = false;
+                _opt.deleteable = false;
+            }
 
             //取消自動抓後端資料
             _opt.tableOptions.url = undefined;

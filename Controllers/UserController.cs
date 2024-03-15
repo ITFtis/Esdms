@@ -74,10 +74,10 @@ namespace Esdms.Controllers
                         string ssouname = ssouser.Name.Value + "";//姓名
                         string ssouemail = ssouser.EMail.Value + "";    //EMail
                         string ssoudc = ssouser.DCode.Value + "";       //部門代碼
-                        
+
                         //////測試ID
                         ////if (ssouid == "J00007")
-                        ////    ssouid = "F00878";
+                        ////    ssouid = "F00027";
 
                         User u = FindUser(ssouid); //已驗證，故直接取系統使用者
                         if (u != null)

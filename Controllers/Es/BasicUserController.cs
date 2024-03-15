@@ -17,6 +17,7 @@ using System.Data.Entity;
 using DouHelper;
 using Dou.Models;
 using System.Data.Entity.Infrastructure;
+using System.Web.UI.WebControls;
 
 namespace Esdms.Controllers.Es
 {
@@ -28,6 +29,10 @@ namespace Esdms.Controllers.Es
         {
             List<RoleUser> roles = Dou.Context.CurrentUser<User>().GetUserRoles();
             ViewBag.Roles = roles;
+
+            //有專家編輯權限
+            List<string> editRoles = new List<string>() { "admin", "DataManager", "ftisadmin" };
+            ViewBag.IsView = roles.Where(a => editRoles.Any(b => a.RoleId == b)).Count() == 0;
 
             string path = Server.MapPath("~/Data/vPower.json");
             if (System.IO.File.Exists(path))
