@@ -55,7 +55,12 @@ namespace Esdms.Models
         [ColumnDef(ColSize = 3)]
         [StringLength(40)]
         public string Position { get; set; }
-        
+
+        [Display(Name = "手機號碼")]
+        [ColumnDef(ColSize = 3)]
+        [StringLength(30)]
+        public string PrivatePhone { get; set; }
+
         [Display(Name = "辦公室電話")]
         [ColumnDef(ColSize = 3)]
         [StringLength(20)]
@@ -64,12 +69,7 @@ namespace Esdms.Models
         [Display(Name = "辦公室電話2")]
         [ColumnDef(ColSize = 3)]
         [StringLength(20)]
-        public string OfficePhone2 { get; set; }
-
-        [Display(Name = "手機號碼")]
-        [ColumnDef(ColSize = 3)]
-        [StringLength(30)]
-        public string PrivatePhone { get; set; }
+        public string OfficePhone2 { get; set; }        
 
         [Display(Name = "傳真")]
         [ColumnDef(ColSize = 3)]

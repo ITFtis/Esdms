@@ -66,6 +66,10 @@
         var remind = '<span class="text-danger fw-lighter pull-right">格式(02-23****** #123)</span>';
         $(remind).appendTo($p1);
 
+        var $p1_2 = $('div[data-field=OfficePhone2]').find('label');
+        var remind = '<span class="text-danger fw-lighter pull-right">格式(02-23****** #123)</span>';
+        $(remind).appendTo($p1_2);
+
         var $p2 = $('div[data-field=Fax]').find('label');
         var remind = '<span class="text-danger fw-lighter pull-right">格式(02-23****** #123)</span>';
         $(remind).appendTo($p2);
