@@ -64,6 +64,21 @@ namespace Esdms.Controllers
                 //有token(以驗證)
                 if (_ssotoken != null)
                 {
+                    //Brian：微軟SSO callback 2次(本機才會)
+                    string key = "ssoUser";
+                    var token = DouHelper.Misc.GetCache<string>(10 * 1000, key);
+                    if (token != null)
+                    {
+                        //Sleep 10秒
+                        System.Threading.Thread.Sleep(5 * 1000);
+                        RedirectToAction("Index", "BasicUser");
+                    }
+                    else
+                    {
+                        DouHelper.Misc.AddCache(_ssotoken, key);
+                    }
+                    //End 微軟SSO callback 2次
+
                     _ssotoken = _ssotoken.ToLower();
                     //取驗證使用者資料
                     var ssou = GetUserInfoSSO(_ssotoken);
