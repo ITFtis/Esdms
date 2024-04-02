@@ -55,6 +55,7 @@ namespace Esdms.Controllers.Es
             opts.GetFiled("ActivityCategoryJoinNum").colsize = 6;
             opts.GetFiled("OutYear").colsize = 6;
             opts.GetFiled("ActivityCategoryId").colsize = 12;
+            opts.GetFiled("Owner").colsize = 6;
             opts.GetFiled("ProjectId").colsize = 12;
 
             opts.GetFiled("ActivityCategoryType").align = "left";

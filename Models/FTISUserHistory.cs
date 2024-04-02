@@ -53,6 +53,11 @@ namespace Esdms.Models
         [ColumnDef(ColSize = 3)]
         public int? ActivityCategoryJoinNum { get; set; }
 
+        [Display(Name = "業主")]
+        [ColumnDef(ColSize = 3)]
+        [StringLength(50)]
+        public string Owner { get; set; }
+
         [Display(Name = "年度")]
         [ColumnDef(EditType = EditType.Select,
             Filter = true, SelectItemsClassNamespace = Esdms.GetYaerSelectItems.AssemblyQualifiedName, 
@@ -61,8 +66,8 @@ namespace Esdms.Models
 
         [Display(Name = "日期")]
         [ColumnDef(Visible = false, VisibleEdit = false, EditType = EditType.Date, ColSize = 3)]
-        public DateTime? Date { get; set; }        
-
+        public DateTime? Date { get; set; }
+       
         [Display(Name = "專案")]
         [ColumnDef(Filter = true,
             EditType = EditType.TextList, SelectItemsClassNamespace = Esdms.Models.ProjectSelectItems.AssemblyQualifiedName,
