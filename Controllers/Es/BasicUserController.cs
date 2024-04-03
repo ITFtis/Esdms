@@ -449,12 +449,12 @@ namespace Esdms.Controllers.Es
                     string privatePhone = !dic.ContainsKey("_PrivatePhone") ? "" : row.ItemArray[dic["_PrivatePhone"]].ToString();
                     string fax = !dic.ContainsKey("_Fax") ? "" : row.ItemArray[dic["_Fax"]].ToString();
                     string officeEmail = !dic.ContainsKey("_OfficeEmail") ? "" : row.ItemArray[dic["_OfficeEmail"]].ToString();
-                    string privateEmail = !dic.ContainsKey("_PrivateEmail") ? "" : row.ItemArray[dic["_PrivateEmail"]].ToString();
-                    //(辦公)縣市_CityCode
-                    //(辦公)鄉鎮市區_ZIP
+                    string privateEmail = !dic.ContainsKey("_PrivateEmail") ? "" : row.ItemArray[dic["_PrivateEmail"]].ToString();                   
+                    string ___cityCode = !dic.ContainsKey("_CityCode") ? "" : row.ItemArray[dic["_CityCode"]].ToString();                    
+                    string ___zip = !dic.ContainsKey("_ZIP") ? "" : row.ItemArray[dic["_ZIP"]].ToString();
                     string officeAddress = !dic.ContainsKey("_OfficeAddress") ? "" : row.ItemArray[dic["_OfficeAddress"]].ToString();
-                    //(住家)縣市_PCityCode
-                    //(住家)鄉鎮市區_PZIP
+                    string ___pCityCode = !dic.ContainsKey("_PCityCode") ? "" : row.ItemArray[dic["_PCityCode"]].ToString();
+                    string ___pZIP = !dic.ContainsKey("_PZIP") ? "" : row.ItemArray[dic["_PZIP"]].ToString();
                     string paddress = !dic.ContainsKey("_Paddress") ? "" : row.ItemArray[dic["_Paddress"]].ToString();
                     string note = !dic.ContainsKey("_Note") ? "" : row.ItemArray[dic["_Note"]].ToString();
 
@@ -474,7 +474,19 @@ namespace Esdms.Controllers.Es
                     int? categoryId = v2.Count() == 0 ? (int?)null : v2.FirstOrDefault().Id;
 
                     var v3 = Code.GetOnJob().Where(a => a.Value.ToString() == ___onJob);
-                    string onJob = v3.Count() == 0 ? null : v3.FirstOrDefault().Key;                    
+                    string onJob = v3.Count() == 0 ? null : v3.FirstOrDefault().Key;
+
+                    var v4 = CitySelectItems.CITIES.Where(a => a.Name == ___cityCode);
+                    string cityCode = v4.Count() == 0 ? null : v4.FirstOrDefault().CityCode;
+
+                    var v5 = TownSelectItems.Towns.Where(a => a.Name == ___zip);
+                    string zip = v5.Count() == 0 ? null : v5.FirstOrDefault().ZIP;
+
+                    var v6 = CitySelectItems.CITIES.Where(a => a.Name == ___pCityCode);
+                    string pCityCode = v6.Count() == 0 ? null : v6.FirstOrDefault().CityCode;
+
+                    var v7 = TownSelectItems.Towns.Where(a => a.Name == ___pZIP);
+                    string pzip = v7.Count() == 0 ? null : v7.FirstOrDefault().ZIP;
 
                     //環境部
                     int env_num = 0;                    
@@ -511,11 +523,11 @@ namespace Esdms.Controllers.Es
                         if (dic.ContainsKey("_Fax")) nuser.Fax = fax;
                         if (dic.ContainsKey("_OfficeEmail")) nuser.OfficeEmail = officeEmail;
                         if (dic.ContainsKey("_PrivateEmail")) nuser.PrivateEmail = privateEmail;
-                        //(辦公)縣市_CityCode
-                        //(辦公)鄉鎮市區_ZIP
-                        if (dic.ContainsKey("_OfficeAddress")) nuser.OfficeAddress = officeAddress;
-                        //(住家)縣市_PCityCode
-                        //(住家)鄉鎮市區_PZIP
+                        if (dic.ContainsKey("_CityCode")) nuser.CityCode = cityCode;
+                        if (dic.ContainsKey("_ZIP")) nuser.ZIP = zip;
+                        if (dic.ContainsKey("_OfficeAddress")) nuser.OfficeAddress = officeAddress;                                               
+                        if (dic.ContainsKey("_PCityCode")) nuser.PCityCode = pCityCode;
+                        if (dic.ContainsKey("_PZIP")) nuser.PZIP = pzip;
                         if (dic.ContainsKey("_Paddress")) nuser.PAddress = paddress;
                         if (dic.ContainsKey("_Note")) nuser.Note = note;
                         nuser.BDate = DateTime.Now;
@@ -542,11 +554,11 @@ namespace Esdms.Controllers.Es
                         if (dic.ContainsKey("_Fax") && !string.IsNullOrEmpty(fax.Trim())) data.Fax = fax;
                         if (dic.ContainsKey("_OfficeEmail") && !string.IsNullOrEmpty(officeEmail.Trim())) data.OfficeEmail = officeEmail;
                         if (dic.ContainsKey("_PrivateEmail") && !string.IsNullOrEmpty(privateEmail.Trim())) data.PrivateEmail = privateEmail;
-                        //(辦公)縣市_CityCode
-                        //(辦公)鄉鎮市區_ZIP
-                        if (dic.ContainsKey("_OfficeAddress") && !string.IsNullOrEmpty(officeAddress.Trim())) data.OfficeAddress = officeAddress;
-                        //(住家)縣市_PCityCode
-                        //(住家)鄉鎮市區_PZIP
+                        if (dic.ContainsKey("_CityCode") && cityCode != null) data.CityCode = cityCode;
+                        if (dic.ContainsKey("_ZIP") && zip != null) data.ZIP = zip;
+                        if (dic.ContainsKey("_OfficeAddress") && !string.IsNullOrEmpty(officeAddress.Trim())) data.OfficeAddress = officeAddress;                        
+                        if (dic.ContainsKey("_PCityCode") && pCityCode != null) data.PCityCode = pCityCode;                        
+                        if (dic.ContainsKey("_PZIP") && pzip != null) data.PZIP = pzip;
                         if (dic.ContainsKey("_Paddress") && !string.IsNullOrEmpty(paddress.Trim())) data.PAddress = paddress;
                         if (dic.ContainsKey("_Note") && !string.IsNullOrEmpty(note.Trim())) data.Note = note;
 
