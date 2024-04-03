@@ -63,17 +63,17 @@ namespace Esdms.Models
 
         [Display(Name = "辦公室電話")]
         [ColumnDef(ColSize = 3)]
-        [StringLength(20)]
+        [StringLength(40)]
         public string OfficePhone { get; set; }
 
         [Display(Name = "辦公室電話2")]
         [ColumnDef(ColSize = 3)]
-        [StringLength(20)]
+        [StringLength(40)]
         public string OfficePhone2 { get; set; }        
 
         [Display(Name = "傳真")]
         [ColumnDef(ColSize = 3)]
-        [StringLength(20)]
+        [StringLength(40)]
         public string Fax { get; set; }
 
         [Display(Name = "(辦公)Email")]
