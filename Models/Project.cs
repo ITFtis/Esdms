@@ -32,6 +32,11 @@ namespace Esdms.Models
         [Display(Name = "專案名稱")]
         public string Name { get; set; }
 
+        [StringLength(40)]
+        [Column(TypeName = "nvarchar")]
+        [Display(Name = "匯入代碼")]
+        public string DCode { get; set; }
+
         [StringLength(50)]
         [Column(TypeName = "nvarchar")]
         [Display(Name = "委辦單位")]
