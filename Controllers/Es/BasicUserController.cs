@@ -484,18 +484,7 @@ namespace Esdms.Controllers.Es
 
                         basicUser.Add(nuser);
                         rPId = nuser.PId;
-
-                        //「新增」時，會加入專長                        
-                        if (subjectDetailId.Count > 0)
-                        {
-                            var Expertises = subjectDetailId.Select(a => new Expertise
-                            {
-                                PId = nuser.PId,
-                                SubjectId = a.SubjectId,
-                                SubjectDetailId = a.Id,
-                            });
-                            expertise.Add(Expertises);
-                        }                        
+                                             
                     }
                     else
                     {
@@ -596,7 +585,27 @@ namespace Esdms.Controllers.Es
                             }
                         }
 
-                        #endregion                        
+                        #endregion
+
+                        #region  更新專長(刪除新增)
+                                           
+                        if (subjectDetailId.Count > 0)
+                        {
+                            //刪除
+                            var delExpertises = expertise.GetAll().Where(a => a.PId == rPId);
+                            expertise.Delete(delExpertises);
+
+                            //新增
+                            var Expertises = subjectDetailId.Select(a => new Expertise
+                            {
+                                PId = rPId,
+                                SubjectId = a.SubjectId,
+                                SubjectDetailId = a.Id,
+                            });
+                            expertise.Add(Expertises);
+                        }
+
+                        #endregion
                     }
 
                 }
