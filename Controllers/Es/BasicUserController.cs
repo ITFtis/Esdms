@@ -389,6 +389,19 @@ namespace Esdms.Controllers.Es
                     if (name.Contains("_OnJob")) { dic.Add("_OnJob", index); continue; }
                     if (name.Contains("_UnitName")) { dic.Add("_UnitName", index); continue; }
                     if (name.Contains("_Position")) { dic.Add("_Position", index); continue; }
+                    if (name.Contains("_OfficePhone")) { dic.Add("_OfficePhone", index); continue; }
+                    if (name.Contains("_2OfficePhone")) { dic.Add("_OfficePhone2", index); continue; }
+                    if (name.Contains("_PrivatePhone")) { dic.Add("_PrivatePhone", index); continue; }
+                    if (name.Contains("_Fax")) { dic.Add("_Fax", index); continue; }
+                    if (name.Contains("_OfficeEmail")) { dic.Add("_OfficeEmail", index); continue; }
+                    if (name.Contains("_PrivateEmail")) { dic.Add("_PrivateEmail", index); continue; }
+                    if (name.Contains("_CityCode")) { dic.Add("_CityCode", index); continue; }
+                    if (name.Contains("_ZIP")) { dic.Add("_ZIP", index); continue; }
+                    if (name.Contains("_OfficeAddress")) { dic.Add("_OfficeAddress", index); continue; }
+                    if (name.Contains("_PCityCode")) { dic.Add("_PCityCode", index); continue; }
+                    if (name.Contains("_PZIP")) { dic.Add("_PZIP", index); continue; }
+                    if (name.Contains("_Paddress")) { dic.Add("_Paddress", index); continue; }
+                    if (name.Contains("_Note")) { dic.Add("_Note", index); continue; }
                     if (name.Contains("_Env_")) 
                     { 
                         dic.Add("_Env_", index);
@@ -431,6 +444,20 @@ namespace Esdms.Controllers.Es
                     string ___onJob = !dic.ContainsKey("_OnJob") ? "" : row.ItemArray[dic["_OnJob"]].ToString();
                     string unitName = !dic.ContainsKey("_UnitName") ? "" : row.ItemArray[dic["_UnitName"]].ToString();
                     string position = !dic.ContainsKey("_Position") ? "" : row.ItemArray[dic["_Position"]].ToString();
+                    string officePhone = !dic.ContainsKey("_OfficePhone") ? "" : row.ItemArray[dic["_OfficePhone"]].ToString();
+                    string officePhone2 = !dic.ContainsKey("_OfficePhone2") ? "" : row.ItemArray[dic["_OfficePhone2"]].ToString();
+                    string privatePhone = !dic.ContainsKey("_PrivatePhone") ? "" : row.ItemArray[dic["_PrivatePhone"]].ToString();
+                    string fax = !dic.ContainsKey("_Fax") ? "" : row.ItemArray[dic["_Fax"]].ToString();
+                    string officeEmail = !dic.ContainsKey("_OfficeEmail") ? "" : row.ItemArray[dic["_OfficeEmail"]].ToString();
+                    string privateEmail = !dic.ContainsKey("_PrivateEmail") ? "" : row.ItemArray[dic["_PrivateEmail"]].ToString();
+                    //(辦公)縣市_CityCode
+                    //(辦公)鄉鎮市區_ZIP
+                    string officeAddress = !dic.ContainsKey("_OfficeAddress") ? "" : row.ItemArray[dic["_OfficeAddress"]].ToString();
+                    //(住家)縣市_PCityCode
+                    //(住家)鄉鎮市區_PZIP
+                    string paddress = !dic.ContainsKey("_Paddress") ? "" : row.ItemArray[dic["_Paddress"]].ToString();
+                    string note = !dic.ContainsKey("_Note") ? "" : row.ItemArray[dic["_Note"]].ToString();
+
                     string ___env = !dic.ContainsKey("_Env_") ? "" : row.ItemArray[dic["_Env_"]].ToString();
                     string ___eng = !dic.ContainsKey("_Eng_") ? "" : row.ItemArray[dic["_Eng_"]].ToString();
                     string ___ida = !dic.ContainsKey("_Ida_") ? "" : row.ItemArray[dic["_Ida_"]].ToString();
@@ -477,7 +504,20 @@ namespace Esdms.Controllers.Es
                         if (dic.ContainsKey("_CategoryId")) nuser.CategoryId = categoryId;
                         if (dic.ContainsKey("_OnJob")) nuser.OnJob = onJob;
                         if (dic.ContainsKey("_UnitName")) nuser.UnitName = unitName;
-                        if (dic.ContainsKey("_Position")) nuser.Position = position;                                                
+                        if (dic.ContainsKey("_Position")) nuser.Position = position;
+                        if (dic.ContainsKey("_OfficePhone")) nuser.OfficePhone = officePhone;
+                        if (dic.ContainsKey("_OfficePhone2")) nuser.OfficePhone2 = officePhone2;
+                        if (dic.ContainsKey("_PrivatePhone")) nuser.PrivatePhone = privatePhone;
+                        if (dic.ContainsKey("_Fax")) nuser.Fax = fax;
+                        if (dic.ContainsKey("_OfficeEmail")) nuser.OfficeEmail = officeEmail;
+                        if (dic.ContainsKey("_PrivateEmail")) nuser.PrivateEmail = privateEmail;
+                        //(辦公)縣市_CityCode
+                        //(辦公)鄉鎮市區_ZIP
+                        if (dic.ContainsKey("_OfficeAddress")) nuser.OfficeAddress = officeAddress;
+                        //(住家)縣市_PCityCode
+                        //(住家)鄉鎮市區_PZIP
+                        if (dic.ContainsKey("_Paddress")) nuser.PAddress = paddress;
+                        if (dic.ContainsKey("_Note")) nuser.Note = note;
                         nuser.BDate = DateTime.Now;
                         nuser.BFno = Dou.Context.CurrentUserBase.Id;
                         nuser.BName = Dou.Context.CurrentUserBase.Name;                                                
@@ -490,11 +530,26 @@ namespace Esdms.Controllers.Es
                     {
                         //修改
                         ////data.Name = name;  (where name)，不需要修改
-                        if (dic.ContainsKey("_Sex")) data.Sex = sex;
-                        if (dic.ContainsKey("_CategoryId")) data.CategoryId = categoryId;
-                        if (dic.ContainsKey("_OnJob")) data.OnJob = onJob;
-                        if (dic.ContainsKey("_UnitName")) data.UnitName = unitName;
-                        if (dic.ContainsKey("_Position")) data.Position = position;
+                        if (dic.ContainsKey("_Sex") && sex != null) data.Sex = sex;
+                        if (dic.ContainsKey("_CategoryId") && categoryId != null) data.CategoryId = categoryId;
+                        if (dic.ContainsKey("_OnJob") && onJob != null) data.OnJob = onJob;
+                        if (dic.ContainsKey("_UnitName") && !string.IsNullOrEmpty(unitName.Trim())) data.UnitName = unitName;
+                        if (dic.ContainsKey("_Position") && !string.IsNullOrEmpty(position.Trim())) data.Position = position;
+
+                        if (dic.ContainsKey("_OfficePhone") && !string.IsNullOrEmpty(officePhone.Trim())) data.OfficePhone = officePhone;
+                        if (dic.ContainsKey("_OfficePhone2") && !string.IsNullOrEmpty(officePhone2.Trim())) data.OfficePhone2 = officePhone2;
+                        if (dic.ContainsKey("_PrivatePhone") && !string.IsNullOrEmpty(privatePhone.Trim())) data.PrivatePhone = privatePhone;
+                        if (dic.ContainsKey("_Fax") && !string.IsNullOrEmpty(fax.Trim())) data.Fax = fax;
+                        if (dic.ContainsKey("_OfficeEmail") && !string.IsNullOrEmpty(officeEmail.Trim())) data.OfficeEmail = officeEmail;
+                        if (dic.ContainsKey("_PrivateEmail") && !string.IsNullOrEmpty(privateEmail.Trim())) data.PrivateEmail = privateEmail;
+                        //(辦公)縣市_CityCode
+                        //(辦公)鄉鎮市區_ZIP
+                        if (dic.ContainsKey("_OfficeAddress") && !string.IsNullOrEmpty(officeAddress.Trim())) data.OfficeAddress = officeAddress;
+                        //(住家)縣市_PCityCode
+                        //(住家)鄉鎮市區_PZIP
+                        if (dic.ContainsKey("_Paddress") && !string.IsNullOrEmpty(paddress.Trim())) data.PAddress = paddress;
+                        if (dic.ContainsKey("_Note") && !string.IsNullOrEmpty(note.Trim())) data.Note = note;
+
                         data.UDate = DateTime.Now;
                         data.UFno = Dou.Context.CurrentUserBase.Id;
                         data.UName = Dou.Context.CurrentUserBase.Name;
