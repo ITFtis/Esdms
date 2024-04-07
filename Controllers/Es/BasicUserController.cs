@@ -472,7 +472,7 @@ namespace Esdms.Controllers.Es
                     string ___subjectDetailId = !dic.ContainsKey("_SubjectDetailId") ? "" : row.ItemArray[dic["_SubjectDetailId"]].ToString();
 
                     string ___ftisActivityCategoryId = !dic.ContainsKey("_FtisActivityCategoryId") ? "" : row.ItemArray[dic["_FtisActivityCategoryId"]].ToString();
-                    string ftisDCode = !dic.ContainsKey("_FtisDCode") ? "" : row.ItemArray[dic["_FtisDCode"]].ToString();
+                    string ___ftisDCode = !dic.ContainsKey("_FtisDCode") ? "" : row.ItemArray[dic["_FtisDCode"]].ToString();
                     string ftisOwner = !dic.ContainsKey("_FtisOwner") ? "" : row.ItemArray[dic["_FtisOwner"]].ToString();
                     string ___ftisYear = !dic.ContainsKey("_FtisYear") ? "" : row.ItemArray[dic["_FtisYear"]].ToString();
                     string ___ftisProjectId = !dic.ContainsKey("_FtisProjectId") ? "" : row.ItemArray[dic["_FtisProjectId"]].ToString();
@@ -519,6 +519,9 @@ namespace Esdms.Controllers.Es
 
                     //專案(單筆)
                     var ftisProject = m_project.Where(a => ___ftisProjectId.Split(',').Any(b => b == a.DCode)).ToList();
+
+                    //部門(單筆) 用名稱比對
+                    var ftisDCode = Code.GetDepartment().Where(a => ___ftisDCode == a.Value.ToString()).ToList();
 
                     //專長
                     var subjectDetailId = m_subjectDetail.Where(a => ___subjectDetailId.Split(',').Any(b => b == a.DCode)).ToList();
@@ -695,7 +698,7 @@ namespace Esdms.Controllers.Es
                                 var FTISUserHistorys = ftisActivityCategoryId.Select(a => new FTISUserHistory
                                 {
                                     PId = rPId,
-                                    DCode = "99",
+                                    DCode = ftisDCode.Count == 0 ? null : ftisDCode.FirstOrDefault().Key,
                                     Year = ftisYear,
                                     ProjectId = ftisProject == null ? (int?)null : ftisProject.FirstOrDefault().Id,
                                     ActivityCategoryType = 1,  //1會內
