@@ -414,6 +414,11 @@ namespace Esdms.Controllers.Es
                     if (name.Contains("_Eng_")) { dic.Add("_Eng_", index); continue; }
                     if (name.Contains("_Ida_")) { dic.Add("_Ida_", index); continue; }
                     if (name.Contains("_SubjectDetailId")) { dic.Add("_SubjectDetailId", index); continue; }
+                    if (name.Contains("_FtisActivityCategoryId")) { dic.Add("_FtisActivityCategoryId", index); continue; }
+                    if (name.Contains("_FtisDCode")) { dic.Add("_FtisDCode", index); continue; }
+                    if (name.Contains("_FtisOwner")) { dic.Add("_FtisOwner", index); continue; }
+                    if (name.Contains("_FtisYear")) { dic.Add("_FtisYear", index); continue; }
+                    if (name.Contains("_FtisProjectId")) { dic.Add("_FtisProjectId", index); continue; }
                 }
                 
                 //int cc = 0;
@@ -423,8 +428,11 @@ namespace Esdms.Controllers.Es
                 Dou.Models.DB.IModelEntity<FTISUserHistory> fTISUserHistory = new Dou.Models.DB.ModelEntity<FTISUserHistory>(dbContext);
                 Dou.Models.DB.IModelEntity<SubjectDetail> subjectDetail = new Dou.Models.DB.ModelEntity<SubjectDetail>(dbContext);                
                 Dou.Models.DB.IModelEntity<ActivityCategory> activityCategory = new Dou.Models.DB.ModelEntity<ActivityCategory>(dbContext);
+                Dou.Models.DB.IModelEntity<Esdms.Models.Project> project = new Dou.Models.DB.ModelEntity<Esdms.Models.Project>(dbContext);
 
                 var m_subjectDetail = subjectDetail.GetAll().ToList();
+                var m_activityCategory = activityCategory.GetAll().ToList();
+                var m_project = project.GetAll().ToList();
 
                 foreach (DataRow row in dt.Rows)
                 {
@@ -463,6 +471,12 @@ namespace Esdms.Controllers.Es
                     string ___ida = !dic.ContainsKey("_Ida_") ? "" : row.ItemArray[dic["_Ida_"]].ToString();
                     string ___subjectDetailId = !dic.ContainsKey("_SubjectDetailId") ? "" : row.ItemArray[dic["_SubjectDetailId"]].ToString();
 
+                    string ___ftisActivityCategoryId = !dic.ContainsKey("_FtisActivityCategoryId") ? "" : row.ItemArray[dic["_FtisActivityCategoryId"]].ToString();
+                    string ftisDCode = !dic.ContainsKey("_FtisDCode") ? "" : row.ItemArray[dic["_FtisDCode"]].ToString();
+                    string ftisOwner = !dic.ContainsKey("_FtisOwner") ? "" : row.ItemArray[dic["_FtisOwner"]].ToString();
+                    string ___ftisYear = !dic.ContainsKey("_FtisYear") ? "" : row.ItemArray[dic["_FtisYear"]].ToString();
+                    string ___ftisProjectId = !dic.ContainsKey("_FtisProjectId") ? "" : row.ItemArray[dic["_FtisProjectId"]].ToString();
+
                     if (name == "")
                         continue;
 
@@ -488,18 +502,25 @@ namespace Esdms.Controllers.Es
                     var v7 = TownSelectItems.Towns.Where(a => a.Name == ___pZIP);
                     string pzip = v7.Count() == 0 ? null : v7.FirstOrDefault().ZIP;
 
-                    //環境部
+                    //(會外)會議 - 環境部
                     int env_num = 0;                    
                     int.TryParse(___env, out env_num);
 
-                    //能源署
+                    //(會外)會議 - 能源署
                     int eng_num = 0;
                     int.TryParse(___eng, out eng_num);
 
-                    //產發署
+                    //(會外)會議 - 產發署
                     int ida_num = 0;
                     int.TryParse(___ida, out ida_num);
 
+                    //(會內)會議
+                    var ftisActivityCategoryId = m_activityCategory.Where(a => ___ftisActivityCategoryId.Split(',').Any(b => b == a.DCode)).ToList();
+
+                    //專案(單筆)
+                    var ftisProject = m_project.Where(a => ___ftisProjectId.Split(',').Any(b => b == a.DCode)).ToList();
+
+                    //專長
                     var subjectDetailId = m_subjectDetail.Where(a => ___subjectDetailId.Split(',').Any(b => b == a.DCode)).ToList();
 
                     string rPId = "";
@@ -654,8 +675,43 @@ namespace Esdms.Controllers.Es
 
                         #endregion
 
+                        #region  更新專家參與紀錄(會內) (刪除新增)
+
+                        if (ftisActivityCategoryId.Count > 0)
+                        {
+                            int ftisYear = 0;
+                            if (int.TryParse(___ftisYear, out ftisYear) && ftisProject.Count > 0)
+                            {
+                                //刪除(條件：年度+專案ID)
+                                var delfTISUserHistory = fTISUserHistory.GetAll().Where(a => a.PId == rPId
+                                                            && a.Year == ftisYear && a.ActivityCategoryType == 1)
+                                                            .AsEnumerable()
+                                                            .Where(a => ftisProject.Any(b => b.Id == a.ProjectId));
+                                
+                                var aa = delfTISUserHistory.ToList();
+                                fTISUserHistory.Delete(delfTISUserHistory);
+                                
+                                //新增
+                                var FTISUserHistorys = ftisActivityCategoryId.Select(a => new FTISUserHistory
+                                {
+                                    PId = rPId,
+                                    DCode = "99",
+                                    Year = ftisYear,
+                                    ProjectId = ftisProject == null ? (int?)null : ftisProject.FirstOrDefault().Id,
+                                    ActivityCategoryType = 1,  //1會內
+                                    ActivityCategoryId = a.Id,
+                                    Owner = ftisOwner,
+                                    //SubjectId = a.SubjectId,
+                                    //SubjectDetailId = a.Id,
+                                });
+                                fTISUserHistory.Add(FTISUserHistorys);
+                            }
+                        }
+
+                        #endregion
+
                         #region  更新專長(刪除新增)
-                                           
+
                         if (subjectDetailId.Count > 0)
                         {
                             //刪除
