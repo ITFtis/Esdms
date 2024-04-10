@@ -59,6 +59,16 @@ namespace Esdms.Models
         [StringLength(50)]
         public string UName { get; set; }
 
+        //組別 (專家參與紀錄會外)
+        [NotMapped]
+        public virtual ICollection<UserHistorySet> UserHistorySets
+        {
+            get
+            {
+                return UserHistorySet.GetAllDatas().Where(a => a.FtisUHId == this.Id).ToList();
+            }
+        }
+
         static object lockGetAllDatas = new object();
         public static IEnumerable<UserHistoryOpinion> GetAllDatas(int cachetimer = 0)
         {

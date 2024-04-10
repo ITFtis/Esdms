@@ -1,4 +1,5 @@
 ﻿using Dou.Misc.Attr;
+using DouHelper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -29,5 +30,32 @@ namespace Esdms.Models
         [Column(TypeName = "nvarchar")]
         [Display(Name = "標案名稱")]
         public string Name { get; set; }
+
+        static object lockGetAllDatas = new object();
+        public static IEnumerable<UserHistorySetBid> GetAllDatas(int cachetimer = 0)
+        {
+            if (cachetimer == 0) cachetimer = Constant.cacheTime;
+
+            string key = "Esdms.Models.UserHistorySetBid";
+            var allData = DouHelper.Misc.GetCache<IEnumerable<UserHistorySetBid>>(cachetimer, key);
+            lock (lockGetAllDatas)
+            {
+                if (allData == null)
+                {
+                    Dou.Models.DB.IModelEntity<UserHistorySetBid> modle = new Dou.Models.DB.ModelEntity<UserHistorySetBid>(new EsdmsModelContextExt());
+                    allData = modle.GetAll().OrderBy(a => a.Id).ToArray();
+
+                    DouHelper.Misc.AddCache(allData, key);
+                }
+            }
+
+            return allData;
+        }
+
+        public static void ResetGetAllDatas()
+        {
+            string key = "Esdms.Models.UserHistorySetBid";
+            Misc.ClearCache(key);
+        }
     }
 }

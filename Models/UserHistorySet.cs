@@ -1,4 +1,5 @@
 ﻿using Dou.Misc.Attr;
+using DouHelper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -37,5 +38,42 @@ namespace Esdms.Models
         
         [Display(Name = "年度")]
         public int? Year { get; set; }
+
+        //組別標案
+        [NotMapped]
+        public virtual ICollection<UserHistorySetBid> UserHistorySetBids
+        {
+            get
+            {
+                return UserHistorySetBid.GetAllDatas().Where(a => a.UHSetId == this.Id).ToList();
+            }
+        }
+
+        static object lockGetAllDatas = new object();
+        public static IEnumerable<UserHistorySet> GetAllDatas(int cachetimer = 0)
+        {
+            if (cachetimer == 0) cachetimer = Constant.cacheTime;
+
+            string key = "Esdms.Models.UserHistorySet";
+            var allData = DouHelper.Misc.GetCache<IEnumerable<UserHistorySet>>(cachetimer, key);
+            lock (lockGetAllDatas)
+            {
+                if (allData == null)
+                {
+                    Dou.Models.DB.IModelEntity<UserHistorySet> modle = new Dou.Models.DB.ModelEntity<UserHistorySet>(new EsdmsModelContextExt());
+                    allData = modle.GetAll().OrderBy(a => a.Id).ToArray();
+
+                    DouHelper.Misc.AddCache(allData, key);
+                }
+            }
+
+            return allData;
+        }
+
+        public static void ResetGetAllDatas()
+        {
+            string key = "Esdms.Models.UserHistorySet";
+            Misc.ClearCache(key);
+        }
     }
 }
