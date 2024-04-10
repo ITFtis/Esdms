@@ -235,6 +235,8 @@
     <Compile Include="Models\Town.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserHistoryOpinion.cs" />
+    <Compile Include="Models\UserHistorySet.cs" />
+    <Compile Include="Models\UserHistorySetBid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Report\Source_BasicUser.Designer.cs">
       <AutoGen>True</AutoGen>

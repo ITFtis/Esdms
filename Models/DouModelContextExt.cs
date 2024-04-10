@@ -29,6 +29,10 @@ namespace Esdms.Models
         public virtual DbSet<FTISUserHistory> FTISUserHistory { get; set; }
         public virtual DbSet<BasicUser_License> BasicUser_License { get; set; }        
         public virtual DbSet<SubjectDetail> SubjectDetail { get; set; }
+
+        public virtual DbSet<UserHistorySet> UserHistorySet { get; set; }
+
+        public virtual DbSet<UserHistorySetBid> UserHistorySetBid { get; set; }
     }
 
 }
