@@ -197,6 +197,7 @@
     <Compile Include="Constant.cs" />
     <Compile Include="Controllers\Es\BasicUserController.cs" />
     <Compile Include="Controllers\Es\BasicUser_LicenseController.cs" />
+    <Compile Include="Controllers\Es\DownLevel\UserHistorySetController.cs" />
     <Compile Include="Controllers\Es\ExpertiseController.cs" />
     <Compile Include="Controllers\Es\FTISUserHistoryController.cs" />
     <Compile Include="Controllers\Es\Fun_BasicUserPIdController.cs" />
@@ -315,6 +316,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\prj\baseb.js" />
     <Content Include="Scripts\prj\BasicUser.js" />
+    <Content Include="Scripts\prj\BasicUserHistorySet.js" />
     <Content Include="Scripts\prj\Fun_BasicUserPId.js" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
@@ -392,6 +394,7 @@
     <Folder Include="Views\FTISUserHistory\" />
     <Folder Include="Views\Resume\" />
     <Folder Include="Views\UserHistoryOpinion\" />
+    <Folder Include="Views\UserHistorySet\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

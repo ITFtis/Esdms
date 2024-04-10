@@ -23,6 +23,7 @@ namespace Esdms.Models
 
         [Required]
         [Display(Name = "對應專家參與紀錄Id")]
+        [ColumnDef(Visible = false, VisibleEdit = false)]
         public int FtisUHId { get; set; }
         
         [StringLength(40)]

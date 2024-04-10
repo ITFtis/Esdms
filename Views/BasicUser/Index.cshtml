@@ -1,4 +1,9 @@
-﻿<script src="~/Scripts/prj/BasicUser.js?v=20240402001"></script>
+﻿@*專家參與紀錄(會外組別標案)*@
+<script src="~/Scripts/prj/BasicUserHistorySet.js?v=20240402001"></script>
+@*專家參與紀錄(主程式)*@
+<script src="~/Scripts/prj/BasicUser.js?v=20240402001"></script>
+
+
 <script src="~/Scripts/prj/baseb.js?v=20240130001"></script>
 @using Dou.Misc.Extension
 @Html.MenuMap()
@@ -9,11 +14,11 @@
         white-space: break-spaces;
     }
 
-    .text-danger{
+    .text-danger {
         font-weight: bold;
     }
 
-    .modal-body .text-danger{
+    .modal-body .text-danger {
         font-weight: bold;
         color: #A0072C !important;
     }
@@ -27,26 +32,33 @@
         color: #53575A;
     }
 
-    .modal-body .mt-2 a:hover {
-        color: #707579;
-        text-decoration: underline !important;
-    }
+        .modal-body .mt-2 a:hover {
+            color: #707579;
+            text-decoration: underline !important;
+        }
 </style>
 
-@{ 
+@{
     List<Dou.Models.RoleUser> r = ViewBag.Roles;
 
     <script>
 
-        var loginRoles = @Html.Raw(Json.Encode(r.Select(a => a.RoleId)));        
+        var loginRoles = @Html.Raw(Json.Encode(r.Select(a => a.RoleId)));
     </script>
 
 }
 
+<br />
+<span id="mlist" class="container-fluid body-content"></span>
+
 <div id="_tabs">
     <table id="_table"></table>
-</div>
+</div>    
 
+@*下層資料表*@
+<table id="_downtable"></table>
+
+   
 <script>
     var aryVPower = JSON.parse('@Html.Raw(Json.Encode(ViewBag.VPower))');
     //只能檢視

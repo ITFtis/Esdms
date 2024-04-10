@@ -38,9 +38,16 @@
 
     douoptions.title = '基本資料';
 
+    //主導覽連結
+    var mlist;
+
     //主表(EmpData) 基本資料
     douoptions.afterCreateEditDataForm = function ($container, row) {
-        
+
+        mlist = [];
+        mlist.push('專家');
+        mlistShow();
+
         var isAdd = JSON.stringify(row) == '{}';
 
         var $_oform = $("#_tabs");
@@ -951,6 +958,29 @@
                     });
                 };
 
+            var a = {};
+            a.item = function (v, r) {
+                var btn = "";
+                if (!r.IsImport) {
+                    btn = '<span class="pe-1"></span><span class="btn btn-default btn-sm glyphicon glyphicon-share-alt" title="會外組別"></span>';
+                }
+                return btn;
+            }
+            a.event = 'click .glyphicon-share-alt';
+            a.callback = function GoUserHistorySet(evt, value, row, index) {
+
+                //資料維護：專家參與紀錄(會外組別標案) 多對多                
+                var FtisUHId = row.Id
+                mlist.push('會外組別');
+                mlistShow();                
+                //主導覽連結
+                $('.bootstrap-table.ftisuserhistorycontroller').closest('.tab-content').parent().hide();
+                //BasicUserHistorySet.js
+                BasicUserHistorySet(FtisUHId);                
+            };
+
+            _opt.appendCustomFuncs = [a];
+
             //實體Dou js
             $_d7Table = $_d7EditDataContainer.douTable(_opt);
         });
@@ -1152,6 +1182,42 @@
             //全開
             $select.find('option').prop('disabled', false);
         }
+    }
+
+    function mlistShow() {
+
+        var content = '';
+
+        if (mlist.length == 1) {
+            content = '<span class="fs-4">專家</span>';
+        }
+        else {
+            $.each(mlist, function (index, value) {
+                //1.專家 2.會外組別            
+                if (content == '') {
+                    var text = '<span name="smap" class="text-decoration-underline text-primary fs-4" style="cursor:pointer" type="' + value + '">' + value + '</span>';
+                    content = text;
+                }
+                else {
+                    content += '<span class="fs-4 ps-2 pe-2">→</span>' + '<span class="fs-4">' + value + '</span>';
+                }
+            });
+        }
+
+        $('#mlist').html(content);
+
+        //event 點選
+        $('#mlist [name="smap"]').on('click', function () {
+            //關閉 downtable
+            $('#_downtable').douTable('destroy');
+            //開啟 主導覽連結
+            $('.bootstrap-table.ftisuserhistorycontroller').closest('.tab-content').parent().show();
+
+            mlist = [];
+            mlist.push('專家');
+            content = '<span class="fs-4">專家</span>';
+            $('#mlist').html(content);
+        });
     }
 })
 
