@@ -963,7 +963,7 @@
                 if (r.ActivityCategoryType == 2) {
                     var btn = "";
                     if (!r.IsImport) {
-                        btn = '<span id="OutSet" class="pe-1 btn btn-default btn-sm ">會外組別</span>';
+                        btn = '<span class="pe-1"></span><span id="OutSet" class="btn btn-default btn-sm ">會外組別</span>';
                     }
                     return btn;
                 }
