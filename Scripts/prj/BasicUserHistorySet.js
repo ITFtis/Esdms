@@ -1,6 +1,4 @@
-﻿var BasicUserHistorySet = function (FtisUHId) {
-    var $container = $('#_downtable');
-
+﻿var BasicUserHistorySet = function ($container, FtisUHId) {    
     helper.misc.showBusyIndicator();
     $.ajax({
         url: $.AppConfigOptions.baseurl + 'UserHistorySet/getDataDetail',
@@ -31,7 +29,7 @@
             };
 
             //實體Dou js                                
-            $('#_downtable').douTable(_opt);
+            $container.douTable(_opt);
 
             helper.misc.hideBusyIndicator();
         },

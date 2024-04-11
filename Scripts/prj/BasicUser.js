@@ -960,23 +960,32 @@
 
             var a = {};
             a.item = function (v, r) {
-                var btn = "";
-                if (!r.IsImport) {
-                    btn = '<span class="pe-1"></span><span class="btn btn-default btn-sm glyphicon glyphicon-share-alt" title="會外組別"></span>';
+                if (r.ActivityCategoryType == 2) {
+                    var btn = "";
+                    if (!r.IsImport) {
+                        btn = '<span id="OutSet" class="pe-1 btn btn-default btn-sm ">會外組別</span>';
+                    }
+                    return btn;
                 }
-                return btn;
+                else {
+                    return '';
+                }
             }
-            a.event = 'click .glyphicon-share-alt';
+            a.event = 'click #OutSet';
             a.callback = function GoUserHistorySet(evt, value, row, index) {
 
-                //資料維護：專家參與紀錄(會外組別標案) 多對多                
-                var FtisUHId = row.Id
-                mlist.push('會外組別');
+                //資料維護：專家參與紀錄(會外組別標案) 多對多
+                var tr = $('.bootstrap-table.ftisuserhistorycontroller table.table tbody tr')[index];
+                var mtitle = $(tr).find('.dou-field-OutYear').text() + '年度'
+                            + $(tr).find('.dou-field-ActivityCategoryId').text();
+
+                var FtisUHId = row.Id;
+                mlist.push('會外組別' + '(' + mtitle + ')');
                 mlistShow();                
                 //主導覽連結
                 $('.bootstrap-table.ftisuserhistorycontroller').closest('.tab-content').parent().hide();
                 //BasicUserHistorySet.js
-                BasicUserHistorySet(FtisUHId);                
+                BasicUserHistorySet($('#_downtable'), FtisUHId);                
             };
 
             _opt.appendCustomFuncs = [a];
