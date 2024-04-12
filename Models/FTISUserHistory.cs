@@ -72,7 +72,17 @@ namespace Esdms.Models
         [ColumnDef(Filter = true,
             EditType = EditType.TextList, SelectItemsClassNamespace = Esdms.Models.ProjectSelectItems.AssemblyQualifiedName,
             ColSize = 3)]        
-        public int? ProjectId { get; set; }        
+        public int? ProjectId { get; set; }
+
+        //組別
+        [NotMapped]
+        public virtual ICollection<UserHistorySet> UserHistorySets
+        {
+            get
+            {                
+                return UserHistorySet.GetAllDatas().Where(a => a.FtisUHId == this.Id).ToList();
+            }
+        }
 
         static object lockGetAllDatas = new object();
         public static IEnumerable<FTISUserHistory> GetAllDatas(int cachetimer = 0)

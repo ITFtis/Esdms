@@ -34,7 +34,7 @@ namespace Esdms.Models
         [Required]
         [StringLength(40)]
         [Column(TypeName = "nvarchar")]
-        [Display(Name = "組別名稱")]
+        [Display(Name = "處室組別名稱")]
         public string Name { get; set; }
         
         [Display(Name = "年度")]

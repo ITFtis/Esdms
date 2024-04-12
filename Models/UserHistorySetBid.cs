@@ -22,7 +22,7 @@ namespace Esdms.Models
         public Int64 Id { get; set; }
                 
         [Display(Name = "UHSetId")]
-        [ColumnDef(Visible = false)]
+        [ColumnDef(Visible = false, VisibleEdit = false)]
         public Int64? UHSetId { get; set; }
 
         [Required]

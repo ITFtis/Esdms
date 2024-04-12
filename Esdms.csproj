@@ -197,6 +197,7 @@
     <Compile Include="Constant.cs" />
     <Compile Include="Controllers\Es\BasicUserController.cs" />
     <Compile Include="Controllers\Es\BasicUser_LicenseController.cs" />
+    <Compile Include="Controllers\Es\DownLevel\UserHistorySetBidController.cs" />
     <Compile Include="Controllers\Es\DownLevel\UserHistorySetController.cs" />
     <Compile Include="Controllers\Es\ExpertiseController.cs" />
     <Compile Include="Controllers\Es\FTISUserHistoryController.cs" />
@@ -394,6 +395,7 @@
     <Folder Include="Views\FTISUserHistory\" />
     <Folder Include="Views\Resume\" />
     <Folder Include="Views\UserHistoryOpinion\" />
+    <Folder Include="Views\UserHistorySetBid\" />
     <Folder Include="Views\UserHistorySet\" />
   </ItemGroup>
   <ItemGroup>

@@ -34,8 +34,19 @@ namespace Esdms.Controllers.Es.DownLevel
 
         protected override void DeleteDBObject(IModelEntity<UserHistorySet> dbEntity, IEnumerable<UserHistorySet> objs)
         {
+            var obj = objs.FirstOrDefault();
+
+            //DB沒關聯
+            var dbContext = new EsdmsModelContextExt();
+
+            if (obj.UserHistorySetBids != null)
+            {
+                Dou.Models.DB.IModelEntity<UserHistorySetBid> userHistorySetBid = new Dou.Models.DB.ModelEntity<UserHistorySetBid>(dbContext);
+                userHistorySetBid.Delete(obj.UserHistorySetBids);
+            }
+
             base.DeleteDBObject(dbEntity, objs);
-            UserHistorySet.ResetGetAllDatas();
+            UserHistorySet.ResetGetAllDatas();            
         }
 
         public virtual ActionResult getDataDetail(int FtisUHId)
