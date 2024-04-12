@@ -24,12 +24,7 @@ namespace Esdms.Models
         [Required]
         [Display(Name = "對應專家參與紀錄Id")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
-        public int FtisUHId { get; set; }
-        
-        [StringLength(40)]
-        [Column(TypeName = "nvarchar")]
-        [Display(Name = "委辦單位")]
-        public string CommUnit { get; set; }
+        public int FtisUHId { get; set; }        
 
         [Required]
         [StringLength(40)]
