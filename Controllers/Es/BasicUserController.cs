@@ -421,6 +421,7 @@ namespace Esdms.Controllers.Es
                     if (name.Contains("_FtisOwner")) { dic.Add("_FtisOwner", index); continue; }
                     if (name.Contains("_FtisYear")) { dic.Add("_FtisYear", index); continue; }
                     if (name.Contains("_FtisProjectId")) { dic.Add("_FtisProjectId", index); continue; }
+                    if (name.Contains("_FtisOutActivityCategoryId")) { dic.Add("_FtisOutActivityCategoryId", index); continue; }
                     if (name.Contains("_SetOutYear")) { dic.Add("_SetOutYear", index); continue; }
                     if (name.Contains("_SetName")) { dic.Add("_SetName", index); continue; }                    
                     if (name.Contains("_SetBidName")) { dic.Add("_SetBidName", index); continue; }
@@ -482,7 +483,8 @@ namespace Esdms.Controllers.Es
                     string ___ftisDCode = !dic.ContainsKey("_FtisDCode") ? "" : row.ItemArray[dic["_FtisDCode"]].ToString();
                     string ftisOwner = !dic.ContainsKey("_FtisOwner") ? "" : row.ItemArray[dic["_FtisOwner"]].ToString();
                     string ___ftisYear = !dic.ContainsKey("_FtisYear") ? "" : row.ItemArray[dic["_FtisYear"]].ToString();
-                    string ___ftisProjectId = !dic.ContainsKey("_FtisProjectId") ? "" : row.ItemArray[dic["_FtisProjectId"]].ToString();
+                    string ___ftisProjectId = !dic.ContainsKey("_FtisProjectId") ? "" : row.ItemArray[dic["_FtisProjectId"]].ToString();                    
+                    string ___ftisOutActivityCategoryId = !dic.ContainsKey("_FtisOutActivityCategoryId") ? "" : row.ItemArray[dic["_FtisOutActivityCategoryId"]].ToString();
                     string ___setOutYear = !dic.ContainsKey("_SetOutYear") ? "" : row.ItemArray[dic["_SetOutYear"]].ToString();
                     string setName = !dic.ContainsKey("_SetName") ? "" : row.ItemArray[dic["_SetName"]].ToString();                    
                     string setBidName = !dic.ContainsKey("_SetBidName") ? "" : row.ItemArray[dic["_SetBidName"]].ToString();
@@ -524,7 +526,8 @@ namespace Esdms.Controllers.Es
                     int.TryParse(___ida, out ida_num);
 
                     //(會內)會議
-                    var ftisActivityCategoryId = m_activityCategory.Where(a => ___ftisActivityCategoryId.Split(',').Any(b => b == a.DCode)).ToList();
+                    var ftisActivityCategoryId = m_activityCategory.Where(a => a.Type == 1)
+                                                        .Where(a => ___ftisActivityCategoryId.Split(',').Any(b => b == a.DCode)).ToList();
 
                     //專案(單筆)
                     var ftisProject = m_project.Where(a => ___ftisProjectId.Split(',').Any(b => b == a.DCode)).ToList();
@@ -534,6 +537,10 @@ namespace Esdms.Controllers.Es
 
                     //專長
                     var subjectDetailId = m_subjectDetail.Where(a => ___subjectDetailId.Split(',').Any(b => b == a.DCode)).ToList();
+
+                    //(會外)會議
+                    var ftisOutActivityCategoryId = m_activityCategory.Where(a => a.Type == 2)
+                                                        .Where(a => ___ftisOutActivityCategoryId.Split(',').Any(b => b == a.DCode)).ToList();
 
                     string rPId = "";
                     var data = basicUser.GetAll().Where(a => a.Name == name).FirstOrDefault();
@@ -687,11 +694,10 @@ namespace Esdms.Controllers.Es
 
                         #endregion
 
-                        #region  更新專家參與紀錄 (刪除新增)
+                        #region  更新專家參與紀錄 會內(刪除新增)
 
                         if (ftisActivityCategoryId.Count > 0)
-                        {
-                            //會內
+                        {                            
                             int ftisYear = 0;
                             if (int.TryParse(___ftisYear, out ftisYear) && ftisProject.Count > 0)
                             {
@@ -718,25 +724,32 @@ namespace Esdms.Controllers.Es
                                     //SubjectDetailId = a.Id,
                                 });
                                 fTISUserHistory.Add(FTISUserHistorys);
-                            }
+                            }                            
+                        }
 
+                        #endregion
+
+                        #region  更新專家參與紀錄 會外(不存在新增)
+
+                        if (ftisOutActivityCategoryId.Count > 0)
+                        {
                             //會外
-                            int SetOutYear = 0;                            
+                            int SetOutYear = 0;
                             if (int.TryParse(___setOutYear, out SetOutYear))
                             {
                                 //b_1(會外) 會議名稱不存在就新增(會議名稱)
                                 var now = fTISUserHistory.GetAll().Where(a => a.PId == rPId
-                                                            && a.OutYear == SetOutYear && a.ActivityCategoryType == 2).ToList();                                                            
+                                                            && a.OutYear == SetOutYear && a.ActivityCategoryType == 2).ToList();
 
                                 //新增
-                                var FTISUserHistorys = ftisActivityCategoryId.Where(a => !now.Any(b => b.ActivityCategoryId == a.Id))
+                                var FTISUserHistorys = ftisOutActivityCategoryId.Where(a => !now.Any(b => b.ActivityCategoryId == a.Id))
                                                         .Select(a => new FTISUserHistory
-                                {
-                                    PId = rPId,                                    
-                                    OutYear = SetOutYear,                                    
-                                    ActivityCategoryType = 2,  //2會外
-                                    ActivityCategoryId = a.Id,
-                                });
+                                                        {
+                                                            PId = rPId,
+                                                            OutYear = SetOutYear,
+                                                            ActivityCategoryType = 2,  //2會外
+                                                            ActivityCategoryId = a.Id,
+                                                        });
                                 fTISUserHistory.Add(FTISUserHistorys);
 
                                 //b_2(會外) 會議組別
@@ -744,7 +757,7 @@ namespace Esdms.Controllers.Es
                                 var FtisUHId = fTISUserHistory.GetAll().Where(a => a.PId == rPId
                                                             && a.OutYear == SetOutYear && a.ActivityCategoryType == 2)
                                                             .AsEnumerable()
-                                                            .Where(a => ftisActivityCategoryId.Any(b => b.Id == a.ActivityCategoryId)).FirstOrDefault().Id;
+                                                            .Where(a => ftisOutActivityCategoryId.Any(b => b.Id == a.ActivityCategoryId)).FirstOrDefault().Id;
 
                                 //不存在新增(單筆)
                                 Int64 UHSetId = 0;
@@ -781,7 +794,7 @@ namespace Esdms.Controllers.Es
                                 }
                                 else
                                 {
-                                    string str = string.Format("評選委員({0}),委辦單位({1}),處室組別({2}),會外年度({3}),標案名稱({4})", name, ftisActivityCategoryId.FirstOrDefault().Name, setName, SetOutYear, setBidName);
+                                    string str = string.Format("評選委員({0}),委辦單位({1}),處室組別({2}),會外年度({3}),標案名稱({4})", name, ftisOutActivityCategoryId.FirstOrDefault().Name, setName, SetOutYear, setBidName);
                                     logger.Info("組別標案已存在：" + str);
                                 }
                             }
