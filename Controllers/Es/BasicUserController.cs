@@ -24,6 +24,8 @@ namespace Esdms.Controllers.Es
     [Dou.Misc.Attr.MenuDef(Id = "BasicUser", Name = "專家基本資料", MenuPath = "專家資料", Action = "Index", Index = 1, Func = Dou.Misc.Attr.FuncEnum.ALL, AllowAnonymous = false)]
     public class BasicUserController : APaginationModelController<BasicUser>
     {
+        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         // GET: BasicUser
         public ActionResult Index()
         {
@@ -776,6 +778,11 @@ namespace Esdms.Controllers.Es
                                     model.Name = setBidName;
 
                                     userHistorySetBid.Add(model);
+                                }
+                                else
+                                {
+                                    string str = string.Format("評選委員({0}),委辦單位({1}),處室組別({2}),會外年度({3}),標案名稱({4})", name, ftisActivityCategoryId.FirstOrDefault().Name, setName, SetOutYear, setBidName);
+                                    logger.Info("組別標案已存在：" + str);
                                 }
                             }
                         }
