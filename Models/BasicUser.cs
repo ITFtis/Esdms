@@ -267,10 +267,10 @@ namespace Esdms.Models
             }
         }
 
-        //虛擬欄位 vmFTISJoinNum
+        //虛擬欄位 vmOutCount
         [Display(Name = "評選次數")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
-        public string vmFTISJoinNum
+        public string vmOutCount
         {
             get
             {
@@ -325,10 +325,10 @@ namespace Esdms.Models
             }
         }
 
-        //虛擬欄位 vmTotalFTISJoinNum
+        //虛擬欄位 vmTotalOutCount
         [Display(Name = "評選(總)次數")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
-        public int vmTotalFTISJoinNum
+        public int vmTotalOutCount
         {
             get
             {

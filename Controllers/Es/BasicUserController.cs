@@ -171,7 +171,7 @@ namespace Esdms.Controllers.Es
                 //預設排序
                 iquery = iquery.OrderByDescending(a => a.PId);
             }
-            else if (ksort.value.ToString() == "vmFTISJoinNum")
+            else if (ksort.value.ToString() == "vmOutCount")
             {
                 string sort = ksort.value.ToString();
                 string order = korder.value.ToString();
@@ -179,11 +179,11 @@ namespace Esdms.Controllers.Es
 
                 if (order == "asc")
                 {
-                    enumerable = enumerable.OrderBy(a => a.vmTotalFTISJoinNum).ThenBy(a => a.Name);//order by name(清單第一欄位排序)
+                    enumerable = enumerable.OrderBy(a => a.vmTotalOutCount).ThenBy(a => a.Name);//order by name(清單第一欄位排序)
                 }
                 else if (order == "desc")
                 {
-                    enumerable = enumerable.OrderByDescending(a => a.vmTotalFTISJoinNum).ThenBy(a => a.Name);//order by name(清單第一欄位排序)
+                    enumerable = enumerable.OrderByDescending(a => a.vmTotalOutCount).ThenBy(a => a.Name);//order by name(清單第一欄位排序)
                 }
                 iquery = enumerable.AsQueryable();
             }
@@ -212,7 +212,7 @@ namespace Esdms.Controllers.Es
             options.GetFiled("SubjectDetailId").filter = true;
             options.GetFiled("strExpertises").visible = true;
             options.GetFiled("strExpertises").filter = true;
-            options.GetFiled("vmFTISJoinNum").visible = true;
+            options.GetFiled("vmOutCount").visible = true;
             //options.GetFiled("vmTotalFTISJoinNum").visible = true;
 
             options.ctrlFieldAlign = "left";

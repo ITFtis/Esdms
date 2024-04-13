@@ -113,7 +113,7 @@ namespace Esdms
                 dr["單位系所"] = data.UnitName;
                 dr["職稱"] = data.Position;
                 dr["專長"] = HtmlHelper.RemoveHtmlTag(data.strExpertises);
-                dr["評選次數"] = HtmlHelper.RemoveHtmlTag(data.vmFTISJoinNum.Replace("</br>", "\n"));
+                dr["評選次數"] = HtmlHelper.RemoveHtmlTag(data.vmOutCount.Replace("</br>", "\n"));
 
                 dt.Rows.Add(dr);
             }
