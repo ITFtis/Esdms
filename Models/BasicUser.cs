@@ -274,29 +274,82 @@ namespace Esdms.Models
         {
             get
             {
+                //var dbContext = new EsdmsModelContextExt();
+                //Dou.Models.DB.IModelEntity<ActivityCategory> activityCategory = new Dou.Models.DB.ModelEntity<ActivityCategory>(dbContext);
+                //Dou.Models.DB.IModelEntity<UserHistorySet> userHistorySet = new Dou.Models.DB.ModelEntity<UserHistorySet>(dbContext);
+                //Dou.Models.DB.IModelEntity<UserHistorySetBid> userHistorySetBid = new Dou.Models.DB.ModelEntity<UserHistorySetBid>(dbContext);                
+
                 //近3年資料
-                int n = 3;
+                int n = 2;  //3
                 int sYear = DateTime.Now.Year - 1911 - n;
-                var datas = FTISUserHistory.GetAllDatas().Where(a => a.PId == this.PId && a.ActivityCategoryType == 2)
+
+                var acts = ActivityCategorySelectItems.ActivityCategorys.Where(a => a.Type == 2);
+                var query = FTISUserHistory.GetAllDatas().Where(a => a.PId == this.PId && a.ActivityCategoryType == 2)
                             .Where(a => a.OutYear >= sYear)
-                            .GroupJoin(ActivityCategorySelectItems.ActivityCategorys, a => a.ActivityCategoryId, b => b.Id, (o, c) => new
+                            .GroupJoin(acts, a => a.ActivityCategoryId, b => b.Id, (o, c) => new
                             {
-                                o.OutYear, o.ActivityCategoryJoinNum,
-                                ActName = c.FirstOrDefault() == null ? "": c.FirstOrDefault().Name,
+                                o.Id,
+                                o.OutYear, //o.ActivityCategoryJoinNum,                                
+                                ActName = c.FirstOrDefault() == null ? "" : c.FirstOrDefault().Name,
                                 ActId = c.FirstOrDefault() == null ? int.MaxValue : c.FirstOrDefault().Id,
+                            })
+                            .GroupJoin(UserHistorySet.GetAllDatas(), a => a.Id, b => b.FtisUHId, (o, c) => new
+                            {
+                                o.Id, o.OutYear, o.ActName, o.ActId, c
+                            })
+                            .SelectMany(b => b.c.DefaultIfEmpty(), (o, c) => new
+                            {
+                                o.OutYear, o.ActName, o.ActId, c.BidCount,
+                                SetName = c.Name,
+                                bidNum = c.UserHistorySetBids.Count()
+                            });
+
+                var datas = query
+                            .GroupBy(a => new { OutYear = a.OutYear, ActName = a.ActName })
+                            .Select(a => new
+                            {
+                                OutYear = a.Key.OutYear,
+                                setCount = a.Sum(p => p.bidNum),
+                                setTitle = a.Key.ActName + "(" + a.Sum(p => p.bidNum).ToString() + ")",
+                                setDesc = string.Join(",", query.Where(p => p.OutYear == a.Key.OutYear && p.ActName == a.Key.ActName)
+                                                            .Select(p => p.SetName + "(" + p.BidCount.ToString() + ")"))
                             });
 
                 var datasGroup = datas.Select(a => a.OutYear).Distinct().ToList();
 
                 var tmp = datasGroup.GroupJoin(datas, a => a, b => b.OutYear, (o, c) => new
-                            {
-                                str = string.Format("{0}年(共<span class='text-primary'>{1}</span>次)：{2}", 
-                                                o,
-                                                c.Sum(p => p.ActivityCategoryJoinNum),
-                                                string.Join(",", c.OrderBy(p => p.ActId).Select(p => p.ActName + "(" + p.ActivityCategoryJoinNum + ")")))
-                            });
+                {
+                    str = string.Format(@"{0}年：(共<span class='text-primary'>{1}</span>次)</br>
+                                          {2}", 
+                                          o, 
+                                          c.Sum(a=>a.setCount),
+                                          string.Join("</br>", c.Select(p => p.setTitle + "：" + p.setDesc))
+                                       )
+                });
 
                 return string.Join("</br>", tmp.Select(a => a.str));
+
+                //////原寫法
+                ////var datas = FTISUserHistory.GetAllDatas().Where(a => a.PId == this.PId && a.ActivityCategoryType == 2)
+                ////            .Where(a => a.OutYear >= sYear)
+                ////            .GroupJoin(ActivityCategorySelectItems.ActivityCategorys, a => a.ActivityCategoryId, b => b.Id, (o, c) => new
+                ////            {
+                ////                o.OutYear, o.ActivityCategoryJoinNum,
+                ////                ActName = c.FirstOrDefault() == null ? "": c.FirstOrDefault().Name,
+                ////                ActId = c.FirstOrDefault() == null ? int.MaxValue : c.FirstOrDefault().Id,
+                ////            });
+
+                ////var datasGroup = datas.Select(a => a.OutYear).Distinct().ToList();
+
+                ////var tmp = datasGroup.GroupJoin(datas, a => a, b => b.OutYear, (o, c) => new
+                ////            {
+                ////                str = string.Format("{0}年(共<span class='text-primary'>{1}</span>次)：{2}", 
+                ////                                o,
+                ////                                c.Sum(p => p.ActivityCategoryJoinNum),
+                ////                                string.Join(",", c.OrderBy(p => p.ActId).Select(p => p.ActName + "(" + p.ActivityCategoryJoinNum + ")")))
+                ////            });
+
+                ////return string.Join("</br>", tmp.Select(a => a.str));
             }
         }
 

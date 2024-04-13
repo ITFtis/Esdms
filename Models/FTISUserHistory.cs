@@ -82,7 +82,7 @@ namespace Esdms.Models
             {                
                 return UserHistorySet.GetAllDatas().Where(a => a.FtisUHId == this.Id).ToList();
             }
-        }
+        }        
 
         static object lockGetAllDatas = new object();
         public static IEnumerable<FTISUserHistory> GetAllDatas(int cachetimer = 0)

@@ -62,6 +62,9 @@ namespace Esdms.Controllers.Es
         {
             iquery = GetOutputData(iquery, paras);
 
+            //////////////////////////////
+            ////iquery = iquery.Where(a => a.PId == "S202404130045");
+
             return base.BeforeIQueryToPagedList(iquery, paras);
         }
 

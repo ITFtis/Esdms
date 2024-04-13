@@ -45,6 +45,20 @@ namespace Esdms.Models
             }
         }
 
+        //標案總數量
+        [NotMapped]
+        [Display(Name = "標案總數量")]
+        public virtual int BidCount
+        {
+            get
+            {
+                var datas = this.UserHistorySetBids;
+                int count = datas.Count();
+
+                return count;
+            }
+        }
+
         static object lockGetAllDatas = new object();
         public static IEnumerable<UserHistorySet> GetAllDatas(int cachetimer = 0)
         {
