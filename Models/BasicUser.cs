@@ -349,6 +349,53 @@ namespace Esdms.Models
             }
         }
 
+        //虛擬欄位 vmInCount
+        [Display(Name = "會外參與")]
+        [ColumnDef(Visible = false, VisibleEdit = false)]
+        public string vmInCount
+        {
+            get
+            {
+                //近3年資料
+                int n = 3;
+                int sYear = DateTime.Now.Year - 1911 - n;
+                var acts = ActivityCategorySelectItems.ActivityCategorys.Where(a => a.Type == 1);
+                var datas = FTISUserHistory.GetAllDatas().Where(a => a.PId == this.PId && a.ActivityCategoryType == 1)
+                            .Where(a => a.Year >= sYear)
+                            .GroupJoin(acts, a => a.ActivityCategoryId, b => b.Id, (o, c) => new
+                            {
+                                o.Id, o.Year, o.DCode, o.ProjectId,
+                                ActName = c.FirstOrDefault() == null ? "" : c.FirstOrDefault().Name,
+                                ActId = c.FirstOrDefault() == null ? int.MaxValue : c.FirstOrDefault().Id,
+                            })
+                            .GroupJoin(Code.GetDepartment(), a => a.DCode, b => b.Key, (o, c) => new
+                            { 
+                                 o.Id, o.Year, o.DCode, o.ProjectId, o.ActName, o.ActId,
+                                 DName = c == null ? "" : c.FirstOrDefault().Value
+                            })
+                            .GroupJoin(ProjectSelectItems.Projects, a => a.ProjectId, b => b.Id, (o, c) => new
+                            { 
+                                 o.Id, o.Year, o.DCode, o.ProjectId, o.ActName, o.ActId, o.DName,
+                                 pjName = c == null ? "" : c.FirstOrDefault().Name
+                            });
+
+                ////var tt = query.ToList();
+
+                var datasGroup = datas.Select(a => a.Year).Distinct().ToList();
+
+                var tmp = datasGroup.GroupJoin(datas, a => a, b => b.Year, (o, c) => new
+                {
+                    str = string.Format(@"{0}年：(共<span class='text-primary'>{1}</span>次)</br>{2}",
+                                          o,
+                                          c.Count(),
+                                          string.Join("</br>", c.Select((p, index) => (index + 1).ToString() + "." + p.DName + "：" + p.pjName + "(" + p.ActName + ")"))
+                                       )
+                });
+
+                return string.Join("</br>", tmp.Select(a => a.str));
+            }
+        }
+
         //虛擬欄位 DuplicateName
         [Display(Name = "重覆姓名")]
         [ColumnDef(Visible = false, VisibleEdit = false,

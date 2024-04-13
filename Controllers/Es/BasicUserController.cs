@@ -63,7 +63,7 @@ namespace Esdms.Controllers.Es
             iquery = GetOutputData(iquery, paras);
 
             //////////////////////////////
-            ////iquery = iquery.Where(a => a.PId == "S202401300431");
+            ////iquery = iquery.Where(a => a.PId == "S202404070002");
 
             return base.BeforeIQueryToPagedList(iquery, paras);
         }
@@ -207,13 +207,13 @@ namespace Esdms.Controllers.Es
             options.GetFiled("UnitName").title = "單位(系所)";
             options.GetFiled("Position").visible = true;
             //options.GetFiled("BDate").visible = true;
-            //options.GetFiled("BName").visible = true;            
+            options.GetFiled("CategoryId").visible = true;            
             options.GetFiled("SubjectId").filter = true;
             options.GetFiled("SubjectDetailId").filter = true;
             options.GetFiled("strExpertises").visible = true;
             options.GetFiled("strExpertises").filter = true;
             options.GetFiled("vmOutCount").visible = true;
-            //options.GetFiled("vmTotalFTISJoinNum").visible = true;
+            options.GetFiled("vmInCount").visible = true;
 
             options.ctrlFieldAlign = "left";
             options.editformWindowStyle = "modal";
