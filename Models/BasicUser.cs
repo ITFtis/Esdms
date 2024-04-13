@@ -268,7 +268,7 @@ namespace Esdms.Models
         }
 
         //虛擬欄位 vmOutCount
-        [Display(Name = "評選次數")]
+        [Display(Name = "會外評選")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
         public string vmOutCount
         {
@@ -284,7 +284,7 @@ namespace Esdms.Models
                             .GroupJoin(acts, a => a.ActivityCategoryId, b => b.Id, (o, c) => new
                             {
                                 o.Id,
-                                o.OutYear, //o.ActivityCategoryJoinNum,                                
+                                o.OutYear,                                
                                 ActName = c.FirstOrDefault() == null ? "" : c.FirstOrDefault().Name,
                                 ActId = c.FirstOrDefault() == null ? int.MaxValue : c.FirstOrDefault().Id,
                             })
@@ -292,11 +292,13 @@ namespace Esdms.Models
                             {
                                 o.Id, o.OutYear, o.ActName, o.ActId, c
                             })
+                            .Where(a => a.c.Count() != 0)  //有會外會議組別資料
                             .SelectMany(b => b.c.DefaultIfEmpty(), (o, c) => new
                             {
-                                o.OutYear, o.ActName, o.ActId, c.BidCount,
-                                SetName = c.Name,
-                                bidNum = c.UserHistorySetBids.Count()
+                                o.OutYear, o.ActName, o.ActId,
+                                BidCount = c == null ? 0 : c.BidCount,
+                                SetName = c == null ? "" : c.Name,
+                                bidNum = c == null ? 0 : c.UserHistorySetBids.Count()
                             });
 
                 var datas = query
@@ -326,7 +328,7 @@ namespace Esdms.Models
         }
 
         //虛擬欄位 vmTotalOutCount
-        [Display(Name = "評選(總)次數")]
+        [Display(Name = "會外評選(總)次數")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
         public int vmTotalOutCount
         {

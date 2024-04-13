@@ -49,7 +49,7 @@ namespace Esdms.Models
         [StringLength(2)]
         public string DCode { get; set; }
 
-        [Display(Name = "評選次數")]
+        [Display(Name = "(手動)評選次數")]
         [ColumnDef(ColSize = 3)]
         public int? ActivityCategoryJoinNum { get; set; }
 
