@@ -802,16 +802,15 @@ namespace Esdms.Controllers.Es
 
                         #endregion
 
-                        #region  更新專長(刪除新增)
+                        #region  更新專長(不存在新增)
 
                         if (subjectDetailId.Count > 0)
                         {
-                            //刪除
-                            var delExpertises = expertise.GetAll().Where(a => a.PId == rPId);
-                            expertise.Delete(delExpertises);
+                            var has = expertise.GetAll().Where(a => a.PId == rPId);
+                            var v = subjectDetailId.Where(a => !has.Any(b => b.SubjectDetailId == a.Id));
 
                             //新增
-                            var Expertises = subjectDetailId.Select(a => new Expertise
+                            var Expertises = v.Select(a => new Expertise
                             {
                                 PId = rPId,
                                 SubjectId = a.SubjectId,
