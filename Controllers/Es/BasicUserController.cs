@@ -829,6 +829,8 @@ namespace Esdms.Controllers.Es
                 BasicUserNameSelectItems.Reset();
                 Expertise.ResetGetAllDatas();
                 FTISUserHistory.ResetGetAllDatas();
+                UserHistorySet.ResetGetAllDatas();
+                UserHistorySetBid.ResetGetAllDatas();
             }
             catch (Exception ex)
             {
