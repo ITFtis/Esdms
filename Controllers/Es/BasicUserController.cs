@@ -187,6 +187,22 @@ namespace Esdms.Controllers.Es
                 }
                 iquery = enumerable.AsQueryable();
             }
+            else if (ksort.value.ToString() == "vmInCount")
+            {
+                string sort = ksort.value.ToString();
+                string order = korder.value.ToString();
+                var enumerable = iquery.AsEnumerable();
+
+                if (order == "asc")
+                {
+                    enumerable = enumerable.OrderBy(a => a.vmTotalInCount).ThenBy(a => a.Name);//order by name(清單第一欄位排序)
+                }
+                else if (order == "desc")
+                {
+                    enumerable = enumerable.OrderByDescending(a => a.vmTotalInCount).ThenBy(a => a.Name);//order by name(清單第一欄位排序)
+                }
+                iquery = enumerable.AsQueryable();
+            }
 
             return iquery;
         }

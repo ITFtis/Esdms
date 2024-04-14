@@ -350,7 +350,7 @@ namespace Esdms.Models
         }
 
         //虛擬欄位 vmInCount
-        [Display(Name = "會外參與")]
+        [Display(Name = "會內參與")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
         public string vmInCount
         {
@@ -393,6 +393,24 @@ namespace Esdms.Models
                 });
 
                 return string.Join("</br>", tmp.Select(a => a.str));
+            }
+        }
+
+        //虛擬欄位 vmTotalInCount
+        [Display(Name = "會內參與(總)次數")]
+        [ColumnDef(Visible = false, VisibleEdit = false)]
+        public int vmTotalInCount
+        {
+            get
+            {
+                //近3年資料
+                int n = 3;
+                int sYear = DateTime.Now.Year - 1911 - n;
+
+                var query = FTISUserHistory.GetAllDatas().Where(a => a.PId == this.PId && a.ActivityCategoryType == 1)
+                            .Where(a => a.Year >= sYear);                
+
+                return query.Count();
             }
         }
 
