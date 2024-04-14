@@ -312,7 +312,8 @@ namespace Esdms.Models
                                                             .Select(p => p.SetName + "(" + p.BidCount.ToString() + ")"))
                             });
 
-                var datasGroup = datas.Select(a => a.OutYear).Distinct().ToList();
+                var datasGroup = datas.Select(a => a.OutYear)
+                                    .OrderByDescending(a => a).Distinct().ToList();
 
                 var tmp = datasGroup.GroupJoin(datas, a => a, b => b.OutYear, (o, c) => new
                 {
@@ -382,7 +383,8 @@ namespace Esdms.Models
 
                 ////var tt = query.ToList();
 
-                var datasGroup = datas.Select(a => a.Year).Distinct().ToList();
+                var datasGroup = datas.Select(a => a.Year)
+                                    .OrderByDescending(a => a).Distinct().ToList();
 
                 var tmp = datasGroup.GroupJoin(datas, a => a, b => b.Year, (o, c) => new
                 {
