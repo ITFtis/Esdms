@@ -44,7 +44,10 @@ namespace Esdms
                 {
                     dynamic f = new ExpandoObject();
                     f.姓名 = data.Name;   //ooooooooooo
-                    f.人員類別 = data.CategoryId;   //ooooooooooo
+
+                    var v = CategorySelectItems.Categorys.Where(a => a.Id == data.CategoryId).FirstOrDefault();
+                    f.人員類別 = v == null ? "" : v.Name;   //ooooooooooo
+
                     f.單位系所 = data.UnitName; //ooooooooooo
                     f.職稱 = data.Position;   //ooooooooooo
                     f.專長 = HtmlHelper.RemoveHtmlTag(data.strExpertises.Replace("</br>", "\n"));   //ooooooooooo
