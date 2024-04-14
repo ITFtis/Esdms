@@ -64,8 +64,11 @@ namespace Esdms
                     _errorMessage = "查無符合資料表數";
                 }
 
+                //特殊儲存格位置Top
+                List<string> topContents = new List<string>() { "專長", "會外評選", "會內參與" };
+
                 //產出excel
-                string fileName = Esdms.ExcelSpecHelper.GenerateExcelByLinqF1(fileTitle, titles, list, folder, "N");
+                string fileName = Esdms.ExcelSpecHelper.GenerateExcelByLinqF1(fileTitle, titles, list, folder, "N", topContents);
                 string path = folder + fileName;
                 url = Esdms.Cm.PhysicalToUrl(path);
             }

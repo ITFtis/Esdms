@@ -19,8 +19,10 @@ namespace Esdms
         /// <param name="list">多個Sheet資料</param>
         /// <param name="savePath">儲存路徑</param>
         /// <param name="autoSizeColumn">"Y":自動調整長度(效能差:資料量多),"N":字串長度調整width,"default":不調整width</param>
+        /// <param name="topContents">特殊儲存格位置Top</param>
         /// <returns>Excel檔名</returns>
-        public static string GenerateExcelByLinqF1(string fileTitle, List<string> titles, List<dynamic> list, string savePath, string autoSizeColumn = "default")
+        public static string GenerateExcelByLinqF1(string fileTitle, List<string> titles, List<dynamic> list, string savePath, 
+                                                string autoSizeColumn = "default", List<string> topContents = null)
         {
             string fileName = "";
 
@@ -95,17 +97,34 @@ namespace Esdms
 
                 //建立內容
                 var contentStyle = GetContentStyle(workbook);
+
+                HSSFCellStyle hStyle = (HSSFCellStyle)workbook.CreateCellStyle();
+                hStyle.CloneStyleFrom(contentStyle);
+                hStyle.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Top;
+
                 foreach (var row in sheet)
                 {
                     int index = mySheet1.LastRowNum;
 
                     HSSFRow rowItem = (HSSFRow)mySheet1.CreateRow(index + 1);
 
+                    HSSFCellStyle style;
                     foreach (var v in row)
                     {
                         string key = v.Key.ToString();
                         if (key == "SheetName")
                             continue;
+
+                        //特殊儲存格位置Top
+                        style = contentStyle;
+                        if (topContents != null)
+                        {
+                            //if (key == "專長")
+                            if (topContents.Contains(key))
+                            {                                
+                                style = hStyle;
+                            }
+                        }
 
                         int l = rowItem.Cells.Count;
                         object value = v.Value;
@@ -147,7 +166,7 @@ namespace Esdms
                             rowItem.CreateCell(l).SetCellValue(value.ToString());
                         }
 
-                        rowItem.GetCell(l).CellStyle = contentStyle;
+                        rowItem.GetCell(l).CellStyle = style;
                     }
 
 
