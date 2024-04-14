@@ -62,7 +62,7 @@ namespace Esdms
                 }
 
                 //產出excel
-                string fileName = Esdms.ExcelSpecHelper.GenerateExcelByLinqF1(fileTitle, titles, list, folder);
+                string fileName = Esdms.ExcelSpecHelper.GenerateExcelByLinqF1(fileTitle, titles, list, folder, "N");
                 string path = folder + fileName;
                 url = Esdms.Cm.PhysicalToUrl(path);
             }

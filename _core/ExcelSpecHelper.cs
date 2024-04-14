@@ -50,7 +50,7 @@ namespace Esdms
                 }
 
                 HSSFSheet mySheet1 = (HSSFSheet)workbook.CreateSheet(sheetName);
-                mySheet1.DefaultRowHeight = 15 * 20;
+                //mySheet1.DefaultRowHeight = 15 * 20;
 
                 //建立 Header                
                 int hNum = 0;  //目前第幾個資料列
@@ -261,7 +261,7 @@ namespace Esdms
                 }
 
                 HSSFSheet mySheet1 = (HSSFSheet)workbook.CreateSheet(sheetName);
-                mySheet1.DefaultRowHeight = 15 * 20;
+                //mySheet1.DefaultRowHeight = 15 * 20;
 
                 //建立 Header                
                 int hNum = 0;  //目前第幾個資料列
@@ -526,7 +526,10 @@ namespace Esdms
         private static HSSFCellStyle GetTitleStyle(HSSFWorkbook workbook)
         {
             HSSFCellStyle oStyle = (HSSFCellStyle)workbook.CreateCellStyle();
-            oStyle.Alignment = HorizontalAlignment.Center;//水平對齊
+            //多行文字
+            oStyle.WrapText = true;
+            //水平對齊
+            oStyle.Alignment = HorizontalAlignment.Center;
             //文字置中
             oStyle.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Center;
 
@@ -555,7 +558,8 @@ namespace Esdms
         private static HSSFCellStyle GetContentStyle(HSSFWorkbook workbook)
         {
             HSSFCellStyle oStyle = (HSSFCellStyle)workbook.CreateCellStyle();
-            oStyle.Alignment = HorizontalAlignment.Center;//水平對齊
+            //多行文字
+            oStyle.WrapText = true;
             //文字置中
             oStyle.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Center;
 
