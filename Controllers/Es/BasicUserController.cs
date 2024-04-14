@@ -69,7 +69,7 @@ namespace Esdms.Controllers.Es
         }
 
         //匯出清單
-        public ActionResult ExportList(vwe_ChkExport chks, string sort, string order, params KeyValueParams[] paras)
+        public ActionResult ExportList(List<string> Names, vwe_ChkExport chks, string sort, string order, params KeyValueParams[] paras)
         {
             if (sort != null)
             {
@@ -87,6 +87,13 @@ namespace Esdms.Controllers.Es
             }
 
             var iquery = GetModelEntity().GetAll();
+
+            //沒勾選，預設全部
+            if (Names != null && Names.Count>0)
+            {
+                iquery = iquery.Where(a => Names.Contains(a.Name));
+            }
+
             iquery = GetOutputData(iquery, paras);
             var datas = iquery.ToList();
 

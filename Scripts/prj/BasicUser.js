@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
 
+    var aryCheck = [];
+
     var id_toTab;
     //特定角色使用功能
     var adminRoles = ['admin', 'ftisadmin'];
@@ -34,6 +36,7 @@
         douoptions.fields = newFields;
     }
 
+    douoptions.useMutiSelect = true;
     douoptions.tableOptions.pageList = [10, 25, 50, 100, 'All'];
 
     douoptions.title = '基本資料';
@@ -639,7 +642,7 @@
                     url: app.siteRoot + 'BasicUser/ExportList',
                     datatype: "json",
                     type: "POST",
-                    data: { paras: [paras], sort: sortName, order: sortOrder, chks: chks },
+                    data: { "Names": aryCheck, paras: [paras], sort: sortName, order: sortOrder, chks: chks },
                     success: function (data) {
                         if (data.result) {
                             location.href = app.siteRoot + data.url;
@@ -681,6 +684,42 @@
 
         callback();
     }
+
+    douoptions.tableOptions.onCheck = function (row, e) {
+
+        var name = row.Name;
+        if (aryCheck.indexOf(name) == -1) {
+            aryCheck.push(name);
+        }
+
+        return false;
+    };
+
+    douoptions.tableOptions.onUncheck = function (row, e) {
+
+        var name = row.Name;
+        aryCheck = aryCheck.filter(a => a != name);
+
+        return false;
+    };
+
+    douoptions.tableOptions.onCheckAll = function (rows, b) {
+        var aryDatas = rows.map(function (data) {
+            return data.Name;
+        });
+
+        //全選(merge 不重複)        
+        aryCheck = aryCheck.concat(aryDatas.filter(ele => !aryCheck.includes(ele)));
+    };
+
+    douoptions.tableOptions.onUncheckAll = function (a, rows) {
+        var aryDatas = rows.map(function (data) {
+            return data.Name;
+        });
+
+        //全不勾
+        aryCheck = aryCheck.filter(item => !aryDatas.includes(item));
+    };
 
     douoptions.tableOptions.onLoadSuccess = function (datas) {
         //alert('123');        
@@ -727,6 +766,27 @@
             if (aryFilter.length > 0) {
                 var str = aryFilter.join(' ,') + '</br>' + '  無符合資料';
                 $('.no-records-found td').html("篩選條件：" + str);
+            }
+        }
+
+        //選取數量
+        var n_sels = 0;
+        $('.bootstrap-table #_table tbody').find('.dou-field-Name').each(function (index) {
+            var name = $(this).text();
+            if (aryCheck.indexOf(name) > -1) {
+                n_sels++;
+
+                var a = $(this).closest('tr').find('.bs-checkbox');
+                //用trigger，不使用jquery保持資料正確性
+                $('#_table').bootstrapTable('check', index);
+            }
+        });
+
+        //若清單選取數量都勾,全選也勾
+        if (n_sels > 0) {
+            if (n_sels == datas.rows.length) {
+                //$('input[name="btSelectAll"]').prop('checked', true);
+                $('#_table').bootstrapTable('checkAll');
             }
         }
     }
