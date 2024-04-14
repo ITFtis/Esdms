@@ -296,10 +296,10 @@ namespace Esdms.Models
                             .SelectMany(b => b.c.DefaultIfEmpty(), (o, c) => new
                             {
                                 o.OutYear, o.ActName, o.ActId,
-                                BidCount = c == null ? 0 : c.BidCount,
-                                SetName = c == null ? "" : c.Name,
-                                bidNum = c == null ? 0 : c.UserHistorySetBids.Count()
-                            });
+                                BidCount = c.BidCount,
+                                SetName = c.Name,
+                                bidNum = c.UserHistorySetBids.Count()
+                            }).ToList();
 
                 var datas = query
                             .GroupBy(a => new { OutYear = a.OutYear, ActName = a.ActName })
@@ -321,9 +321,10 @@ namespace Esdms.Models
                                           c.Sum(a=>a.setCount),
                                           string.Join("</br>", c.Select(p => p.setTitle + "：" + p.setDesc))
                                        )
-                });
+                }).Select(a => a.str)
+                .ToList();
 
-                return string.Join("</br>", tmp.Select(a => a.str));
+                return string.Join("</br>", tmp);
             }
         }
 
@@ -390,9 +391,10 @@ namespace Esdms.Models
                                           c.Count(),
                                           string.Join("</br>", c.Select((p, index) => (index + 1).ToString() + "." + p.DName + "：" + p.pjName + "(" + p.ActName + ")"))
                                        )
-                });
+                }).Select(a => a.str)
+                .ToList();
 
-                return string.Join("</br>", tmp.Select(a => a.str));
+                return string.Join("</br>", tmp);
             }
         }
 
