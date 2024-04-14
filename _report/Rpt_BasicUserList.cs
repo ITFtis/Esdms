@@ -18,6 +18,7 @@ using Dou.Models.DB;
 using Esdms.Models;
 using FtisHelperV2.DB.Helpe;
 using FtisHelperV2.DB.Model;
+using Esdms.Controllers.Es;
 
 namespace Esdms
 {
@@ -25,7 +26,7 @@ namespace Esdms
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public string Export(List<BasicUser> datas)
+        public string Export(vwe_ChkExport chks, List<BasicUser> datas)
         {
             string url = "";
 
@@ -44,55 +45,97 @@ namespace Esdms
                 {
                     dynamic f = new ExpandoObject();
                     f.姓名 = data.Name;   //ooooooooooo                    
-                    if (1 == 1)
+                    if (chks.ChkSex)
                     {
                         var v = Code.GetSex().Where(a => int.Parse(a.Key) == data.Sex).FirstOrDefault();
                         f.性別 = v.Value;
                     }
-                    if (1 == 1)
+                    if (chks.ChkOnJob)
                     {
                         var v = Code.GetOnJob().Where(a => a.Key == data.OnJob).FirstOrDefault();
                         f.在職狀況 = v.Value;
                     }
-                    f.手機號碼 = data.PrivatePhone;
-                    f.辦公室電話 = data.OfficePhone;
-                    f.辦公室電話2 = data.OfficePhone2;
-                    f.傳真 = data.Fax;
-                    f.辦公_Email = data.OfficeEmail;
-                    f.私人_Email = data.PrivateEmail;                    
-                    if (1 == 1)
+                    if (chks.ChkPrivatePhone)
+                    {
+                        f.手機號碼 = data.PrivatePhone;
+                    }
+                    if (chks.ChkOfficePhone)
+                    {
+                        f.辦公室電話 = data.OfficePhone;
+                    }
+                    if (chks.ChkOfficePhone2)
+                    {
+                        f.辦公室電話2 = data.OfficePhone2;
+                    }
+                    if (chks.ChkFax)
+                    {
+                        f.傳真 = data.Fax;
+                    }
+                    if (chks.ChkOfficeEmail)
+                    {
+                        f.辦公_Email = data.OfficeEmail;
+                    }
+                    if (chks.ChkPrivateEmail)
+                    {
+                        f.私人_Email = data.PrivateEmail;
+                    }
+                    if (chks.ChkCityCode)
                     {
                         var v = CitySelectItems.CITIES.Where(a => a.CityCode == data.CityCode).FirstOrDefault();
                         f.辦公_縣市 = v == null ? "" : v.Name;
                     }                    
-                    if (1 == 1)
+                    if (chks.ChkZIP)
                     {
                         var v = TownSelectItems.Towns.Where(a => a.ZIP == data.ZIP).FirstOrDefault();
                         f.辦公_鄉鎮市區 = v == null ? "" : v.Name;
                     }
-                    f.辦公_地址 = data.OfficeAddress;                    
-                    if (1 == 1)
+                    if (chks.ChkOfficeAddress)
+                    {
+                        f.辦公_地址 = data.OfficeAddress;
+                    }
+                    if (chks.ChkPCityCode)
                     {
                         var v = CitySelectItems.CITIES.Where(a => a.CityCode == data.PCityCode).FirstOrDefault();
                         f.住家_縣市 = v == null ? "" : v.Name;
                     }                    
-                    if (1 == 1)
+                    if (chks.ChkPZIP)
                     {
                         var v = TownSelectItems.Towns.Where(a => a.ZIP == data.PZIP).FirstOrDefault();
                         f.住家_鄉鎮市區 = v == null ? "" : v.Name;
                     }
-                    f.住家_地址 = data.PAddress;
-                    f.備註 = data.Note;                    
-                    if (1 == 1)
+                    if (chks.ChkPAddress)
+                    {
+                        f.住家_地址 = data.PAddress;
+                    }
+                    if (chks.ChkNote)
+                    {
+                        f.備註 = data.Note;
+                    }
+                    if (chks.ChkCategoryId)
                     {
                         var v = CategorySelectItems.Categorys.Where(a => a.Id == data.CategoryId).FirstOrDefault();
                         f.人員類別 = v == null ? "" : v.Name;   //ooooooooooo
                     }
-                    f.單位系所 = data.UnitName; //ooooooooooo
-                    f.職稱 = data.Position;   //ooooooooooo
-                    f.專長 = HtmlHelper.RemoveHtmlTag(data.strExpertises.Replace("</br>", "\n"));   //ooooooooooo
-                    f.會外評選 = HtmlHelper.RemoveHtmlTag(data.vmOutCount.Replace("</br>", "\n"));  //ooooooooooo
-                    f.會內參與 = HtmlHelper.RemoveHtmlTag(data.vmInCount.Replace("</br>", "\n"));   //ooooooooooo
+                    if (chks.ChkUnitName)
+                    {
+                        f.單位系所 = data.UnitName; //ooooooooooo
+                    }
+                    if (chks.ChkPosition)
+                    {
+                        f.職稱 = data.Position;   //ooooooooooo
+                    }
+                    if (chks.ChkstrExpertises)
+                    {
+                        f.專長 = HtmlHelper.RemoveHtmlTag(data.strExpertises.Replace("</br>", "\n"));   //ooooooooooo
+                    }
+                    if (chks.ChkvmOutCount)
+                    {
+                        f.會外評選 = HtmlHelper.RemoveHtmlTag(data.vmOutCount.Replace("</br>", "\n"));  //ooooooooooo
+                    }
+                    if (chks.ChkvmInCount)
+                    {
+                        f.會內參與 = HtmlHelper.RemoveHtmlTag(data.vmInCount.Replace("</br>", "\n"));   //ooooooooooo
+                    }
 
                     f.SheetName = fileTitle;//sheep.名稱;
                     list.Add(f);

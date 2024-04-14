@@ -472,12 +472,6 @@
         var content = '<div class="row"> \
                             <div class="detail-view-field pb-2 col-6"> \
                                 <div class="detail-view-field form-check checkbox-xl"> \
-                                    <input class="form-check-input" type="checkbox" value="" id="ChkName" checked/> \
-                                    <label class="form-check-label" for="ChkName">姓名</label> \
-                                </div> \
-                            </div> \
-                            <div class="detail-view-field pb-2 col-6"> \
-                                <div class="detail-view-field form-check checkbox-xl"> \
                                     <input class="form-check-input" type="checkbox" value="" id="ChkSex" /> \
                                     <label class="form-check-label" for="ChkSex">性別</label> \
                                 </div> \
@@ -496,14 +490,14 @@
                             </div> \
                             <div class="detail-view-field pb-2 col-6"> \
                                 <div class="detail-view-field form-check checkbox-xl"> \
-                                    <input class="form-check-input" type="checkbox" value="" id="辦公室電話" /> \
-                                    <label class="form-check-label" for="辦公室電話">ChkOfficePhone</label> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkOfficePhone" /> \
+                                    <label class="form-check-label" for="ChkOfficePhone">辦公室電話</label> \
                                 </div> \
                             </div> \
                             <div class="detail-view-field pb-2 col-6"> \
                                 <div class="detail-view-field form-check checkbox-xl"> \
-                                    <input class="form-check-input" type="checkbox" value="" id="辦公室電話2" /> \
-                                    <label class="form-check-label" for="辦公室電話2">ChkOfficePhone2</label> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkOfficePhone2" /> \
+                                    <label class="form-check-label" for="ChkOfficePhone2">辦公室電話2</label> \
                                 </div> \
                             </div> \
                             <div class="detail-view-field pb-2 col-6"> \
@@ -550,14 +544,14 @@
                             </div> \
                             <div class="detail-view-field pb-2 col-6"> \
                                 <div class="detail-view-field form-check checkbox-xl"> \
-                                    <input class="form-check-input" type="checkbox" value="" id="住家_鄉鎮市區" /> \
-                                    <label class="form-check-label" for="住家_鄉鎮市區">ChkPZIP</label> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkPZIP" /> \
+                                    <label class="form-check-label" for="ChkPZIP">住家_鄉鎮市區</label> \
                                 </div> \
                             </div> \
                             <div class="detail-view-field pb-2 col-6"> \
                                 <div class="detail-view-field form-check checkbox-xl"> \
-                                    <input class="form-check-input" type="checkbox" value="" id="住家_地址" /> \
-                                    <label class="form-check-label" for="住家_地址">ChkPAddress</label> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkPAddress" /> \
+                                    <label class="form-check-label" for="ChkPAddress">住家_地址</label> \
                                 </div> \
                             </div> \
                             <div class="detail-view-field pb-2 col-6"> \
@@ -616,12 +610,36 @@
                 var sortName = $_masterTable.bootstrapTable('getOptions').sortName;
                 var sortOrder = $_masterTable.bootstrapTable('getOptions').sortOrder;
 
+                //勾選欄位
+                var chks = {};
+                chks.ChkSex = $('#ChkSex').prop("checked");
+                chks.ChkOnJob = $('#ChkOnJob').prop("checked");
+                chks.ChkPrivatePhone = $('#ChkPrivatePhone').prop("checked");
+                chks.ChkOfficePhone = $('#ChkOfficePhone').prop("checked");
+                chks.ChkOfficePhone2 = $('#ChkOfficePhone2').prop("checked");
+                chks.ChkFax = $('#ChkFax').prop("checked");
+                chks.ChkOfficeEmail = $('#ChkOfficeEmail').prop("checked");
+                chks.ChkPrivateEmail = $('#ChkPrivateEmail').prop("checked");
+                chks.ChkCityCode = $('#ChkCityCode').prop("checked");
+                chks.ChkZIP = $('#ChkZIP').prop("checked");
+                chks.ChkOfficeAddress = $('#ChkOfficeAddress').prop("checked");
+                chks.ChkPCityCode = $('#ChkPCityCode').prop("checked");
+                chks.ChkPZIP = $('#ChkPZIP').prop("checked");
+                chks.ChkPAddress = $('#ChkPAddress').prop("checked");
+                chks.ChkNote = $('#ChkNote').prop("checked");
+                chks.ChkCategoryId = $('#ChkCategoryId').prop("checked");
+                chks.ChkUnitName = $('#ChkUnitName').prop("checked");
+                chks.ChkPosition = $('#ChkPosition').prop("checked");
+                chks.ChkstrExpertises = $('#ChkstrExpertises').prop("checked");
+                chks.ChkvmOutCount = $('#ChkvmOutCount').prop("checked");
+                chks.ChkvmInCount = $('#ChkvmInCount').prop("checked");
+
                 helper.misc.showBusyIndicator();
                 $.ajax({
                     url: app.siteRoot + 'BasicUser/ExportList',
                     datatype: "json",
                     type: "POST",
-                    data: { paras: [paras], sort: sortName, order: sortOrder },
+                    data: { paras: [paras], sort: sortName, order: sortOrder, chks: chks },
                     success: function (data) {
                         if (data.result) {
                             location.href = app.siteRoot + data.url;

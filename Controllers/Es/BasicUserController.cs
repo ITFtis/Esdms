@@ -69,7 +69,7 @@ namespace Esdms.Controllers.Es
         }
 
         //匯出清單
-        public ActionResult ExportList(string sort, string order, params KeyValueParams[] paras)
+        public ActionResult ExportList(vwe_ChkExport chks, string sort, string order, params KeyValueParams[] paras)
         {
             if (sort != null)
             {
@@ -92,7 +92,7 @@ namespace Esdms.Controllers.Es
 
             Rpt_BasicUserList rep = new Rpt_BasicUserList();
             //string url = rep.Export(datas, ".xlsx");
-            string url = rep.Export(datas);
+            string url = rep.Export(chks, datas);
 
             if (url == "")
             {
@@ -102,22 +102,6 @@ namespace Esdms.Controllers.Es
             {
                 return Json(new { result = true, url = url }, JsonRequestBehavior.AllowGet);
             }            
-        }
-
-        public ActionResult ExportList2(vwe_ChkExport chks)
-        {
-            string url = "";
-            //string url = rep.Export(datas);
-
-            if (url == "")
-            {
-                //return Json(new { result = false, errorMessage = rep.ErrorMessage }, JsonRequestBehavior.AllowGet);
-                return Json(new { result = false, errorMessage = "xxxxxx" }, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(new { result = true, url = url }, JsonRequestBehavior.AllowGet);
-            }
         }
 
         private IQueryable<BasicUser> GetOutputData(IQueryable<BasicUser> iquery, params KeyValueParams[] paras)
