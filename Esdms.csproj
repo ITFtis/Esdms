@@ -259,6 +259,7 @@
     <Compile Include="_core\Code.cs" />
     <Compile Include="_core\DateFormat.cs" />
     <Compile Include="_core\ExcelHelper.cs" />
+    <Compile Include="_core\ExcelSpecHelper.cs" />
     <Compile Include="_core\FileHelper.cs" />
     <Compile Include="_core\GenerateHelper.cs" />
     <Compile Include="_core\HtmlHelper.cs" />
