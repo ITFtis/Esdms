@@ -104,6 +104,22 @@ namespace Esdms.Controllers.Es
             }            
         }
 
+        public ActionResult ExportList2(vwe_ChkExport chks)
+        {
+            string url = "";
+            //string url = rep.Export(datas);
+
+            if (url == "")
+            {
+                //return Json(new { result = false, errorMessage = rep.ErrorMessage }, JsonRequestBehavior.AllowGet);
+                return Json(new { result = false, errorMessage = "xxxxxx" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { result = true, url = url }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         private IQueryable<BasicUser> GetOutputData(IQueryable<BasicUser> iquery, params KeyValueParams[] paras)
         {
             //---1.查詢---
@@ -882,5 +898,74 @@ namespace Esdms.Controllers.Es
         {
             return new Dou.Models.DB.ModelEntity<BasicUser>(new EsdmsModelContextExt());
         }
+    }
+
+    public class vwe_ChkExport
+    {
+        //姓名
+        public bool ChkName { get; set; }
+
+        //性別
+        public bool ChkSex { get; set; }
+
+        //在職狀況
+        public bool ChkOnJob { get; set; }
+
+        //手機號碼
+        public bool ChkPrivatePhone { get; set; }
+
+        //辦公室電話
+        public bool ChkOfficePhone { get; set; }
+
+        //辦公室電話2
+        public bool ChkOfficePhone2 { get; set; }
+
+        //傳真
+        public bool ChkFax { get; set; }               
+
+        //辦公_Email
+        public bool ChkOfficeEmail { get; set; }
+
+        //私人_Email
+        public bool ChkPrivateEmail { get; set; }
+
+        //辦公_縣市
+        public bool ChkCityCode { get; set; }
+
+        //辦公_鄉鎮市區
+        public bool ChkZIP { get; set; }
+
+        //辦公_地址
+        public bool ChkOfficeAddress { get; set; }
+
+        //住家_縣市
+        public bool ChkPCityCode { get; set; }
+
+        //住家_鄉鎮市區
+        public bool ChkPZIP { get; set; }
+
+        //住家_地址
+        public bool ChkPAddress { get; set; }
+
+        //備註
+        public bool ChkNote { get; set; }
+
+        //人員類別
+        public bool ChkCategoryId { get; set; }
+
+        //單位系所
+        public bool ChkUnitName { get; set; }
+
+        //職稱
+        public bool ChkPosition { get; set; }
+
+        //專長
+        public bool ChkstrExpertises { get; set; }
+
+        //會外評選
+        public bool ChkvmOutCount { get; set; }
+
+        //會內參與
+        public bool ChkvmInCount { get; set; }
     }
 }

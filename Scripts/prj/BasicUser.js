@@ -468,37 +468,178 @@
     b.item = '<span class="btn btn-secondary glyphicon glyphicon-download-alt"> 匯出清單</span>';
     b.event = 'click .glyphicon-download-alt';
     b.callback = function exportQdate(evt) {
-        var conditions = GetFilterParams($_masterTable)
-        var paras;
-        if (conditions.length > 0) {
-            paras = { key: 'filter', value: JSON.stringify(conditions) };
-        }
 
-        var sortName = $_masterTable.bootstrapTable('getOptions').sortName;
-        var sortOrder = $_masterTable.bootstrapTable('getOptions').sortOrder;
+        var content = '<div class="row"> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkName" checked/> \
+                                    <label class="form-check-label" for="ChkName">姓名</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkSex" /> \
+                                    <label class="form-check-label" for="ChkSex">性別</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkOnJob" /> \
+                                    <label class="form-check-label" for="ChkOnJob">在職狀況</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkPrivatePhone" /> \
+                                    <label class="form-check-label" for="ChkPrivatePhone">手機號碼</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="辦公室電話" /> \
+                                    <label class="form-check-label" for="辦公室電話">ChkOfficePhone</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="辦公室電話2" /> \
+                                    <label class="form-check-label" for="辦公室電話2">ChkOfficePhone2</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkFax" /> \
+                                    <label class="form-check-label" for="ChkFax">傳真</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkOfficeEmail" /> \
+                                    <label class="form-check-label" for="ChkOfficeEmail">辦公_Email</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkPrivateEmail" /> \
+                                    <label class="form-check-label" for="ChkPrivateEmail">私人_Email</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkCityCode" /> \
+                                    <label class="form-check-label" for="ChkCityCode">辦公_縣市</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkZIP" /> \
+                                    <label class="form-check-label" for="ChkZIP">辦公_鄉鎮市區</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkOfficeAddress" /> \
+                                    <label class="form-check-label" for="ChkOfficeAddress">辦公_地址</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkPCityCode" /> \
+                                    <label class="form-check-label" for="ChkPCityCode">住家_縣市</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="住家_鄉鎮市區" /> \
+                                    <label class="form-check-label" for="住家_鄉鎮市區">ChkPZIP</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="住家_地址" /> \
+                                    <label class="form-check-label" for="住家_地址">ChkPAddress</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkNote" /> \
+                                    <label class="form-check-label" for="ChkNote">備註</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkCategoryId" checked/> \
+                                    <label class="form-check-label" for="ChkCategoryId">人員類別</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkUnitName" checked/> \
+                                    <label class="form-check-label" for="ChkUnitName">單位系所</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkPosition" checked/> \
+                                    <label class="form-check-label" for="ChkPosition">職稱</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkstrExpertises" checked/> \
+                                    <label class="form-check-label" for="ChkstrExpertises">專長</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkvmOutCount" checked/> \
+                                    <label class="form-check-label" for="ChkvmOutCount">會外評選</label> \
+                                </div> \
+                            </div> \
+                            <div class="detail-view-field pb-2 col-6"> \
+                                <div class="detail-view-field form-check checkbox-xl"> \
+                                    <input class="form-check-input" type="checkbox" value="" id="ChkvmInCount" checked/> \
+                                    <label class="form-check-label" for="ChkvmInCount">會內參與</label> \
+                                </div> \
+                            </div> \
+                        </div>';
 
-        helper.misc.showBusyIndicator();
-        $.ajax({
-            url: app.siteRoot + 'BasicUser/ExportList',
-            datatype: "json",
-            type: "POST",
-            data: { paras: [paras], sort: sortName, order: sortOrder },
-            success: function (data) {
-                if (data.result) {
-                    location.href = app.siteRoot + data.url;
-                } else {
-                    alert("查詢失敗：\n" + data.errorMessage);
+        jspConfirmYesNo($("body"), { content: content }, function (confrim) {
+            if (confrim) {
+                //匯出Excel
+                var conditions = GetFilterParams($_masterTable)
+                var paras;
+                if (conditions.length > 0) {
+                    paras = { key: 'filter', value: JSON.stringify(conditions) };
                 }
-            },
-            complete: function () {
-                helper.misc.hideBusyIndicator();
-            },
-            error: function (xhr, status, error) {
-                var err = eval("(" + xhr.responseText + ")");
-                alert(err.Message);
-                helper.misc.hideBusyIndicator();
+
+                var sortName = $_masterTable.bootstrapTable('getOptions').sortName;
+                var sortOrder = $_masterTable.bootstrapTable('getOptions').sortOrder;
+
+                helper.misc.showBusyIndicator();
+                $.ajax({
+                    url: app.siteRoot + 'BasicUser/ExportList',
+                    datatype: "json",
+                    type: "POST",
+                    data: { paras: [paras], sort: sortName, order: sortOrder },
+                    success: function (data) {
+                        if (data.result) {
+                            location.href = app.siteRoot + data.url;
+                        } else {
+                            alert("查詢失敗：\n" + data.errorMessage);
+                        }
+                    },
+                    complete: function () {
+                        helper.misc.hideBusyIndicator();
+                    },
+                    error: function (xhr, status, error) {
+                        var err = eval("(" + xhr.responseText + ")");
+                        alert(err.Message);
+                        helper.misc.hideBusyIndicator();
+                    }
+                });
             }
-        });
+        })        
     };
 
     var ad1 = {};
