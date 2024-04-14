@@ -100,6 +100,7 @@ namespace Esdms
 
                 HSSFCellStyle hStyle = (HSSFCellStyle)workbook.CreateCellStyle();
                 hStyle.CloneStyleFrom(contentStyle);
+                hStyle.Alignment = HorizontalAlignment.Left;
                 hStyle.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Top;
 
                 foreach (var row in sheet)
@@ -579,6 +580,8 @@ namespace Esdms
             HSSFCellStyle oStyle = (HSSFCellStyle)workbook.CreateCellStyle();
             //多行文字
             oStyle.WrapText = true;
+            //水平對齊
+            oStyle.Alignment = HorizontalAlignment.Center;
             //文字置中
             oStyle.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Center;
 
