@@ -91,7 +91,8 @@ namespace Esdms.Controllers.Es
             var datas = iquery.ToList();
 
             Rpt_BasicUserList rep = new Rpt_BasicUserList();
-            string url = rep.Export(datas, ".xlsx");
+            //string url = rep.Export(datas, ".xlsx");
+            string url = rep.Export(datas);
 
             if (url == "")
             {

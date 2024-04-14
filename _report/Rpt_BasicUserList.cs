@@ -9,11 +9,75 @@ using System.Web.UI.WebControls;
 using Microsoft.Reporting.WebForms;
 using System.Data;
 using System.Text.RegularExpressions;
+using Dou.Models;
+using System.Dynamic;
+using System.Web.Mvc;
+using Dou.Controllers;
+using Dou.Misc;
+using Dou.Models.DB;
+using Esdms.Models;
+using FtisHelperV2.DB.Helpe;
+using FtisHelperV2.DB.Model;
 
 namespace Esdms
 {
     public class Rpt_BasicUserList : ReportClass
     {
+        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        public string Export(List<BasicUser> datas)
+        {
+            string url = "";
+
+            ////List<string> titles = new List<string>() { "匯出專家清單，查詢條件:" };
+            List<string> titles = new List<string>();
+
+            try
+            {
+                string fileTitle = "專家清單";
+                string folder = FileHelper.GetFileFolder(Code.TempUploadFile.匯出專家清單);
+
+                //產出Dynamic資料 (給Excel)
+                List<dynamic> list = new List<dynamic>();
+
+                foreach (var data in datas)
+                {
+                    dynamic f = new ExpandoObject();
+                    f.姓名 = data.Name;   //ooooooooooo
+                    f.人員類別 = data.CategoryId;   //ooooooooooo
+                    f.單位系所 = data.UnitName; //ooooooooooo
+                    f.職稱 = data.Position;   //ooooooooooo
+                    f.專長 = HtmlHelper.RemoveHtmlTag(data.strExpertises.Replace("</br>", "\n"));   //ooooooooooo
+                    f.會外評選 = HtmlHelper.RemoveHtmlTag(data.vmOutCount.Replace("</br>", "\n"));  //ooooooooooo
+                    f.會內參與 = HtmlHelper.RemoveHtmlTag(data.vmInCount.Replace("</br>", "\n"));   //ooooooooooo
+
+                    f.SheetName = fileTitle;//sheep.名稱;
+                    list.Add(f);
+                }
+
+                //查無符合資料表數
+                if (list.Count == 0)
+                {
+                    _errorMessage = "查無符合資料表數";
+                }
+
+                //產出excel
+                string fileName = Esdms.ExcelSpecHelper.GenerateExcelByLinqF1(fileTitle, titles, list, folder);
+                string path = folder + fileName;
+                url = Esdms.Cm.PhysicalToUrl(path);
+            }
+            catch(Exception ex)
+            {
+                _errorMessage = "匯出專家清單失敗：" + ex.Message;
+                logger.Error(ex.Message);
+                logger.Error(ex.StackTrace);
+
+                return "";
+            }
+
+            return url;
+        }
+
         public string Export(List<BasicUser> datas, string ext)
         {
             string resultUrl = "";

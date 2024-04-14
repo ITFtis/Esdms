@@ -502,11 +502,11 @@ namespace Esdms
 
             HSSFFont font1 = (HSSFFont)workbook.CreateFont();
             //字體顏色
-            //font1.Color = NPOI.HSSF.Util.HSSFColor.Blue.Index;
+            font1.Color = NPOI.HSSF.Util.HSSFColor.Blue.Index;
             //字體粗體
-            //font1.Boldweight = (short)NPOI.SS.UserModel.FontBoldWeight.Bold;
+            font1.Boldweight = (short)NPOI.SS.UserModel.FontBoldWeight.Bold;
             //字型
-            font1.FontName = "新細明體";
+            font1.FontName = "標楷體";     //新細明體
             oStyle.SetFont(font1);
 
             //有邊框
@@ -527,13 +527,15 @@ namespace Esdms
         {
             HSSFCellStyle oStyle = (HSSFCellStyle)workbook.CreateCellStyle();
             oStyle.Alignment = HorizontalAlignment.Center;//水平對齊
+            //文字置中
+            oStyle.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Center;
 
             HSSFFont font1 = (HSSFFont)workbook.CreateFont();
-            //font1.FontHeightInPoints = 12;
+            font1.FontHeightInPoints = 12;
             ////字體粗體
-            //font1.Boldweight = (short)NPOI.SS.UserModel.FontBoldWeight.Bold;
+            font1.Boldweight = (short)NPOI.SS.UserModel.FontBoldWeight.Bold;
             //字型
-            font1.FontName = "新細明體";
+            font1.FontName = "標楷體";     //新細明體
             oStyle.SetFont(font1);
 
             //有邊框
@@ -553,10 +555,13 @@ namespace Esdms
         private static HSSFCellStyle GetContentStyle(HSSFWorkbook workbook)
         {
             HSSFCellStyle oStyle = (HSSFCellStyle)workbook.CreateCellStyle();
+            oStyle.Alignment = HorizontalAlignment.Center;//水平對齊
+            //文字置中
+            oStyle.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Center;
 
             HSSFFont font1 = (HSSFFont)workbook.CreateFont();
             //字型
-            font1.FontName = "新細明體";
+            font1.FontName = "標楷體";     //新細明體
             oStyle.SetFont(font1);
 
             //有邊框
