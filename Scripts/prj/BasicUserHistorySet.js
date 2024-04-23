@@ -9,6 +9,11 @@
 
             _setopt.title = '處室組別';
 
+            if (IsView) {
+                _setopt.addable = false;
+                _setopt.deleteable = false;
+            }
+
             //取消自動抓後端資料
             _setopt.tableOptions.url = undefined;
 
@@ -35,10 +40,20 @@
                 if (row.Id == undefined)
                     return;
 
+                if (IsView) {
+                    $('.userhistorysetcontroller .modal-dialog ').find('.modal-footer').find('.btn-primary').hide();
+                }
+
                 var oId = row.Id;
                 $.getJSON($.AppConfigOptions.baseurl + 'UserHistorySetBid/GetDataManagerOptionsJson', function (_opt) {
 
                     _opt.title = '標案';
+
+                    if (IsView) {
+                        _opt.addable = false;
+                        _opt.editable = false;
+                        _opt.deleteable = false;
+                    }
 
                     //取消自動抓後端資料
                     _opt.tableOptions.url = undefined;
@@ -62,7 +77,7 @@
                     //實體Dou js
                     $_detailTable = $('<table>').appendTo($_editDataContainer).douTable(_opt);
                     //預設值
-                    $('.bootstrap-table.userhistorysetbidcontroller .fixed-table-toolbar .btn-add-data-manager').text('新增(標案名稱)')
+                    $('.bootstrap-table.userhistorysetbidcontroller .fixed-table-toolbar .btn-add-data-manager').text('新增(標案名稱)')                    
                 });
             }
 
