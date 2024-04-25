@@ -378,7 +378,7 @@ namespace Esdms.Models
                             .GroupJoin(ProjectSelectItems.Projects, a => a.ProjectId, b => b.Id, (o, c) => new
                             { 
                                  o.Id, o.Year, o.DCode, o.ProjectId, o.ActName, o.ActId, o.DName,
-                                 pjName = c == null ? "" : c.FirstOrDefault().Name
+                                 pjName = c.FirstOrDefault() == null ? "" : c.FirstOrDefault().Name
                             });
 
                 ////var tt = query.ToList();
