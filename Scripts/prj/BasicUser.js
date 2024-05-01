@@ -695,11 +695,13 @@
 
         //多選專家
         var Names = params.find(a => a.key == "Names");
-        var $Names = $('.filter-toolbar-plus [data-fn="Names"]').parent().find(".ui-autocomplete-multiselect-item");
-        var aryNames = $Names.map(function () {
-            return $(this).text();
-        }).get();
-        Names.value = aryNames.join(',')
+        if (Names != null) {
+            var $Names = $('.filter-toolbar-plus [data-fn="Names"]').parent().find(".ui-autocomplete-multiselect-item");
+            var aryNames = $Names.map(function () {
+                return $(this).text();
+            }).get();
+            Names.value = aryNames.join(',')
+        }
 
         callback();
     }
@@ -937,6 +939,11 @@
         if (aryVPower.indexOf('2') > -1) {
             $('.glyphicon-download-alt').css("display", "block");
         }
+    }
+    else if (IsFinances)
+    {
+        //財務有權限
+        $('.glyphicon-download-alt').css("display", "block");
     }
     else {
         //json原編(無)

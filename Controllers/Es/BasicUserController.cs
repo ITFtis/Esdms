@@ -26,6 +26,11 @@ namespace Esdms.Controllers.Es
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        static List<RoleUser> roles = Dou.Context.CurrentUser<User>().RoleUsers;
+        //特定權限(admin + 會內財務檢視人員)
+        static List<string> Finances = new List<string>() { "admin", "ftisadmin", "DataManager", "DataFinance" };
+        bool isFinances = roles.Any(a => Finances.Contains(a.RoleId));
+
         // GET: BasicUser
         public ActionResult Index()
         {
@@ -35,6 +40,7 @@ namespace Esdms.Controllers.Es
             //有專家編輯權限
             List<string> editRoles = new List<string>() { "admin", "DataManager", "ftisadmin" };
             ViewBag.IsView = roles.Where(a => editRoles.Any(b => a.RoleId == b)).Count() == 0;
+            ViewBag.IsFinances = isFinances;
 
             string path = Server.MapPath("~/Data/vPower.json");
             if (System.IO.File.Exists(path))
@@ -231,7 +237,10 @@ namespace Esdms.Controllers.Es
                 field.sortable = true;
                 field.visible = false;
             }
-            
+
+            //多筆姓名挑選 (限定：admin + 會內財務檢視人員)
+            options.GetFiled("Names").filter = isFinances;
+
             options.GetFiled("Name").visible = true;
             options.GetFiled("UnitName").visible = true;
             options.GetFiled("UnitName").title = "單位(系所)";

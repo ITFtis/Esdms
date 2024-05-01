@@ -94,4 +94,7 @@
     var aryVPower = JSON.parse('@Html.Raw(Json.Encode(ViewBag.VPower))');
     //只能檢視
     var IsView = '@ViewBag.IsView'.toLowerCase() == 'true';
+
+    //財務權限
+    var IsFinances = '@ViewBag.IsFinances'.toLowerCase() == 'true';
 </script>
