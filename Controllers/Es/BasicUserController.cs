@@ -114,12 +114,18 @@ namespace Esdms.Controllers.Es
         private IQueryable<BasicUser> GetOutputData(IQueryable<BasicUser> iquery, params KeyValueParams[] paras)
         {
             //---1.查詢---
+            var Names = KeyValue.GetFilterParaValue(paras, "Names");
             var Name = KeyValue.GetFilterParaValue(paras, "Name");
             var DuplicateName = KeyValue.GetFilterParaValue(paras, "DuplicateName");
             var SubjectId = KeyValue.GetFilterParaValue(paras, "SubjectId");
             var SubjectDetailId = KeyValue.GetFilterParaValue(paras, "SubjectDetailId");
             var strExpertises = KeyValue.GetFilterParaValue(paras, "strExpertises");
 
+            if (!string.IsNullOrEmpty(Names))
+            {
+                var aryNames = Names.Split(',');
+                iquery = iquery.Where(a => aryNames.Contains(a.Name));
+            }
             if (!string.IsNullOrEmpty(Name))
             {
                 iquery = iquery.Where(a => a.Name.IndexOf(Name) > -1);

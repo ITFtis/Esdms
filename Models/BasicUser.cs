@@ -19,7 +19,14 @@ namespace Esdms.Models
         [ColumnDef(ColSize = 3)]
         [StringLength(13)]
         public string PId { get; set; }
-        
+
+        /// <summary>
+        /// Filter使用
+        /// </summary>
+        [Display(Name = "多筆姓名挑選")]
+        [ColumnDef(Visible = false, VisibleEdit = false, Filter = true)]
+        public string Names { get; }
+
         [Display(Name = "姓名")]
         [Required]
         [ColumnDef(EditType = EditType.TextList, SelectItemsClassNamespace = Esdms.Models.BasicUserNameSelectItems.AssemblyQualifiedName, 
@@ -422,7 +429,7 @@ namespace Esdms.Models
         [Display(Name = "重覆姓名")]
         [ColumnDef(Visible = false, VisibleEdit = false,
                 Filter = true, EditType = EditType.Select, SelectItems = "{\"Y\":\"是\",\"N\":\"否\"}")]
-        public string DuplicateName { get; }
+        public string DuplicateName { get; } 
     }
 
     public class BasicUserNameSelectItems : Dou.Misc.Attr.SelectItemsClass

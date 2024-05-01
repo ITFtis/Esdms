@@ -1,28 +1,4 @@
 ﻿$(document).ready(function () {
-    //多選專家 $("#divFilterUser .ui-autocomplete-multiselect-item").first().text()
-    $('.mulit-select-mem').autocomplete({
-        source: function (request, response) {
-            $.ajax({
-                url: app.siteRoot + 'BasicUser/GetBasicUserList',
-                datatype: "json",
-                type: "Get",
-                data: { searchKeyword: request.term },
-                async: false,
-                success: function (datas) {
-                    response($.map(datas, function (obj) {
-                        return {
-                            value: obj.label,
-                            label: obj.Name,
-                        };
-                    }));
-                },
-            });
-        },
-        multiselect: true,
-        delay: 0,
-        minLength: 0
-    }).on('focus', function () { $(this).keydown(); });
-
 
     var aryCheck = [];
 
@@ -628,7 +604,18 @@
         jspConfirmYesNo($("body"), { content: content }, function (confrim) {
             if (confrim) {
                 //匯出Excel
-                var conditions = GetFilterParams($_masterTable)
+                var conditions = GetFilterParams($_masterTable);
+
+                //filter params特殊參數調整
+                var Names = conditions.find(a => a.key == "Names");
+                if (Names != null) {
+                    var $Names = $('.filter-toolbar-plus [data-fn="Names"]').parent().find(".ui-autocomplete-multiselect-item");
+                    var aryNames = $Names.map(function () {
+                        return $(this).text();
+                    }).get();
+                    Names.value = aryNames.join(',')
+                }
+
                 var paras;
                 if (conditions.length > 0) {
                     paras = { key: 'filter', value: JSON.stringify(conditions) };
@@ -705,6 +692,14 @@
     douoptions.queryFilter = function (params, callback) {
         var SubjectDetailId = params.find(a => a.key == "SubjectDetailId");
         SubjectDetailId.value = SubjectDetailId.value.join(',');
+
+        //多選專家
+        var Names = params.find(a => a.key == "Names");
+        var $Names = $('.filter-toolbar-plus [data-fn="Names"]').parent().find(".ui-autocomplete-multiselect-item");
+        var aryNames = $Names.map(function () {
+            return $(this).text();
+        }).get();
+        Names.value = aryNames.join(',')
 
         callback();
     }
@@ -844,6 +839,37 @@
         $SubjectDetailId.selectpicker('deselectAll');
         RestSelectpickerSubjectId();
     })
+
+    //多選專家
+    $('.filter-toolbar-plus [data-fn="Names"]').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: app.siteRoot + 'BasicUser/GetBasicUserList',
+                datatype: "json",
+                type: "Get",
+                data: { searchKeyword: request.term },
+                async: false,
+                success: function (datas) {
+                    //autocomplete不挑重複
+                    var $Names = $('.filter-toolbar-plus [data-fn="Names"]').parent().find(".ui-autocomplete-multiselect-item");
+                    var aryNames = $Names.map(function () {
+                        return $(this).text();
+                    }).get();
+                    datas = datas.filter(x => !aryNames.includes(x.Name));
+                    response($.map(datas, function (obj) {
+                        return {
+                            value: obj.label,
+                            label: obj.Name,
+                        };
+                    }));
+                },
+            });
+        },
+        multiselect: true,
+        delay: 0,
+        minLength: 0
+    }).on('focus', function () { $(this).keydown(); });
+    $('.filter-toolbar-plus [data-fn="Names"]').removeClass('form-control');
 
     //特定角色使用功能
     if ($('.glyphicon.glyphicon-open-file').length > 0) {
