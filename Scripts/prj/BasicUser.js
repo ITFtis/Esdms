@@ -845,6 +845,17 @@
     //多選專家
     $('.filter-toolbar-plus [data-fn="Names"]').autocomplete({
         source: function (request, response) {
+
+            //不可超過10位專家
+            var limit = 3;
+            var $Names = $('.filter-toolbar-plus [data-fn="Names"]').parent().find(".ui-autocomplete-multiselect-item");
+            var aryNames = $Names.map(function () {
+                return $(this).text();
+            }).get();
+            if (aryNames.length >= limit) {
+                return;
+            }
+
             $.ajax({
                 url: app.siteRoot + 'BasicUser/GetBasicUserList',
                 datatype: "json",
