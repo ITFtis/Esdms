@@ -3,6 +3,15 @@
 @*專家參與紀錄(主程式)*@
 <script src="~/Scripts/prj/BasicUser.js?v=20240423001"></script>
 
+<link href="~/Content/icons.css" rel="stylesheet" />
+<link href="~/Content/icons.min.css.map" rel="stylesheet" />
+<!-- jquery-ui -->
+<link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+<!-- Multi select-->
+<link href="~/Content/autocomplete.multiselect.css" rel="stylesheet">
+
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/autocomplete.multiselect.js"></script>
 
 <script src="~/Scripts/prj/baseb.js?v=20240130001"></script>
 @using Dou.Misc.Extension
@@ -53,7 +62,7 @@
         margin-right: 0.8rem;
     }
 
-    .checkbox-xl .form-check-label {        
+    .checkbox-xl .form-check-label {
         font-size: 18px
     }
 </style>
@@ -71,14 +80,18 @@
 <br />
 <span id="mlist" class="container-fluid body-content"></span>
 
+<div id="divFilterUser">
+    <input class="mulit-select-mem" type="text" id="txtFilterUser" placeholder="鍵入關鍵字以搜尋並挑選人員" />
+</div>
+
 <div id="_tabs">
     <table id="_table"></table>
-</div>    
+</div>
 
 @*下層資料表*@
 <table id="_downtable"></table>
 
-   
+
 <script>
     var aryVPower = JSON.parse('@Html.Raw(Json.Encode(ViewBag.VPower))');
     //只能檢視

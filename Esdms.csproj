@@ -268,6 +268,7 @@
     <Compile Include="_report\_ReportClass.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\autocomplete.multiselect.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -284,14 +285,25 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\icons.css" />
+    <Content Include="Content\icons.min.css" />
+    <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\prjImage\sort-arrow-asc.png" />
     <Content Include="Content\prjImage\sort-arrow-both.png" />
     <Content Include="Content\prjImage\sort-arrow-desc.png" />
     <Content Include="Content\prj\StyleSheet1.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\dripicons-v2.svg" />
+    <Content Include="fonts\materialdesignicons-webfont.svg" />
+    <Content Include="fonts\Nunito-Bold.svg" />
+    <Content Include="fonts\Nunito-Light.svg" />
+    <Content Include="fonts\Nunito-Regular.svg" />
+    <Content Include="fonts\Nunito-SemiBold.svg" />
+    <Content Include="fonts\unicons.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\autocomplete.multiselect.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -301,6 +313,34 @@
     <Content Include="Report\Source_BasicUser.xsc">
       <DependentUpon>Source_BasicUser.xsd</DependentUpon>
     </Content>
+    <Content Include="Content\icons.min.css.map" />
+    <Content Include="fonts\dripicons-v2.eot" />
+    <Content Include="fonts\dripicons-v2.ttf" />
+    <Content Include="fonts\dripicons-v2.woff" />
+    <Content Include="fonts\materialdesignicons-webfont.eot" />
+    <Content Include="fonts\materialdesignicons-webfont.ttf" />
+    <Content Include="fonts\materialdesignicons-webfont.woff" />
+    <Content Include="fonts\materialdesignicons-webfont.woff2" />
+    <Content Include="fonts\Nunito-Bold.eot" />
+    <Content Include="fonts\Nunito-Bold.ttf" />
+    <Content Include="fonts\Nunito-Bold.woff" />
+    <Content Include="fonts\Nunito-Light.ttf" />
+    <Content Include="fonts\Nunito-Light.woff" />
+    <Content Include="fonts\Nunito-Light.woff2" />
+    <Content Include="fonts\Nunito-Regular.eot" />
+    <Content Include="fonts\Nunito-Regular.ttf" />
+    <Content Include="fonts\Nunito-Regular.woff" />
+    <Content Include="fonts\Nunito-SemiBold.eot" />
+    <Content Include="fonts\Nunito-SemiBold.ttf" />
+    <Content Include="fonts\Nunito-SemiBold.woff" />
+    <Content Include="fonts\summernote.eot" />
+    <Content Include="fonts\summernote.ttf" />
+    <Content Include="fonts\summernote.woff" />
+    <Content Include="fonts\summernote.woff2" />
+    <Content Include="fonts\unicons.eot" />
+    <Content Include="fonts\unicons.ttf" />
+    <Content Include="fonts\unicons.woff" />
+    <Content Include="fonts\unicons.woff2" />
     <None Include="Report\Source_BasicUser.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -315,6 +355,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />

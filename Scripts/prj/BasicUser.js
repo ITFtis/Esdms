@@ -1,4 +1,28 @@
 ﻿$(document).ready(function () {
+    //多選專家 $("#divFilterUser .ui-autocomplete-multiselect-item").first().text()
+    $('.mulit-select-mem').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: app.siteRoot + 'BasicUser/GetBasicUserList',
+                datatype: "json",
+                type: "Get",
+                data: { searchKeyword: request.term },
+                async: false,
+                success: function (datas) {
+                    response($.map(datas, function (obj) {
+                        return {
+                            value: obj.label,
+                            label: obj.Name,
+                        };
+                    }));
+                },
+            });
+        },
+        multiselect: true,
+        delay: 0,
+        minLength: 0
+    }).on('focus', function () { $(this).keydown(); });
+
 
     var aryCheck = [];
 

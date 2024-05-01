@@ -350,6 +350,22 @@ namespace Esdms.Controllers.Es
             return Content(jstr, "application/json");
         }
 
+        //取得autocomplete user
+        public ActionResult GetBasicUserList(string searchKeyword)
+        {
+            var jquery = BasicUserNameSelectItems.BasicUsers;//.Where(a => a.PId == PId);
+
+            jquery = jquery.Where(a=>a.Name.Contains(searchKeyword));
+
+            var result = jquery.Select(a => new { 
+                a.PId, a.Name,
+            });
+
+            var jstr = JsonConvert.SerializeObject(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            jstr = jstr.Replace(DataManagerScriptHelper.JavaScriptFunctionStringStart, "(").Replace(DataManagerScriptHelper.JavaScriptFunctionStringEnd, ")");
+            return Content(jstr, "application/json");
+        }
+
         //上傳檔案(匯入專家資料)
         public ActionResult UpFile()
         {
