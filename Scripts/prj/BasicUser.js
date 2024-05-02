@@ -603,7 +603,7 @@
 
         //限定匯出欄位 $('#divExportExportList .form-check')
         if (IsFinances) {
-            //會內財務檢視人員
+            //做帳管理師
             $.each($content.find('.detail-view-field').filter('[data-field]'), function (index, value) {                
                 var ary_field = ['ChkCategoryId', 'ChkUnitName', 'ChkPosition'];
                 var name_field = $(this).attr('data-field');
@@ -967,7 +967,7 @@
     }
     else if (IsFinances)
     {
-        //財務有權限
+        //做帳管理師 有權限
         $('.glyphicon-download-alt').css("display", "block");
     }
     else {

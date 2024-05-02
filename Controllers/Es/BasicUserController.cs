@@ -30,7 +30,7 @@ namespace Esdms.Controllers.Es
         bool isAdmin = Dou.Context.CurrentUser<User>().RoleUsers.Any(a => adminRoles.Any(b => b == a.RoleId));
 
         static List<RoleUser> roles = Dou.Context.CurrentUser<User>().RoleUsers;
-        //特定權限(會內財務檢視人員)
+        //特定權限(做帳管理師)
         static List<string> Finances = new List<string>() { "DataFinance" };
         bool isFinances = roles.Any(a => Finances.Contains(a.RoleId));
 
@@ -242,12 +242,12 @@ namespace Esdms.Controllers.Es
                 field.filter = false;
             }
 
-            //多筆姓名挑選 (限定：admin + 會內財務檢視人員)
+            //多筆姓名挑選 (限定：admin + 做帳管理師)
             options.GetFiled("Names").filter = isAdmin || isFinances;
 
             if (isFinances)
             {
-                //會內財務檢視人員，只能多筆姓名挑選
+                //做帳管理師，只能多筆姓名挑選
             }
             else
             {
