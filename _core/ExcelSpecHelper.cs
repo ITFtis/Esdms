@@ -335,32 +335,21 @@ namespace Esdms
             return oStyle;
         }
 
-        public static Image DrawWatermarkImage(string text, Font font, Color textColor, Color backColor, double height, double width)
+        public static System.Drawing.Image DrawText(String text, System.Drawing.Font font, Color textColor, Color backColor, double height, double width)
         {
-            //Create an image with specified width and height
+            //创建一个指定宽度和高度的位图图像
             Image img = new Bitmap((int)width, (int)height);
-            //Create a Graphics object from the image
             Graphics drawing = Graphics.FromImage(img);
-
-            //Get the size of the text
+            //获取文本大小
             SizeF textSize = drawing.MeasureString(text, font);
-
-            //Change the origin of the coordinate system by prepending the specified translation to the transformation matrix of the Graphics
+            //旋转图片
             drawing.TranslateTransform(((int)width - textSize.Width) / 2, ((int)height - textSize.Height) / 2);
-
-            //Apply rotation
             drawing.RotateTransform(-45);
-
-            //Change the origin of the coordinate system by prepending the specified translation to the transformation matrix of the Graphics
             drawing.TranslateTransform(-((int)width - textSize.Width) / 2, -((int)height - textSize.Height) / 2);
-
-            //Paint the background
+            //绘制背景
             drawing.Clear(backColor);
-
-            //Create a brush for the text
+            //创建文本刷
             Brush textBrush = new SolidBrush(textColor);
-
-            //Draw the text onto the center position of the Graphics
             drawing.DrawString(text, font, textBrush, ((int)width - textSize.Width) / 2, ((int)height - textSize.Height) / 2);
             drawing.Save();
             return img;

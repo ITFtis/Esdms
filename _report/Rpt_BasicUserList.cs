@@ -23,6 +23,7 @@ using NPOI.SS.UserModel;
 using System.Drawing;
 using NPOI.XSSF.UserModel;
 using System.Xml.Linq;
+using Spire.Xls;
 
 namespace Esdms
 {
@@ -45,8 +46,7 @@ namespace Esdms
                 //產出Dynamic資料 (給Excel)
                 List<dynamic> list = new List<dynamic>();
 
-                foreach (var data in datas)
-                //foreach (var data in datas.Take(5))
+                foreach (var data in datas)                
                 {
                     dynamic f = new ExpandoObject();
                     f.姓名 = data.Name;   //ooooooooooo                    
@@ -159,38 +159,22 @@ namespace Esdms
                 string fileName = Esdms.ExcelSpecHelper.GenerateExcelByLinqF1(fileTitle, titles, list, folder, "N", topContents);
                 string path = folder + fileName;
 
-                //////initialize a new instance of the Workbook class and load an Excel file
-                //////Workbook workbook = new Workbook();
-                ////XSSFWorkbook workbook = new XSSFWorkbook(path);
+                Workbook workbook = new Workbook();
+                workbook.LoadFromFile(path);
 
-                //////Create a font
-                ////Font font = new Font("Arial", 40);
-                //////Define a text
-                ////string watermark = "Confidential";
-                ////string waterPath = folder + "water_" + fileName;
+                Font font = new System.Drawing.Font("arial", 40);
+                String watermark = "產基會專家資料";
+                foreach (Worksheet sheet in workbook.Worksheets)
+                {                    
+                    System.Drawing.Image imgWtrmrk = ExcelSpecHelper.DrawText(watermark, font, System.Drawing.Color.LightCoral, System.Drawing.Color.White, sheet.PageSetup.PageHeight, sheet.PageSetup.PageWidth);
+                    
+                    sheet.PageSetup.LeftHeaderImage = imgWtrmrk;
+                    sheet.PageSetup.LeftHeader = "&G";
+                    //////水印在此模式顯示
+                    ////sheet.ViewMode = ViewMode.Layout;
+                }
 
-                //////workbook.GetSheetAt(0)
-                //////Call the DrawWatermarkImage() method to create an image based on the text
-                ////var sheet = workbook.GetSheetAt(0);
-                //////var imgWtrmrk = ExcelSpecHelper.DrawWatermarkImage(watermark, font, Color.LightCoral, Color.White, sheet.PageSetup.PageHeight, sheet.PageSetup.PageWidth);
-                ////var imgWtrmrk = ExcelSpecHelper.DrawWatermarkImage(watermark, font, Color.LightCoral, Color.White, sheet.PrintSetup.FitHeight, sheet.PrintSetup.FitWidth);
-
-                //////Add the image to the left header section of each worksheet 
-                ////sheet.PageSetup.LeftHeaderImage = imgWtrmrk;
-                ////sheet.PrintSetup.im = imgWtrmrk;
-                //////sheet.PageSetup.LeftHeader = "&G";                
-
-                //////Change the view mode of the worksheet to page layout in order to view the watermark
-                //////sheet.ViewMode = ViewMode.Layout;
-
-                //////Save the result file
-                //////workbook.SaveToFile("AddWatermark.xlsx", ExcelVersion.Version2013);
-                ////using (var fs = new FileStream(waterPath, FileMode.Create, FileAccess.Write))
-                ////{
-                ////    workbook.Write(fs);
-                ////}
-
-                ////url = Esdms.Cm.PhysicalToUrl(waterPath);
+                workbook.Save();
 
                 url = Esdms.Cm.PhysicalToUrl(path);
             }
