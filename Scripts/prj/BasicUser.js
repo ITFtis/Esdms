@@ -847,7 +847,7 @@
         source: function (request, response) {
 
             //不可超過10位專家
-            var limit = 3;
+            var limit = 10;
             var $Names = $('.filter-toolbar-plus [data-fn="Names"]').parent().find(".ui-autocomplete-multiselect-item");
             var aryNames = $Names.map(function () {
                 return $(this).text();
