@@ -91,7 +91,7 @@ namespace Esdms.Controllers
                         string ssoudc = ssouser.DCode.Value + "";       //部門代碼
 
                         //////測試ID
-                        //////F00027(蔡宏達),F01879(陳宇揚),F00062(簡曉菁 財務)
+                        //////F00027(蔡宏達),F01879(陳宇揚),F00062(簡曉菁 財務),F01470(鄭涵憶),F00475(林冠汝)
                         ////if (ssouid == "J00007")
                         ////    ssouid = "F00027";
 
