@@ -26,9 +26,12 @@ namespace Esdms.Controllers.Es
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        static List<string> adminRoles = new List<string>() { "admin", "ftisadmin" };
+        bool isAdmin = Dou.Context.CurrentUser<User>().RoleUsers.Any(a => adminRoles.Any(b => b == a.RoleId));
+
         static List<RoleUser> roles = Dou.Context.CurrentUser<User>().RoleUsers;
-        //特定權限(admin + 會內財務檢視人員)
-        static List<string> Finances = new List<string>() { "admin", "ftisadmin", "DataManager", "DataFinance" };
+        //特定權限(會內財務檢視人員)
+        static List<string> Finances = new List<string>() { "DataFinance" };
         bool isFinances = roles.Any(a => Finances.Contains(a.RoleId));
 
         // GET: BasicUser
@@ -236,21 +239,32 @@ namespace Esdms.Controllers.Es
             {
                 field.sortable = true;
                 field.visible = false;
+                field.filter = false;
             }
 
             //多筆姓名挑選 (限定：admin + 會內財務檢視人員)
-            options.GetFiled("Names").filter = isFinances;
+            options.GetFiled("Names").filter = isAdmin || isFinances;
+
+            if (isFinances)
+            {
+                //會內財務檢視人員，只能多筆姓名挑選
+            }
+            else
+            {
+                options.GetFiled("Name").filter = true;
+                options.GetFiled("SubjectId").filter = true;
+                options.GetFiled("SubjectDetailId").filter = true;
+                options.GetFiled("strExpertises").filter = true;
+                options.GetFiled("DuplicateName").filter = true;
+            }
 
             options.GetFiled("Name").visible = true;
             options.GetFiled("UnitName").visible = true;
             options.GetFiled("UnitName").title = "單位(系所)";
             options.GetFiled("Position").visible = true;
             //options.GetFiled("BDate").visible = true;
-            options.GetFiled("CategoryId").visible = true;            
-            options.GetFiled("SubjectId").filter = true;
-            options.GetFiled("SubjectDetailId").filter = true;
-            options.GetFiled("strExpertises").visible = true;
-            options.GetFiled("strExpertises").filter = true;
+            options.GetFiled("CategoryId").visible = true;                        
+            options.GetFiled("strExpertises").visible = true;            
             options.GetFiled("vmOutCount").visible = true;
             options.GetFiled("vmInCount").visible = true;
 
