@@ -258,15 +258,19 @@ namespace Esdms.Controllers.Es
                 options.GetFiled("DuplicateName").filter = true;
             }
 
+            if(isAdmin)
+            {
+                options.GetFiled("strExpertises").visible = true;
+                options.GetFiled("vmOutCount").visible = true;
+                options.GetFiled("vmInCount").visible = true;
+            }
+
             options.GetFiled("Name").visible = true;
             options.GetFiled("UnitName").visible = true;
             options.GetFiled("UnitName").title = "單位(系所)";
             options.GetFiled("Position").visible = true;
             //options.GetFiled("BDate").visible = true;
-            options.GetFiled("CategoryId").visible = true;                        
-            options.GetFiled("strExpertises").visible = true;            
-            options.GetFiled("vmOutCount").visible = true;
-            options.GetFiled("vmInCount").visible = true;
+            options.GetFiled("CategoryId").visible = true;                                    
 
             options.ctrlFieldAlign = "left";
             options.editformWindowStyle = "modal";
