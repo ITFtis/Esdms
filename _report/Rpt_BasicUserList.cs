@@ -45,8 +45,8 @@ namespace Esdms
                 //產出Dynamic資料 (給Excel)
                 List<dynamic> list = new List<dynamic>();
 
-                //foreach (var data in datas)
-                foreach (var data in datas.Take(5))
+                foreach (var data in datas)
+                //foreach (var data in datas.Take(5))
                 {
                     dynamic f = new ExpandoObject();
                     f.姓名 = data.Name;   //ooooooooooo                    
