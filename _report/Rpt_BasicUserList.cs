@@ -162,16 +162,28 @@ namespace Esdms
                 Workbook workbook = new Workbook();
                 workbook.LoadFromFile(path);
 
-                Font font = new System.Drawing.Font("arial", 40);
-                String watermark = "產基會專家資料";
+                string dCode = FtisHelperV2.DB.Helpe.Employee.GetEmployee(Dou.Context.CurrentUser<User>().Id).DCode;
+                string depName = FtisHelperV2.DB.Helpe.Department.GetDepartment(dCode).DName;
+
+                Font font = new System.Drawing.Font("標楷體", 20);
+                String watermark = string.Format(
+                    @"FTIS專家資料@{0}@{1}@{2}"
+                    , depName
+                    , Dou.Context.CurrentUser<User>().Name
+                    , DateFormat.ToDate4(DateTime.Now));                
+
                 foreach (Worksheet sheet in workbook.Worksheets)
-                {                    
-                    System.Drawing.Image imgWtrmrk = ExcelSpecHelper.DrawText(watermark, font, System.Drawing.Color.LightCoral, System.Drawing.Color.White, sheet.PageSetup.PageHeight, sheet.PageSetup.PageWidth);
-                    
+                {
+                    //sheet.PageSetup.PageHeight  841.8897637795277   double
+                    //sheet.PageSetup.PageWidth   595.27559055118115  double
+                    System.Drawing.Image imgWtrmrk = ExcelSpecHelper.DrawText(watermark, font, System.Drawing.Color.LightCoral,
+                                                        System.Drawing.Color.White,
+                                                        sheet.PageSetup.PageHeight + 300, sheet.PageSetup.PageWidth +30);
+
                     sheet.PageSetup.LeftHeaderImage = imgWtrmrk;
                     sheet.PageSetup.LeftHeader = "&G";
-                    //////水印在此模式顯示
-                    ////sheet.ViewMode = ViewMode.Layout;
+                    ////水印在此模式顯示
+                    //sheet.ViewMode = ViewMode.Layout;
                 }
 
                 workbook.Save();
