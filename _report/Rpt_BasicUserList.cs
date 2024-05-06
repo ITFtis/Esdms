@@ -31,7 +31,7 @@ namespace Esdms
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public string Export(vwe_ChkExport chks, List<BasicUser> datas)
+        public string Export(vwe_ChkExport chks, List<BasicUser> datas, int autoSizeColumn)
         {
             string url = "";
 
@@ -156,7 +156,7 @@ namespace Esdms
                 List<string> topContents = new List<string>() { "專長", "會外評選", "會內參與" };
 
                 //產出excel
-                string fileName = Esdms.ExcelSpecHelper.GenerateExcelByLinqF1(fileTitle, titles, list, folder, "N", topContents);
+                string fileName = Esdms.ExcelSpecHelper.GenerateExcelByLinqF1(fileTitle, titles, list, folder, autoSizeColumn, topContents);
                 string path = folder + fileName;
 
                 Workbook workbook = new Workbook();

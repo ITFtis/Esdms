@@ -108,7 +108,13 @@ namespace Esdms.Controllers.Es
 
             Rpt_BasicUserList rep = new Rpt_BasicUserList();
             //string url = rep.Export(datas, ".xlsx");
-            string url = rep.Export(chks, datas);
+
+            //"0":不調整width,"1":自動調整長度(效能差:資料量多),"2":字串長度調整width,"3":字串長度調整width(展開)
+            int autoSizeColumn = 2;
+            if (isFinances)
+                autoSizeColumn = 3;
+
+            string url = rep.Export(chks, datas, autoSizeColumn);
 
             if (url == "")
             {

@@ -19,11 +19,11 @@ namespace Esdms
         /// <param name="titles">表頭文字:機車加油站基本資料欄位清單,條件1,條件2..等</param>
         /// <param name="list">多個Sheet資料</param>
         /// <param name="savePath">儲存路徑</param>
-        /// <param name="autoSizeColumn">"Y":自動調整長度(效能差:資料量多),"N":字串長度調整width,"default":不調整width</param>
+        /// <param name="autoSizeColumn">"0":不調整width,"1":自動調整長度(效能差:資料量多),"2":字串長度調整width,"3":字串長度調整width(展開)</param>
         /// <param name="topContents">特殊儲存格位置Top</param>
         /// <returns>Excel檔名</returns>
         public static string GenerateExcelByLinqF1(string fileTitle, List<string> titles, List<dynamic> list, string savePath,
-                                                string autoSizeColumn = "default", List<string> topContents = null)
+                                                int autoSizeColumn, List<string> topContents = null)
         {
             string fileName = "";
 
@@ -180,7 +180,7 @@ namespace Esdms
                     //有資料列
                     int columnCount = ((ICollection<KeyValuePair<string, Object>>)sheet.First()).Count;
 
-                    if (autoSizeColumn == "Y")
+                    if (autoSizeColumn == 1)
                     {
                         //*********自動調整長度(效能差:資料量多)********
                         for (int j = 0; j < columnCount; j++)
@@ -188,7 +188,7 @@ namespace Esdms
                             mySheet1.AutoSizeColumn(j);
                         }
                     }
-                    else if (autoSizeColumn == "N")
+                    else if (autoSizeColumn == 2)
                     {
                         //字串長度調整width
                         for (int j = 0; j < columnCount; j++)
@@ -215,7 +215,46 @@ namespace Esdms
                             mySheet1.SetColumnWidth(j, columnWidth);
                         }
                     }
-                    else if (autoSizeColumn == "default")
+                    else if (autoSizeColumn == 3)
+                    {                        
+                        //字串長度調整width(展開)
+                        for (int j = 0; j < columnCount; j++)
+                        {
+                            //欄寬預設 12
+                            int columnWidth = 12;
+
+                            if (colsLength.ContainsKey(j))
+                            {
+                                int len = colsLength[j];
+                                if (len > columnWidth)
+                                {
+                                    columnWidth = columnWidth + ((len - 12) / 2);
+
+                                    //欄寬上限
+                                    int up = 25;
+                                    if (columnWidth > up)
+                                        columnWidth = up;
+                                }
+                            }
+
+                            //excel儲存格實際寬度轉換公式
+                            if (colsLength.ContainsKey(j))
+                            {
+                                if ((colsLength[j] / 12) > 0)
+                                {
+                                    columnWidth = (int)((columnWidth + 0.71) * 450);
+                                    mySheet1.SetColumnWidth(j, columnWidth);
+                                    //mySheet1.AutoSizeColumn(j);
+                                }
+                                else
+                                {
+                                    columnWidth = (int)((columnWidth + 0.71) * 250);
+                                     mySheet1.SetColumnWidth(j, columnWidth);
+                                }
+                            }
+                        }
+                    }
+                    else if (autoSizeColumn == 0)
                     {
                         //不調整width
                     }
