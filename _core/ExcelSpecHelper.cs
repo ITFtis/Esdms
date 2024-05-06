@@ -383,7 +383,7 @@ namespace Esdms
             //创建文本刷
             Brush textBrush = new SolidBrush(textColor);
             //頭
-            drawing.DrawString(text, font, textBrush, 180, 250);
+            drawing.DrawString(text, font, textBrush, 140, 300);
             //置中
             drawing.DrawString(text, font, textBrush, 30, ((int)height - textSize.Height) / 2);
             //尾
