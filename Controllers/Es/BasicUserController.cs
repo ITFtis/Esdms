@@ -128,6 +128,15 @@ namespace Esdms.Controllers.Es
 
         private IQueryable<BasicUser> GetOutputData(IQueryable<BasicUser> iquery, params KeyValueParams[] paras)
         {
+            if (isFinances)
+            {
+                //做帳管理師 無查詢條件，沒資料
+                if (paras.FirstOrDefault((KeyValueParams s) => s.key == "filter") == null)
+                {
+                    return new List<BasicUser>() as IQueryable<BasicUser>;
+                }
+            }
+
             //---1.查詢---
             var Names = KeyValue.GetFilterParaValue(paras, "Names");
             var Name = KeyValue.GetFilterParaValue(paras, "Name");
