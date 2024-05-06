@@ -239,8 +239,11 @@ namespace Esdms.Controllers.Es
             {
                 field.sortable = true;
                 field.visible = false;
-                field.filter = false;
+                field.filter = false;                
             }
+
+            //預設權限
+            options.editable = false;
 
             //多筆姓名挑選 (限定：admin + 做帳管理師)
             options.GetFiled("Names").filter = isAdmin || isFinances;
@@ -251,6 +254,8 @@ namespace Esdms.Controllers.Es
             }
             else
             {
+                options.editable = true;
+
                 options.GetFiled("Name").filter = true;
                 options.GetFiled("SubjectId").filter = true;
                 options.GetFiled("SubjectDetailId").filter = true;

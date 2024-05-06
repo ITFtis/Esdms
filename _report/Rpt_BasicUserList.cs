@@ -165,7 +165,7 @@ namespace Esdms
                 string dCode = FtisHelperV2.DB.Helpe.Employee.GetEmployee(Dou.Context.CurrentUser<User>().Id).DCode;
                 string depName = FtisHelperV2.DB.Helpe.Department.GetDepartment(dCode).DName;
 
-                Font font = new System.Drawing.Font("標楷體", 20);
+                Font font = new System.Drawing.Font("標楷體", 18);
                 String watermark = string.Format(
                     @"FTIS專家資料@{0}@{1}@{2}"
                     , depName
