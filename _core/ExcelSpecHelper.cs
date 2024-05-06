@@ -227,7 +227,11 @@ namespace Esdms
                             {
                                 int len = colsLength[j];
                                 int wordLen = 12;
-                                if (len > columnWidth)
+                                if (len > 6 && len <= columnWidth)
+                                {
+                                    columnWidth = 18;
+                                }
+                                else if (len > columnWidth)
                                 {                                    
                                     columnWidth = (1 + (len / wordLen)) * 25;
 
