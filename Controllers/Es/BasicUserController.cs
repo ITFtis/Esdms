@@ -127,16 +127,7 @@ namespace Esdms.Controllers.Es
         }
 
         private IQueryable<BasicUser> GetOutputData(IQueryable<BasicUser> iquery, params KeyValueParams[] paras)
-        {
-            if (isFinances)
-            {
-                //做帳管理師 無查詢條件，沒資料
-                if (paras.FirstOrDefault((KeyValueParams s) => s.key == "filter") == null)
-                {
-                    return new List<BasicUser>() as IQueryable<BasicUser>;
-                }
-            }
-
+        {            
             //---1.查詢---
             var Names = KeyValue.GetFilterParaValue(paras, "Names");
             var Name = KeyValue.GetFilterParaValue(paras, "Name");
@@ -144,6 +135,20 @@ namespace Esdms.Controllers.Es
             var SubjectId = KeyValue.GetFilterParaValue(paras, "SubjectId");
             var SubjectDetailId = KeyValue.GetFilterParaValue(paras, "SubjectDetailId");
             var strExpertises = KeyValue.GetFilterParaValue(paras, "strExpertises");
+
+            if (isFinances)
+            {
+                //做帳管理師 無查詢條件，沒資料
+                if (string.IsNullOrEmpty(Names)
+                    && string.IsNullOrEmpty(Name)
+                    && string.IsNullOrEmpty(DuplicateName)
+                    && string.IsNullOrEmpty(SubjectId)
+                    && string.IsNullOrEmpty(SubjectDetailId)
+                    && string.IsNullOrEmpty(strExpertises))
+                {
+                    return new List<BasicUser>() as IQueryable<BasicUser>;
+                }
+            }
 
             if (!string.IsNullOrEmpty(Names))
             {

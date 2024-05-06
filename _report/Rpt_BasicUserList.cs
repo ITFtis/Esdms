@@ -46,9 +46,12 @@ namespace Esdms
                 //產出Dynamic資料 (給Excel)
                 List<dynamic> list = new List<dynamic>();
 
+                int serial = 1;
                 foreach (var data in datas)                
                 {
                     dynamic f = new ExpandoObject();
+                    f.序號 = serial;
+                    serial++;
                     f.姓名 = data.Name;   //ooooooooooo                    
                     if (chks.ChkSex)
                     {
@@ -167,7 +170,7 @@ namespace Esdms
 
                 Font font = new System.Drawing.Font("標楷體", 18);
                 String watermark = string.Format(
-                    @"FTIS專家資料@{0}@{1}@{2}"
+                    @"FTIS專家學者資料@{0}@{1}@{2}"
                     , depName
                     , Dou.Context.CurrentUser<User>().Name
                     , DateFormat.ToDate4(DateTime.Now));                

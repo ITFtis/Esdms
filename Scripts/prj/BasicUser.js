@@ -837,6 +837,9 @@
 
     }); //初始dou table
 
+    //全選
+    $('.basicusercontroller [name=btSelectAll]').next().text('全選');
+
     $('[data-fn="SubjectDetailId"] option[value=""]').remove();
     //多選
     var $SubjectDetailId = $('.filter-toolbar-plus').find("[data-fn=SubjectDetailId]")
