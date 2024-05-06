@@ -47,7 +47,7 @@ namespace Esdms
                 List<dynamic> list = new List<dynamic>();
 
                 int serial = 1;
-                foreach (var data in datas)                
+                foreach (var data in datas.Take(3))                
                 {
                     dynamic f = new ExpandoObject();
                     f.序號 = serial;
@@ -168,7 +168,7 @@ namespace Esdms
                 string dCode = FtisHelperV2.DB.Helpe.Employee.GetEmployee(Dou.Context.CurrentUser<User>().Id).DCode;
                 string depName = FtisHelperV2.DB.Helpe.Department.GetDepartment(dCode).DName;
 
-                Font font = new System.Drawing.Font("標楷體", 18);
+                Font font = new System.Drawing.Font("標楷體", 16);
                 String watermark = string.Format(
                     @"FTIS專家學者資料@{0}@{1}@{2}"
                     , depName
@@ -181,12 +181,12 @@ namespace Esdms
                     //sheet.PageSetup.PageWidth   595.27559055118115  double
                     System.Drawing.Image imgWtrmrk = ExcelSpecHelper.DrawText(watermark, font, System.Drawing.Color.LightCoral,
                                                         System.Drawing.Color.White,
-                                                        sheet.PageSetup.PageHeight + 300, sheet.PageSetup.PageWidth +30);
+                                                        sheet.PageSetup.PageHeight + 400, sheet.PageSetup.PageWidth + 30);
 
                     sheet.PageSetup.LeftHeaderImage = imgWtrmrk;
                     sheet.PageSetup.LeftHeader = "&G";
                     ////水印在此模式顯示
-                    //sheet.ViewMode = ViewMode.Layout;
+                    sheet.ViewMode = ViewMode.Layout;
                 }
 
                 workbook.Save();

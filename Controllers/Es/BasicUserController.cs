@@ -104,6 +104,11 @@ namespace Esdms.Controllers.Es
             }
 
             iquery = GetOutputData(iquery, paras);
+            if (iquery == null)
+            {
+                return Json(new { result = false, errorMessage = "無符合資料" }, JsonRequestBehavior.AllowGet);
+            }
+
             var datas = iquery.ToList();
 
             Rpt_BasicUserList rep = new Rpt_BasicUserList();

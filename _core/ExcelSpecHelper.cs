@@ -369,12 +369,12 @@ namespace Esdms
 
         public static System.Drawing.Image DrawText(String text, System.Drawing.Font font, Color textColor, Color backColor, double height, double width)
         {
-            //创建一个指定宽度和高度的位图图像
+            //創建一個指定寬度和高度的圖像
             Image img = new Bitmap((int)width, (int)height);
             Graphics drawing = Graphics.FromImage(img);
-            //获取文本大小
+            //獲取文本大小
             SizeF textSize = drawing.MeasureString(text, font);
-            //旋转图片
+            //旋轉圖片
             drawing.TranslateTransform(((int)width - textSize.Width) / 2, ((int)height - textSize.Height) / 2);
             drawing.RotateTransform(-25);  //defalut:-45
             drawing.TranslateTransform(-((int)width - textSize.Width) / 2, -((int)height - textSize.Height) / 2);
@@ -382,7 +382,12 @@ namespace Esdms
             drawing.Clear(backColor);
             //创建文本刷
             Brush textBrush = new SolidBrush(textColor);
-            drawing.DrawString(text, font, textBrush, ((int)width - textSize.Width) / 2, ((int)height - textSize.Height) / 2);
+            //頭
+            drawing.DrawString(text, font, textBrush, 180, 250);
+            //置中
+            drawing.DrawString(text, font, textBrush, 30, ((int)height - textSize.Height) / 2);
+            //尾
+            drawing.DrawString(text, font, textBrush, -90, 900);
             drawing.Save();
             return img;
         }
