@@ -47,7 +47,7 @@ namespace Esdms
                 List<dynamic> list = new List<dynamic>();
 
                 int serial = 1;
-                foreach (var data in datas.Take(3))                
+                foreach (var data in datas)                
                 {
                     dynamic f = new ExpandoObject();
                     f.序號 = serial;
@@ -186,7 +186,7 @@ namespace Esdms
                     sheet.PageSetup.LeftHeaderImage = imgWtrmrk;
                     sheet.PageSetup.LeftHeader = "&G";
                     ////水印在此模式顯示
-                    sheet.ViewMode = ViewMode.Layout;
+                    //sheet.ViewMode = ViewMode.Layout;
                 }
 
                 workbook.Save();
