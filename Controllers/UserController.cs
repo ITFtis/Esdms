@@ -93,7 +93,7 @@ namespace Esdms.Controllers
                         //////測試ID
                         //////F00027(蔡宏達),F01879(陳宇揚),F00062(簡曉菁 財務),F01470(鄭涵憶),F00475(林冠汝),F01785(顏瑜慧)
                         ////if (ssouid == "J00007")
-                        ////    ssouid = "F01785";
+                        ////    ssouid = "F01801";
 
                         User u = FindUser(ssouid); //已驗證，故直接取系統使用者
                         if (u != null)

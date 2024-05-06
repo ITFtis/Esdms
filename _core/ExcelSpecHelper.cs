@@ -220,37 +220,26 @@ namespace Esdms
                         //字串長度調整width(展開)
                         for (int j = 0; j < columnCount; j++)
                         {
-                            //欄寬預設 12
-                            int columnWidth = 12;
+                            //欄寬預設 11                            
+                            int columnWidth = 11;
 
                             if (colsLength.ContainsKey(j))
                             {
                                 int len = colsLength[j];
+                                int wordLen = 12;
                                 if (len > columnWidth)
-                                {
-                                    columnWidth = columnWidth + ((len - 12) / 2);
+                                {                                    
+                                    columnWidth = (1 + (len / wordLen)) * 25;
 
                                     //欄寬上限
-                                    int up = 25;
+                                    int up = 50;
                                     if (columnWidth > up)
                                         columnWidth = up;
                                 }
-                            }
 
-                            //excel儲存格實際寬度轉換公式
-                            if (colsLength.ContainsKey(j))
-                            {
-                                if ((colsLength[j] / 12) > 0)
-                                {
-                                    columnWidth = (int)((columnWidth + 0.71) * 450);
-                                    mySheet1.SetColumnWidth(j, columnWidth);
-                                    //mySheet1.AutoSizeColumn(j);
-                                }
-                                else
-                                {
-                                    columnWidth = (int)((columnWidth + 0.71) * 250);
-                                     mySheet1.SetColumnWidth(j, columnWidth);
-                                }
+                                //excel儲存格實際寬度轉換公式
+                                columnWidth = (int)((columnWidth + 0.71) * 256);
+                                mySheet1.SetColumnWidth(j, columnWidth);
                             }
                         }
                     }
