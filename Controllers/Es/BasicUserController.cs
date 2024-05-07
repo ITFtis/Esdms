@@ -27,12 +27,12 @@ namespace Esdms.Controllers.Es
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         static List<string> adminRoles = new List<string>() { "admin", "ftisadmin" };
-        bool isAdmin = Dou.Context.CurrentUser<User>().RoleUsers.Any(a => adminRoles.Any(b => b == a.RoleId));
+        static bool isAdmin = Dou.Context.CurrentUser<User>().RoleUsers.Any(a => adminRoles.Any(b => b == a.RoleId));
 
         static List<RoleUser> roles = Dou.Context.CurrentUser<User>().RoleUsers;
         //特定權限(做帳管理師)
         static List<string> Finances = new List<string>() { "DataFinance" };
-        bool isFinances = roles.Any(a => Finances.Contains(a.RoleId));
+        static bool isFinances = roles.Any(a => Finances.Contains(a.RoleId));
 
         // GET: BasicUser
         public ActionResult Index()
