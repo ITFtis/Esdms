@@ -29,10 +29,7 @@ namespace Esdms.Controllers.Es
         static List<string> adminRoles = new List<string>() { "admin", "ftisadmin" };
         static bool isAdmin = Dou.Context.CurrentUser<User>().RoleUsers.Any(a => adminRoles.Any(b => b == a.RoleId));
 
-        static List<RoleUser> roles = Dou.Context.CurrentUser<User>().RoleUsers;
-        //特定權限(做帳管理師)
-        static List<string> Finances = new List<string>() { "DataFinance" };
-        static bool isFinances = roles.Any(a => Finances.Contains(a.RoleId));
+        
 
         // GET: BasicUser
         public ActionResult Index()
@@ -43,7 +40,7 @@ namespace Esdms.Controllers.Es
             //有專家編輯權限
             List<string> editRoles = new List<string>() { "admin", "DataManager", "ftisadmin" };
             ViewBag.IsView = roles.Where(a => editRoles.Any(b => a.RoleId == b)).Count() == 0;
-            ViewBag.IsFinances = isFinances;
+            ViewBag.IsFinances = Dou.Context.CurrentUser<User>().IsFinances();
 
             string path = Server.MapPath("~/Data/vPower.json");
             if (System.IO.File.Exists(path))
@@ -116,7 +113,7 @@ namespace Esdms.Controllers.Es
 
             //"0":不調整width,"1":自動調整長度(效能差:資料量多),"2":字串長度調整width,"3":字串長度調整width(展開)
             int autoSizeColumn = 2;
-            if (isFinances)
+            if (Dou.Context.CurrentUser<User>().IsFinances())
                 autoSizeColumn = 3;
 
             string url = rep.Export(chks, datas, autoSizeColumn);
@@ -141,7 +138,7 @@ namespace Esdms.Controllers.Es
             var SubjectDetailId = KeyValue.GetFilterParaValue(paras, "SubjectDetailId");
             var strExpertises = KeyValue.GetFilterParaValue(paras, "strExpertises");
 
-            if (isFinances)
+            if (Dou.Context.CurrentUser<User>().IsFinances())
             {
                 //做帳管理師 無查詢條件，沒資料
                 if (string.IsNullOrEmpty(Names)
@@ -271,9 +268,9 @@ namespace Esdms.Controllers.Es
             options.editable = false;
 
             //多筆姓名挑選 (限定：admin + 做帳管理師)
-            options.GetFiled("Names").filter = isAdmin || isFinances;
+            options.GetFiled("Names").filter = isAdmin || Dou.Context.CurrentUser<User>().IsFinances();
 
-            if (isFinances)
+            if (Dou.Context.CurrentUser<User>().IsFinances())
             {
                 //做帳管理師，只能多筆姓名挑選
             }

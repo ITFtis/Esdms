@@ -19,6 +19,22 @@ namespace Esdms.Models
 
             return roles;
         }
+
+        /// <summary>
+        /// 特定權限(做帳管理師)
+        /// </summary>
+        /// <returns></returns>
+        public bool IsFinances()
+        {
+            bool result = false;
+            
+            List<string> Finances = new List<string>() { "DataFinance" };
+            bool isFinances = this.RoleUsers.Any(a => Finances.Contains(a.RoleId));
+
+            result = isFinances;
+
+            return result;
+        }
     }
 
 }
