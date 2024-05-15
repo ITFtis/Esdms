@@ -25,12 +25,7 @@ namespace Esdms.Controllers.Es
     public class BasicUserController : APaginationModelController<BasicUser>
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-        static List<string> adminRoles = new List<string>() { "admin", "ftisadmin" };
-        static bool isAdmin = Dou.Context.CurrentUser<User>().RoleUsers.Any(a => adminRoles.Any(b => b == a.RoleId));
-
-        
-
+                        
         // GET: BasicUser
         public ActionResult Index()
         {
@@ -266,6 +261,10 @@ namespace Esdms.Controllers.Es
 
             //預設權限
             options.editable = false;
+
+            //客製化頁面角色
+            List<string> specRoles = new List<string>() { "admin", "ftisadmin" };
+            bool isAdmin = Dou.Context.CurrentUser<User>().RoleUsers.Any(a => specRoles.Any(b => b == a.RoleId));
 
             //多筆姓名挑選 (限定：admin + 做帳管理師)
             options.GetFiled("Names").filter = isAdmin || Dou.Context.CurrentUser<User>().IsFinances();
