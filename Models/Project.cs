@@ -106,7 +106,7 @@ namespace Esdms.Models
         public override IEnumerable<KeyValuePair<string, object>> GetSelectItems()
         {            
             return Projects.OrderByDescending(a => a.Year)
-                    .Select((s, index) => new KeyValuePair<string, object>(s.Id.ToString(), JsonConvert.SerializeObject(new { v = "(" + s.Year.ToString() + ") " + s.Name, s = index, Year = s.Year })));
+                    .Select((s, index) => new KeyValuePair<string, object>(s.Id.ToString(), JsonConvert.SerializeObject(new { v = s.Name, s = index, Year = s.Year })));
         }
     }
 
