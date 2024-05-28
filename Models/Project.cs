@@ -40,10 +40,15 @@ namespace Esdms.Models
         [StringLength(50)]
         [Column(TypeName = "nvarchar")]
         [Display(Name = "委辦單位")]
-        public string CommissionedUnit { get; set; }           
+        public string CommissionedUnit { get; set; }
+
+        [Display(Name = "專案編號")]
+        [Column(TypeName = "nvarchar")]
+        [StringLength(50)]
+        public string PjNo { get; set; }
 
         [Display(Name = "建檔日期")]
-        [ColumnDef(VisibleEdit = false, ColSize = 3)]
+        [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
         public DateTime? BDate { get; set; }
 
         [Display(Name = "建檔人員編")]

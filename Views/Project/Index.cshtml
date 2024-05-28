@@ -10,6 +10,13 @@
     $(document).ready(function () {
         douoptions.tableOptions.pageList = [10, 25, 50, 100, 'All'];
 
+        douoptions.afterCreateEditDataForm = function ($container, row) {
+            //加提示字
+            var $p1 = $('div[data-field=PjNo]').find('label');
+            var remind = '<span class="text-danger fw-lighter pull-right">格式多筆","區分(p1,p2,p3...)</span>';
+            $(remind).appendTo($p1);
+        }
+
         var $_masterTable = $("#_table").DouEditableTable(douoptions)
     })
 
