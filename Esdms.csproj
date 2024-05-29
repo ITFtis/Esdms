@@ -211,6 +211,7 @@
     <Compile Include="Controllers\Es\Fun_BasicUserPIdController.cs" />
     <Compile Include="Controllers\Es\ResumeController.cs" />
     <Compile Include="Controllers\Es\UserHistoryOpinionController.cs" />
+    <Compile Include="Controllers\Notify\GCalController.cs" />
     <Compile Include="Controllers\SysCode\LicenseController.cs" />
     <Compile Include="Controllers\ExpertiseFold\SubjectController.cs" />
     <Compile Include="Controllers\ExpertiseFold\SubjectDetailController.cs" />
@@ -442,6 +443,7 @@
     <Folder Include="Views\Expertise\" />
     <Folder Include="Views\FileProcessing\" />
     <Folder Include="Views\FTISUserHistory\" />
+    <Folder Include="Views\GCal\" />
     <Folder Include="Views\Resume\" />
     <Folder Include="Views\UserHistoryOpinion\" />
     <Folder Include="Views\UserHistorySetBid\" />
