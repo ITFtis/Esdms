@@ -65,7 +65,8 @@ namespace Esdms.Models
         public int? Year { get; set; }
 
         [Display(Name = "日期")]
-        [ColumnDef(Visible = false, VisibleEdit = false, EditType = EditType.Date, ColSize = 3)]
+        [Column(TypeName = "date")]
+        [ColumnDef(EditType = EditType.Date, ColSize = 3)]
         public DateTime? Date { get; set; }
        
         [Display(Name = "專案")]
