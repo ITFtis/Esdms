@@ -39,6 +39,10 @@ namespace Esdms.Models
         [Display(Name = "匯入代碼")]
         public string DCode { get; set; }
 
+        [Display(Name = "排序")]
+        [ColumnDef(Visible = false)]
+        public int Sort { get; set; }
+
         [Display(Name = "建檔日期")]
         [ColumnDef(VisibleEdit = false, ColSize = 3)]
         public DateTime? BDate { get; set; }

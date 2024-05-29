@@ -19,6 +19,23 @@ namespace Esdms.Controllers.ProjectFold
             return View();
         }
 
+        protected override IQueryable<ActivityCategory> BeforeIQueryToPagedList(IModelEntity<ActivityCategory> dbEntity, IQueryable<ActivityCategory> iquery, params KeyValueParams[] paras)
+        {
+            KeyValueParams ksort = paras.FirstOrDefault((KeyValueParams s) => s.key == "sort");
+            KeyValueParams korder = paras.FirstOrDefault((KeyValueParams s) => s.key == "order");
+            //分頁排序
+            if (ksort.value != null && korder.value != null)
+            {
+            }
+            else
+            {
+                //預設排序                
+                iquery = iquery.OrderBy(a => a.Type).ThenBy(a => a.Sort);
+            }
+
+            return base.BeforeIQueryToPagedList(dbEntity, iquery, paras);
+        }
+
         protected override void AddDBObject(IModelEntity<ActivityCategory> dbEntity, IEnumerable<ActivityCategory> objs)
         {
             var f = objs.First();
@@ -58,6 +75,8 @@ namespace Esdms.Controllers.ProjectFold
                 field.sortable = true;
 
             opts.GetFiled("Type").align = "left";
+            opts.GetFiled("Sort").visible = true;
+            opts.GetFiled("Sort").align = "left";
 
             return opts;
         }
