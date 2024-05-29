@@ -369,6 +369,7 @@
     <Content Include="Scripts\prj\BasicUser.js" />
     <Content Include="Scripts\prj\BasicUserHistorySet.js" />
     <Content Include="Scripts\prj\Fun_BasicUserPId.js" />
+    <Content Include="Scripts\prj\GCal.js" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -430,6 +431,7 @@
     <Content Include="Views\Shared\DouLoginError.cshtml" />
     <Content Include="Views\SubjectDetail\Index.cshtml" />
     <Content Include="Views\Fun_BasicUserPId\Index.cshtml" />
+    <Content Include="Views\GCal\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -443,7 +445,6 @@
     <Folder Include="Views\Expertise\" />
     <Folder Include="Views\FileProcessing\" />
     <Folder Include="Views\FTISUserHistory\" />
-    <Folder Include="Views\GCal\" />
     <Folder Include="Views\Resume\" />
     <Folder Include="Views\UserHistoryOpinion\" />
     <Folder Include="Views\UserHistorySetBid\" />
