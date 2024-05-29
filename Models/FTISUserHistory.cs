@@ -53,7 +53,7 @@ namespace Esdms.Models
         [ColumnDef(ColSize = 3)]
         public int? ActivityCategoryJoinNum { get; set; }
 
-        [Display(Name = "業主")]
+        [Display(Name = "委辦單位")]
         [ColumnDef(ColSize = 3)]
         [StringLength(50)]
         public string Owner { get; set; }
