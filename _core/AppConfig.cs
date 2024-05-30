@@ -11,6 +11,7 @@ namespace Esdms
         #region 私有變數
 
         private static string _rootPath;
+        private static string _systemWebSite;
 
         #endregion
 
@@ -22,6 +23,8 @@ namespace Esdms
 
             //實體路徑(解決開發者專案於不同目錄)
             _rootPath = _rootPath.Replace("~\\", HttpContext.Current.Server.MapPath("~\\"));
+            
+            _systemWebSite = ConfigurationManager.AppSettings["SystemWebSite"].ToString();
         }
 
         #endregion
@@ -34,6 +37,14 @@ namespace Esdms
         public static string RootPath
         {
             get { return _rootPath; }
+        }
+
+        /// <summary>
+        /// 網站網址
+        /// </summary>
+        public static string SystemWebSite
+        {
+            get { return _systemWebSite; }
         }
 
         #endregion
