@@ -138,7 +138,8 @@ namespace Esdms
                     }
                     if (chks.ChkvmOutCount)
                     {
-                        f.會外評選 = HtmlHelper.RemoveHtmlTag(data.vmOutCount.Replace("</br>", "\n"));  //ooooooooooo
+                        //會外評選
+                        f.政府採購網公開評選 = HtmlHelper.RemoveHtmlTag(data.vmOutCount.Replace("</br>", "\n"));  //ooooooooooo
                     }
                     if (chks.ChkvmInCount)
                     {
@@ -155,8 +156,8 @@ namespace Esdms
                     _errorMessage = "查無符合資料表數";
                 }
 
-                //特殊儲存格位置Top
-                List<string> topContents = new List<string>() { "專長", "會外評選", "會內參與" };
+                //特殊儲存格位置Top (會外評選=政府採購網公開評選)
+                List<string> topContents = new List<string>() { "專長", "政府採購網公開評選", "會內參與" };
 
                 //產出excel
                 string fileName = Esdms.ExcelSpecHelper.GenerateExcelByLinqF1(fileTitle, titles, list, folder, autoSizeColumn, topContents);

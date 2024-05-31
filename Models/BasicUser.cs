@@ -275,7 +275,7 @@ namespace Esdms.Models
         }
 
         //虛擬欄位 vmOutCount
-        [Display(Name = "會外評選")]
+        [Display(Name = "政府採購網公開評選")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
         public string vmOutCount
         {
@@ -336,8 +336,8 @@ namespace Esdms.Models
             }
         }
 
-        //虛擬欄位 vmTotalOutCount
-        [Display(Name = "會外評選(總)次數")]
+        //虛擬欄位 vmTotalOutCount 會外評選
+        [Display(Name = "政府採購網公開評選(總)次數")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
         public int vmTotalOutCount
         {

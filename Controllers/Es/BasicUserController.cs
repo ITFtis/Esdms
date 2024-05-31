@@ -1028,7 +1028,7 @@ namespace Esdms.Controllers.Es
         //專長
         public bool ChkstrExpertises { get; set; }
 
-        //會外評選
+        //政府採購網公開評選(會外評選)
         public bool ChkvmOutCount { get; set; }
 
         //會內參與

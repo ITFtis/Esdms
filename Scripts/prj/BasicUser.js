@@ -590,7 +590,7 @@
                             <div class="detail-view-field pb-2 col-6" data-field="ChkvmOutCount"> \
                                 <div class="detail-view-field form-check checkbox-xl"> \
                                     <input class="form-check-input" type="checkbox" value="" id="ChkvmOutCount" checked/> \
-                                    <label class="form-check-label" for="ChkvmOutCount">會外評選</label> \
+                                    <label class="form-check-label" for="ChkvmOutCount">政府採購網公開評選</label> \
                                 </div> \
                             </div> \
                             <div class="detail-view-field pb-2 col-6" data-field="ChkvmInCount"> \
