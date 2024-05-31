@@ -73,14 +73,14 @@ namespace Esdms.Controllers.Notify
                 ////}
 
                 // 驗證憑證                
-                string GoogleApiClientId = "1002934567383-52dhafecpfss0c0dtovkml0snjfnbgq0.apps.googleusercontent.com";
+                string GoogleApiClientId = AppConfig.GoogleApiClientId;
                 var settings = new GoogleJsonWebSignature.ValidationSettings()
                 {
                     Audience = new List<string>() { GoogleApiClientId }
                 };
                 //payload = await GoogleJsonWebSignature.ValidateAsync(formCredential, settings);
                 payload = await GoogleJsonWebSignature.ValidateAsync(formCredential).ConfigureAwait(false);
-                if (!payload.Issuer.Equals("accounts.google.com") && !payload.Issuer.Equals("https://accounts.google.com"))
+                if (!payload.Issuer.Equals("accounts.google.com") && !payload.Issuer.Equals(AppConfig.GoogleApiAccountsUrl))
                 {
                     return null;
                 }

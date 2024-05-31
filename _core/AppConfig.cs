@@ -12,6 +12,8 @@ namespace Esdms
 
         private static string _rootPath;
         private static string _systemWebSite;
+        private static string _googleApiClientId;
+        private static string _googleApiAccountsUrl;
 
         #endregion
 
@@ -25,6 +27,8 @@ namespace Esdms
             _rootPath = _rootPath.Replace("~\\", HttpContext.Current.Server.MapPath("~\\"));
             
             _systemWebSite = ConfigurationManager.AppSettings["SystemWebSite"].ToString();
+            _googleApiClientId = ConfigurationManager.AppSettings["GoogleApiClientId"].ToString();
+            _googleApiAccountsUrl = ConfigurationManager.AppSettings["GoogleApiAccountsUrl"].ToString();
         }
 
         #endregion
@@ -45,6 +49,22 @@ namespace Esdms
         public static string SystemWebSite
         {
             get { return _systemWebSite; }
+        }
+
+        /// <summary>
+        /// GoogleApiClientId (管理者gmail:ftisuser@gmail.com/xxxxxxxxx)
+        /// </summary>
+        public static string GoogleApiClientId
+        {
+            get { return _googleApiClientId; }
+        }
+
+        /// <summary>
+        /// Accounts Google Url
+        /// </summary>
+        public static string GoogleApiAccountsUrl
+        {
+            get { return _googleApiAccountsUrl; }
         }
 
         #endregion
