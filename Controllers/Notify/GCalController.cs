@@ -24,7 +24,7 @@ namespace Esdms.Controllers.Notify
         public ActionResult Index()
         {
             //2.利用Google Calendar API，新增活動至Google行事曆
-            string path = Server.MapPath("~/Data/ftis-prj-esdms-aaa74f95b1a6.json");
+            string path = Server.MapPath("~/Data/t_key/ftis-prj-esdms-aaa74f95b1a6.json");
             CalendarService _service = this.GetCalendarService(path);
             CreateEvent(_service);
 
