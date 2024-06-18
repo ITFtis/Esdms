@@ -606,13 +606,15 @@ namespace Esdms.Controllers.Es
                     var v4 = CitySelectItems.CITIES.Where(a => a.Name == ___cityCode);
                     string cityCode = v4.Count() == 0 ? null : v4.FirstOrDefault().CityCode;
 
-                    var v5 = TownSelectItems.Towns.Where(a => a.Name == ___zip);
+                    var v5 = TownSelectItems.Towns.Where(a => a.CityCode == cityCode)
+                                        .Where(a => a.Name == ___zip);
                     string zip = v5.Count() == 0 ? null : v5.FirstOrDefault().ZIP;
 
                     var v6 = CitySelectItems.CITIES.Where(a => a.Name == ___pCityCode);
                     string pCityCode = v6.Count() == 0 ? null : v6.FirstOrDefault().CityCode;
 
-                    var v7 = TownSelectItems.Towns.Where(a => a.Name == ___pZIP);
+                    var v7 = TownSelectItems.Towns.Where(a => a.CityCode == pCityCode)
+                                        .Where(a => a.Name == ___pZIP);
                     string pzip = v7.Count() == 0 ? null : v7.FirstOrDefault().ZIP;
 
                     //(會外)會議 - 環境部
