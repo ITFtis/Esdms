@@ -452,6 +452,8 @@
     <Content Include="Views\Fun_BasicUserPId\Index.cshtml" />
     <Content Include="Views\GCal\Index.cshtml" />
     <Content Include="Views\GCal\ValidGoogleLogin.cshtml" />
+    <Content Include="Views\Home\Privacy.cshtml" />
+    <Content Include="Views\Home\Terms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
