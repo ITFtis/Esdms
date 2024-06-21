@@ -21,6 +21,8 @@ namespace Esdms.Controllers.Es
 
         protected override void AddDBObject(IModelEntity<FTISUserHistory> dbEntity, IEnumerable<FTISUserHistory> objs)
         {
+            ////1.專家資料庫2.線上系統            
+            objs = objs.Select(w => { w.addfrom = 1; return w; });
             base.AddDBObject(dbEntity, objs);
             FTISUserHistory.ResetGetAllDatas();
         }

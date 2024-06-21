@@ -735,6 +735,7 @@ namespace Esdms.Controllers.Es
                                 addHistory1.ActivityCategoryId = envId;
                                 addHistory1.ActivityCategoryJoinNum = env_num;
                                 addHistory1.OutYear = outYear;
+                                addHistory1.addfrom = 1;    ////1.專家資料庫2.線上系統
                                 fTISUserHistory.Add(addHistory1);
                             }
                             else
@@ -761,6 +762,7 @@ namespace Esdms.Controllers.Es
                                 addHistory1.ActivityCategoryId = engId;
                                 addHistory1.ActivityCategoryJoinNum = eng_num;
                                 addHistory1.OutYear = outYear;
+                                addHistory1.addfrom = 1;    ////1.專家資料庫2.線上系統
                                 fTISUserHistory.Add(addHistory1);
                             }
                             else
@@ -787,6 +789,7 @@ namespace Esdms.Controllers.Es
                                 addHistory1.ActivityCategoryId = idaId;
                                 addHistory1.ActivityCategoryJoinNum = ida_num;
                                 addHistory1.OutYear = outYear;
+                                addHistory1.addfrom = 1;    ////1.專家資料庫2.線上系統
                                 fTISUserHistory.Add(addHistory1);
                             }
                             else
@@ -824,6 +827,7 @@ namespace Esdms.Controllers.Es
                                     ActivityCategoryType = 1,  //1會內
                                     ActivityCategoryId = a.Id,
                                     Owner = ftisOwner,
+                                    addfrom = 1,    ////1.專家資料庫2.線上系統
                                     //SubjectId = a.SubjectId,
                                     //SubjectDetailId = a.Id,
                                 });
@@ -853,6 +857,7 @@ namespace Esdms.Controllers.Es
                                                             OutYear = SetOutYear,
                                                             ActivityCategoryType = 2,  //2會外
                                                             ActivityCategoryId = a.Id,
+                                                            addfrom = 1,    ////1.專家資料庫2.線上系統
                                                         });
                                 fTISUserHistory.Add(FTISUserHistorys);
 

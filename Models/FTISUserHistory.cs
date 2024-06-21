@@ -75,6 +75,14 @@ namespace Esdms.Models
             ColSize = 3)]        
         public int? ProjectId { get; set; }
 
+        [Display(Name = "新增來源")]
+        [ColumnDef(Visible = false, VisibleEdit = false)]
+        public int? addfrom { get; set; }
+
+        [Display(Name = "key來源")]
+        [ColumnDef(Visible = false, VisibleEdit = false)]
+        public string sno { get; set; }
+
         //組別
         [NotMapped]
         public virtual ICollection<UserHistorySet> UserHistorySets

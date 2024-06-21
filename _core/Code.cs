@@ -23,6 +23,20 @@ namespace Esdms
         }
 
         /// <summary>
+        /// 新增來源
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<KeyValuePair<string, object>> GetAddFrom()
+        {
+            IEnumerable<KeyValuePair<string, object>> result = new List<KeyValuePair<string, object>>();
+
+            result = result.Append(new KeyValuePair<string, object>("1", "專家資料庫"));
+            result = result.Append(new KeyValuePair<string, object>("2", "線上系統"));
+
+            return result;
+        }
+
+        /// <summary>
         /// 部門
         /// </summary>
         /// <returns></returns>
