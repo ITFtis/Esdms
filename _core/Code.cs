@@ -44,14 +44,14 @@ namespace Esdms
         {
             IEnumerable<KeyValuePair<string, object>> result = new List<KeyValuePair<string, object>>();
 
-            result = result.Append(new KeyValuePair<string, object>("1", "講習訓練組"));
-            result = result.Append(new KeyValuePair<string, object>("2", "永續創新研發中心"));
-            result = result.Append(new KeyValuePair<string, object>("3", "綠色技術發展中心"));
-            result = result.Append(new KeyValuePair<string, object>("4", "環境與資源服務中心"));
-            result = result.Append(new KeyValuePair<string, object>("5", "低碳策略與技術服務組"));
-            result = result.Append(new KeyValuePair<string, object>("6", "資訊室"));
-            result = result.Append(new KeyValuePair<string, object>("7", "法務室"));
-            result = result.Append(new KeyValuePair<string, object>("8", "人資室"));
+            result = result.Append(new KeyValuePair<string, object>("02", "講習訓練組"));
+            result = result.Append(new KeyValuePair<string, object>("58", "永續創新研發中心"));
+            result = result.Append(new KeyValuePair<string, object>("52", "綠色技術發展中心"));
+            result = result.Append(new KeyValuePair<string, object>("31", "環境與資源服務中心"));
+            result = result.Append(new KeyValuePair<string, object>("19", "低碳策略與技術服務組"));
+            result = result.Append(new KeyValuePair<string, object>("16", "資訊室"));
+            result = result.Append(new KeyValuePair<string, object>("22", "法務室"));
+            result = result.Append(new KeyValuePair<string, object>("17", "人力資源室"));
 
 
             return result;
