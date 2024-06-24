@@ -9,3 +9,5 @@ Update FTISUserHistory Set DCode = '16' Where DCode = '6' And ActivityCategoryTy
 Update FTISUserHistory Set DCode = '22' Where DCode = '7' And ActivityCategoryType = 1
 Update FTISUserHistory Set DCode = '17' Where DCode = '8' And ActivityCategoryType = 1
 
+--
+Alter TABLE FTISUserHistory ALTER COLUMN [DCode] [nvarchar](50) NULL
