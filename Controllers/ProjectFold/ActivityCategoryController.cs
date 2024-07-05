@@ -77,6 +77,7 @@ namespace Esdms.Controllers.ProjectFold
             opts.GetFiled("Type").align = "left";
             opts.GetFiled("Sort").visible = true;
             opts.GetFiled("Sort").align = "left";
+            opts.GetFiled("IsCount").colsize = 6;
 
             return opts;
         }
