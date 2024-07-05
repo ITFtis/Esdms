@@ -43,13 +43,13 @@ namespace Esdms.Models
         [ColumnDef(Visible = false)]
         public int Sort { get; set; }
         
-        [Display(Name = "不計評選次數")]
+        [Display(Name = "是否需評選次數")]
         [Required]
         [ColumnDef(EditType = EditType.Radio,
             SelectItemsClassNamespace = Esdms.GetYNSelectItems.AssemblyQualifiedName,
             ColSize = 3)]
         [StringLength(1)]
-        public string IsNoCount { get; set; }
+        public string IsCount { get; set; }
 
         [Display(Name = "建檔日期")]
         [ColumnDef(VisibleEdit = false, ColSize = 3)]
