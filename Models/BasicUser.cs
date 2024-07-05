@@ -376,7 +376,9 @@ namespace Esdms.Models
                                 o.Id, o.Year, o.DCode, o.ProjectId,
                                 ActName = c.FirstOrDefault() == null ? "" : c.FirstOrDefault().Name,
                                 ActId = c.FirstOrDefault() == null ? int.MaxValue : c.FirstOrDefault().Id,
+                                IsNoCount = c.FirstOrDefault() == null ? "": c.FirstOrDefault().IsNoCount,   
                             })
+                            .Where(a => a.IsNoCount != "Y")     //不計評選次數(非Y)
                             .GroupJoin(Code.GetDepartment(), a => a.DCode, b => b.Key, (o, c) => new
                             { 
                                  o.Id, o.Year, o.DCode, o.ProjectId, o.ActName, o.ActId,
@@ -388,7 +390,7 @@ namespace Esdms.Models
                                  pjName = c.FirstOrDefault() == null ? "" : c.FirstOrDefault().Name
                             });
 
-                ////var tt = query.ToList();
+                //var tt = datas.ToList();
 
                 var datasGroup = datas.Select(a => a.Year)
                                     .OrderByDescending(a => a).Distinct().ToList();
@@ -419,7 +421,11 @@ namespace Esdms.Models
                 int sYear = DateTime.Now.Year - 1911 - n;
 
                 var query = FTISUserHistory.GetAllDatas().Where(a => a.PId == this.PId && a.ActivityCategoryType == 1)
-                            .Where(a => a.Year >= sYear);                
+                            .Where(a => a.Year >= sYear);
+
+                //不計評選次數(非Y)
+                var acts = ActivityCategorySelectItems.ActivityCategorys.Where(a => a.IsNoCount != "Y");
+                query = query.Where(a => acts.Any(b => b.Id == a.ActivityCategoryId));
 
                 return query.Count();
             }
