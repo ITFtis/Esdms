@@ -378,7 +378,7 @@ namespace Esdms.Models
                                 ActId = c.FirstOrDefault() == null ? int.MaxValue : c.FirstOrDefault().Id,
                                 IsCount = c.FirstOrDefault() == null ? "": c.FirstOrDefault().IsCount,   
                             })
-                            .Where(a => a.IsCount == "Y")     //是否需評選次數
+                            .Where(a => a.IsCount == "Y")     //是否加入評選次數
                             .GroupJoin(Code.GetDepartment(), a => a.DCode, b => b.Key, (o, c) => new
                             { 
                                  o.Id, o.Year, o.DCode, o.ProjectId, o.ActName, o.ActId,
@@ -423,7 +423,7 @@ namespace Esdms.Models
                 var query = FTISUserHistory.GetAllDatas().Where(a => a.PId == this.PId && a.ActivityCategoryType == 1)
                             .Where(a => a.Year >= sYear);
 
-                //是否需評選次數
+                //是否加入評選次數
                 var acts = ActivityCategorySelectItems.ActivityCategorys.Where(a => a.IsCount == "Y");
                 query = query.Where(a => acts.Any(b => b.Id == a.ActivityCategoryId));
 

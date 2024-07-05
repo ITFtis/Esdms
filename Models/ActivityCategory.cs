@@ -43,7 +43,7 @@ namespace Esdms.Models
         [ColumnDef(Visible = false)]
         public int Sort { get; set; }
         
-        [Display(Name = "是否需評選次數")]
+        [Display(Name = "是否加入評選次數")]
         [Required]
         [ColumnDef(EditType = EditType.Radio,
             SelectItemsClassNamespace = Esdms.GetYNSelectItems.AssemblyQualifiedName,
