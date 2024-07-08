@@ -58,13 +58,13 @@ namespace Esdms.Models
         [StringLength(50)]
         public string Owner { get; set; }
 
-        [Display(Name = "年度")]
+        [Display(Name = "專案年度")]
         [ColumnDef(EditType = EditType.Select,
             Filter = true, SelectItemsClassNamespace = Esdms.GetYaerSelectItems.AssemblyQualifiedName, 
             ColSize = 3)]
         public int? Year { get; set; }
 
-        [Display(Name = "日期")]
+        [Display(Name = "會議日期")]
         [Column(TypeName = "date")]
         [ColumnDef(EditType = EditType.Date, ColSize = 3)]
         public DateTime? Date { get; set; }

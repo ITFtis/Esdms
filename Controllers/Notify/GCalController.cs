@@ -17,7 +17,7 @@ using Google.Apis.Services;
 
 namespace Esdms.Controllers.Notify
 {
-    [Dou.Misc.Attr.MenuDef(Id = "GCal", Name = "加入Google行事曆", Action = "Index", Index = -1, Func = Dou.Misc.Attr.FuncEnum.ALL, AllowAnonymous = true)]
+    //[Dou.Misc.Attr.MenuDef(Id = "GCal", Name = "加入Google行事曆", Action = "Index", Index = -1, Func = Dou.Misc.Attr.FuncEnum.ALL, AllowAnonymous = true)]
     public class GCalController : Controller
     {
         // GET: GCal
