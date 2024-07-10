@@ -74,6 +74,7 @@ namespace Esdms.Controllers.ProjectFold
             foreach (var field in opts.fields)
                 field.sortable = true;
 
+            opts.ctrlFieldAlign = "left";
             opts.GetFiled("Type").align = "left";
             opts.GetFiled("Sort").visible = true;
             opts.GetFiled("Sort").align = "left";

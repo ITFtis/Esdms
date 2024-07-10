@@ -33,6 +33,11 @@ namespace Esdms.Models
         [Column(TypeName = "nvarchar")]
         [Display(Name = "會議名稱")]
         public string Name { get; set; }
+        
+        [StringLength(200)]
+        [Column(TypeName = "nvarchar")]
+        [Display(Name = "會議全名")]
+        public string FullName { get; set; }
 
         [StringLength(40)]
         [Column(TypeName = "nvarchar")]
@@ -50,6 +55,14 @@ namespace Esdms.Models
             ColSize = 3)]
         [StringLength(1)]
         public string IsCount { get; set; }
+
+        [Display(Name = "線上系統選項")]
+        [Required]
+        [ColumnDef(EditType = EditType.Radio,
+            SelectItemsClassNamespace = Esdms.GetYNSelectItems.AssemblyQualifiedName,
+            ColSize = 3)]
+        [StringLength(1)]
+        public string IsMis { get; set; }
 
         [Display(Name = "建檔日期")]
         [ColumnDef(VisibleEdit = false, ColSize = 3)]
