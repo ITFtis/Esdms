@@ -127,6 +127,20 @@ namespace Esdms
 
             return result;
         }
+
+        /// <summary>
+        /// 有無(Y/N)
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<KeyValuePair<string, object>> GetHas()
+        {
+            IEnumerable<KeyValuePair<string, object>> result = new List<KeyValuePair<string, object>>();
+
+            result = result.Append(new KeyValuePair<string, object>("Y", "有"));
+            result = result.Append(new KeyValuePair<string, object>("N", "無"));
+
+            return result;
+        }
     }
 
     #region  下拉
@@ -167,6 +181,19 @@ namespace Esdms
         public override IEnumerable<KeyValuePair<string, object>> GetSelectItems()
         {
             return Code.GetYN().Select(a => new KeyValuePair<string, object>(a.Key, a.Value));
+        }
+    }
+
+    /// <summary>
+    /// 有無(Y/N)
+    /// </summary>
+    public class GetHasSelectItems : SelectItemsClass
+    {
+        public const string AssemblyQualifiedName = "Esdms.GetHasSelectItems, Esdms";
+
+        public override IEnumerable<KeyValuePair<string, object>> GetSelectItems()
+        {
+            return Code.GetHas().Select(a => new KeyValuePair<string, object>(a.Key, a.Value));
         }
     }
 

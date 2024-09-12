@@ -63,6 +63,11 @@ namespace Esdms.Models
         [StringLength(40)]
         public string Position { get; set; }
 
+        [Display(Name = "有無提供存摺")]
+        [ColumnDef(EditType = EditType.Select, SelectItemsClassNamespace = Esdms.GetHasSelectItems.AssemblyQualifiedName,
+           ColSize = 3)]
+        public string HasPassbook { get; set; }
+
         [Display(Name = "手機號碼")]
         [ColumnDef(ColSize = 3)]
         [StringLength(30)]
