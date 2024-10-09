@@ -376,7 +376,7 @@ namespace Esdms
             SizeF textSize = drawing.MeasureString(text, font);
             //旋轉圖片
             drawing.TranslateTransform(((int)width - textSize.Width) / 2, ((int)height - textSize.Height) / 2);
-            drawing.RotateTransform(0);  //defalut:-45
+            drawing.RotateTransform(-25);  //defalut:-45
             drawing.TranslateTransform(-((int)width - textSize.Width) / 2, -((int)height - textSize.Height) / 2);
             //绘制背景
             drawing.Clear(backColor);
@@ -404,7 +404,7 @@ namespace Esdms
                 drawing.DrawString(text, font, textBrush, x, y);
                 //x = x - 10;
                 
-                y += 100;
+                y += 50;
             }
 
             drawing.Save();
