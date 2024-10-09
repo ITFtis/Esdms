@@ -180,7 +180,7 @@ namespace Esdms
                 {
                     //sheet.PageSetup.PageHeight  841.8897637795277   double
                     //sheet.PageSetup.PageWidth   595.27559055118115  double
-                    System.Drawing.Image imgWtrmrk = ExcelSpecHelper.DrawText(watermark, font, System.Drawing.Color.LightCoral,
+                    System.Drawing.Image imgWtrmrk = ExcelSpecHelper.DrawText(watermark, font, System.Drawing.Color.SkyBlue,
                                                         System.Drawing.Color.White,
                                                         sheet.PageSetup.PageHeight + 400, sheet.PageSetup.PageWidth + 30);
 
