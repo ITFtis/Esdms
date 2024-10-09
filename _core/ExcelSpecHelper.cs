@@ -376,18 +376,37 @@ namespace Esdms
             SizeF textSize = drawing.MeasureString(text, font);
             //旋轉圖片
             drawing.TranslateTransform(((int)width - textSize.Width) / 2, ((int)height - textSize.Height) / 2);
-            drawing.RotateTransform(-25);  //defalut:-45
+            drawing.RotateTransform(0);  //defalut:-45
             drawing.TranslateTransform(-((int)width - textSize.Width) / 2, -((int)height - textSize.Height) / 2);
             //绘制背景
             drawing.Clear(backColor);
             //创建文本刷
             Brush textBrush = new SolidBrush(textColor);
-            //頭
-            drawing.DrawString(text, font, textBrush, 140, 300);
-            //置中
-            drawing.DrawString(text, font, textBrush, 30, ((int)height - textSize.Height) / 2);
-            //尾
-            drawing.DrawString(text, font, textBrush, -90, 900);
+            ////頭
+            //drawing.DrawString(text, font, textBrush, 140, 300);
+            ////置中
+            //drawing.DrawString(text, font, textBrush, 30, ((int)height - textSize.Height) / 2);
+            ////尾
+            //drawing.DrawString(text, font, textBrush, -90, 900);
+
+            //435, 28
+            //int x = 140, y = 300;
+            //while (x <= textSize.Width)
+            //{
+            //    drawing.DrawString(text, font, textBrush, x, y);
+            //    x += 50;
+            //}
+
+            int x = 50, y = 50;
+            int maxY = 1000;
+            while (y <= maxY)
+            {
+                drawing.DrawString(text, font, textBrush, x, y);
+                //x = x - 10;
+                
+                y += 100;
+            }
+
             drawing.Save();
             return img;
         }
