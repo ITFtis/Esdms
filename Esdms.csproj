@@ -287,6 +287,7 @@
     <Compile Include="_core\FileHelper.cs" />
     <Compile Include="_core\GenerateHelper.cs" />
     <Compile Include="_core\HtmlHelper.cs" />
+    <Compile Include="_core\StringHelper.cs" />
     <Compile Include="_core\vPower.cs" />
     <Compile Include="_report\Rpt_BasicUserList.cs" />
     <Compile Include="_report\_ReportClass.cs" />

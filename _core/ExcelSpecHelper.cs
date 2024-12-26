@@ -1,4 +1,5 @@
-﻿using NPOI.SS.UserModel;
+﻿using NPOI.SS.Formula.Functions;
+using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace Esdms
@@ -367,7 +369,7 @@ namespace Esdms
             return oStyle;
         }
 
-        public static System.Drawing.Image DrawText(String text, System.Drawing.Font font, Color textColor, Color backColor, double height, double width)
+        public static System.Drawing.Image DrawText(String text, System.Drawing.Font font, string waterColor, Color backColor, double height, double width)
         {
             //創建一個指定寬度和高度的圖像
             Image img = new Bitmap((int)width, (int)height);
@@ -381,7 +383,25 @@ namespace Esdms
             //绘制背景
             drawing.Clear(backColor);
             //创建文本刷
-            Brush textBrush = new SolidBrush(textColor);
+
+            //浮水印色碼，預設
+            int alpha = 180;  //透明度(100%=>255)
+            System.Drawing.Color con1DrawColor = Color.FromArgb(255, 220, 220, 220); //Gainsboro;
+            System.Drawing.Color con2DrawColor = Color.FromArgb(alpha, 220, 220, 220);//Gainsboro;
+
+            var color1 = ColorCode.GetWaterColor().Where(a => a.Key == waterColor);
+            var color2 = ColorCode.GetWaterColor(alpha).Where(a => a.Key == waterColor);
+            if (color1.Count() > 0)
+            {
+                //Con1
+                con1DrawColor = (System.Drawing.Color)color1.First().Value;
+                //Con2
+                con2DrawColor = (System.Drawing.Color)color2.First().Value;
+            }
+
+            Brush textBrushCon1 = new SolidBrush(con1DrawColor);
+            Brush textBrushCon2 = new SolidBrush(con2DrawColor);
+            
             ////頭
             //drawing.DrawString(text, font, textBrush, 140, 300);
             ////置中
@@ -405,8 +425,27 @@ namespace Esdms
             string content = text + " " + text;
             while (y <= maxY)
             {
-                drawing.DrawString(content, font, textBrush, x, y);
+                string con1 = "";
+                string con2 = "";
+                for (int i = 0; i < content.Length; i++)
+                {
+                    string str = content[i].ToString();
+                    if (i % 2 == 0)
+                    {
+                        con1 += content[i];
+                        con2 += StringHelper.HasChinese(str) ? "  " : " ";                       
+                    }
+                    else
+                    {
+                        con1 += StringHelper.HasChinese(str) ? "  " : " ";
+                        con2 += content[i];
+                    }
+                }
+
                 
+                drawing.DrawString(con1, font, textBrushCon1, x, y);
+                drawing.DrawString(con2, font, textBrushCon2, x, y);
+
                 y += 50;
             }
 

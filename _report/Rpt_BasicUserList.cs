@@ -31,7 +31,7 @@ namespace Esdms
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public string Export(vwe_ChkExport chks, List<BasicUser> datas, int autoSizeColumn, System.Drawing.Color drawWaterColor)
+        public string Export(vwe_ChkExport chks, List<BasicUser> datas, int autoSizeColumn, string waterColor)
         {
             string url = "";
 
@@ -181,7 +181,7 @@ namespace Esdms
                     //sheet.PageSetup.PageHeight  841.8897637795277   double
                     //sheet.PageSetup.PageWidth   595.27559055118115  double
                     //Gainsboro(剛好), Beige(有點淺), WhiteSmoke (複印無色), 
-                    System.Drawing.Image imgWtrmrk = ExcelSpecHelper.DrawText(watermark, font, drawWaterColor,
+                    System.Drawing.Image imgWtrmrk = ExcelSpecHelper.DrawText(watermark, font, waterColor,
                                                         System.Drawing.Color.White,
                                                         sheet.PageSetup.PageHeight + 400, sheet.PageSetup.PageWidth + 30);
 
