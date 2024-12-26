@@ -696,7 +696,15 @@
     var b_water = {};
     b_water.item = '<select id="waterColor">\
 	                    <option value="Gainsboro">(浮)灰1 Gainsboro 使用中</option>\
-	                    <option value="Beige">(浮)灰2 Beige</option>\
+	                    <option value="BurlyWood">(浮)灰2 BurlyWood</option>\
+                        <option value="DarkCyan">(浮)灰3 DarkCyan</option>\
+                        <option value="CornflowerBlue">(浮)灰4 CornflowerBlue</option>\
+                        <option value="Gray">(浮)灰5 Gray</option>\
+                        <option value="LightSlateGray">(浮)灰6 LightSlateGray</option>\
+                        <option value="Navy">(浮)灰7 Navy</option>\
+                        <option value="Maroon">(浮)灰8 Maroon</option>\
+                        <option value="LightSkyBlue">(浮)灰9 LightSkyBlue</option>\
+                        <option value="Black">(浮)灰10 Black</option>\
                     </select>';
 
     var ad1 = {};
