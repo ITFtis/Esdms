@@ -660,12 +660,18 @@
                 chks.ChkvmOutCount = $('#ChkvmOutCount').prop("checked");
                 chks.ChkvmInCount = $('#ChkvmInCount').prop("checked");
 
+                //浮水印色碼
+                var waterColor = $('.fixed-table-toolbar #waterColor').val();
+
                 helper.misc.showBusyIndicator();
                 $.ajax({
                     url: app.siteRoot + 'BasicUser/ExportList',
                     datatype: "json",
                     type: "POST",
-                    data: { "Names": aryCheck, paras: [paras], sort: sortName, order: sortOrder, chks: chks },
+                    data: {
+                        "waterColor": waterColor,
+                        "Names": aryCheck, paras: [paras], sort: sortName, order: sortOrder, chks: chks
+                    },
                     success: function (data) {
                         if (data.result) {
                             location.href = app.siteRoot + data.url;
@@ -686,6 +692,13 @@
         })        
     };
 
+    //清單匯出(浮水印色碼)
+    var b_water = {};
+    b_water.item = '<select id="waterColor">\
+	                    <option value="Gainsboro">(浮)灰1 Gainsboro 使用中</option>\
+	                    <option value="Beige">(浮)灰2 Beige</option>\
+                    </select>';
+
     var ad1 = {};
     ad1.item = '<span class="btn btn-secondary glyphicon glyphicon-open-file"> 匯入專家資料</span>';
     ad1.event = 'click .glyphicon-open-file';
@@ -695,7 +708,14 @@
     
     //特定角色使用功能
     if (adminUsed) {
-        douoptions.appendCustomToolbars = [b, ad1];
+        if (loginUserName == '林正祥') {
+            //測：開啟挑選功能(b_water)：浮水印色碼
+            douoptions.appendCustomToolbars = [b_water, b, ad1];
+        }
+        else {
+            //admin常用
+            douoptions.appendCustomToolbars = [b, ad1];
+        }
     }
     else {
         douoptions.appendCustomToolbars = [b];

@@ -31,7 +31,7 @@ namespace Esdms
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public string Export(vwe_ChkExport chks, List<BasicUser> datas, int autoSizeColumn)
+        public string Export(vwe_ChkExport chks, List<BasicUser> datas, int autoSizeColumn, System.Drawing.Color drawWaterColor)
         {
             string url = "";
 
@@ -169,7 +169,7 @@ namespace Esdms
                 string dCode = FtisHelperV2.DB.Helpe.Employee.GetEmployee(Dou.Context.CurrentUser<User>().Id).DCode;
                 string depName = FtisHelperV2.DB.Helpe.Department.GetDepartment(dCode).DName;
 
-                Font font = new System.Drawing.Font("新細明體", 13);
+                Font font = new System.Drawing.Font("標楷體", 16);
                 String watermark = string.Format(
                     @"FTIS專家學者資料@{0}@{1}@{2}"
                     , depName
@@ -181,7 +181,7 @@ namespace Esdms
                     //sheet.PageSetup.PageHeight  841.8897637795277   double
                     //sheet.PageSetup.PageWidth   595.27559055118115  double
                     //Gainsboro(剛好), Beige(有點淺), WhiteSmoke (複印無色), 
-                    System.Drawing.Image imgWtrmrk = ExcelSpecHelper.DrawText(watermark, font, System.Drawing.Color.Gainsboro,
+                    System.Drawing.Image imgWtrmrk = ExcelSpecHelper.DrawText(watermark, font, drawWaterColor,
                                                         System.Drawing.Color.White,
                                                         sheet.PageSetup.PageHeight + 400, sheet.PageSetup.PageWidth + 30);
 

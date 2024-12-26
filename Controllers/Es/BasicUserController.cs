@@ -69,9 +69,32 @@ namespace Esdms.Controllers.Es
             return base.BeforeIQueryToPagedList(iquery, paras);
         }
 
-        //匯出清單
-        public ActionResult ExportList(List<string> Names, vwe_ChkExport chks, string sort, string order, params KeyValueParams[] paras)
+        /// <summary>
+        /// 匯出清單
+        /// </summary>
+        /// <param name="waterColor">浮水印灰底色碼</param>
+        /// <param name="Names"></param>
+        /// <param name="chks"></param>
+        /// <param name="sort"></param>
+        /// <param name="order"></param>
+        /// <param name="paras"></param>
+        /// <returns></returns>
+        public ActionResult ExportList(string waterColor, List<string> Names, vwe_ChkExport chks, string sort, string order, params KeyValueParams[] paras)
         {
+            ////if (string.IsNullOrEmpty(waterColor))
+            ////{
+            ////    //浮水印色碼，預設
+            ////    waterColor = "Gainsboro";
+            ////}
+
+            //浮水印色碼，預設
+            System.Drawing.Color drawWaterColor = System.Drawing.Color.Gainsboro;   
+            var color = ColorCode.GetWaterColor().Where(a => a.Key == waterColor);
+            if (color.Count() > 0)
+            {
+                drawWaterColor = (System.Drawing.Color)color.First().Value;
+            }
+
             if (sort != null)
             {
                 KeyValueParams k = new KeyValueParams();
@@ -111,7 +134,7 @@ namespace Esdms.Controllers.Es
             if (Dou.Context.CurrentUser<User>().IsFinances())
                 autoSizeColumn = 3;
 
-            string url = rep.Export(chks, datas, autoSizeColumn);
+            string url = rep.Export(chks, datas, autoSizeColumn, drawWaterColor);
 
             if (url == "")
             {
