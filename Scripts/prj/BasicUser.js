@@ -716,7 +716,7 @@
     
     //特定角色使用功能
     if (adminUsed) {
-        if (loginUserName == '林正祥') {
+        if (loginUserName == '林正祥' || loginUserName == '陳宇揚') {
             //測：開啟挑選功能(b_water)：浮水印色碼
             douoptions.appendCustomToolbars = [b_water, b, ad1];
         }
