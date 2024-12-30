@@ -385,7 +385,7 @@ namespace Esdms
             //创建文本刷
 
             //浮水印色碼，預設
-            int alpha = 130;  //透明度(100%=>255)
+            int alpha = 160;  //透明度(100%=>255)
             System.Drawing.Color con1DrawColor = Color.FromArgb(255, 220, 220, 220); //Gainsboro;
             System.Drawing.Color con2DrawColor = Color.FromArgb(alpha, 220, 220, 220);//Gainsboro;
 
@@ -419,7 +419,7 @@ namespace Esdms
 
             //int x = 5, y = 50;
             //左右：0 ~ 600
-            int x = 0, y = 50;
+            int x = 0, y = 100;
             int maxY = 1300;
 
             string content = text + " " + text + " " + text;
@@ -446,7 +446,7 @@ namespace Esdms
                 drawing.DrawString(con1, font, textBrushCon1, x, y);
                 drawing.DrawString(con2, font, textBrushCon2, x, y);
 
-                y += 50;
+                y += 220;
             }
 
             drawing.Save();

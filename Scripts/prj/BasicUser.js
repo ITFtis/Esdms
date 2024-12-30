@@ -696,7 +696,7 @@
     var b_water = {};
     b_water.item = '<select id="waterColor">\
 	                    <option value="Gainsboro">(浮)灰1 Gainsboro 使用中</option>\
-	                    <option value="BurlyWood">(浮)灰2 BurlyWood</option>\
+	                    <option value="BurlyWood" selected>(浮)灰2 BurlyWood</option>\
                         <option value="DarkCyan">(浮)灰3 DarkCyan</option>\
                         <option value="CornflowerBlue">(浮)灰4 CornflowerBlue</option>\
                         <option value="Gray">(浮)灰5 Gray</option>\

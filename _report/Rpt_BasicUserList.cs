@@ -169,12 +169,13 @@ namespace Esdms
                 string dCode = FtisHelperV2.DB.Helpe.Employee.GetEmployee(Dou.Context.CurrentUser<User>().Id).DCode;
                 string depName = FtisHelperV2.DB.Helpe.Department.GetDepartment(dCode).DName;
 
-                Font font = new System.Drawing.Font("標楷體", 16);
-                String watermark = string.Format(
-                    @"FTIS專家學者資料@{0}@{1}@{2}"
-                    , depName
-                    , Dou.Context.CurrentUser<User>().Name
-                    , DateFormat.ToDate4(DateTime.Now));                
+                Font font = new System.Drawing.Font("標楷體", 50, FontStyle.Bold);
+                String watermark = "FTIS專家學者資料庫";
+                //String watermark = string.Format(
+                //    @"FTIS專家學者資料@{0}@{1}@{2}"
+                //    , depName
+                //    , Dou.Context.CurrentUser<User>().Name
+                //    , DateFormat.ToDate4(DateTime.Now));                
 
                 foreach (Worksheet sheet in workbook.Worksheets)
                 {
