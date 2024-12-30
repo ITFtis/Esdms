@@ -385,7 +385,7 @@ namespace Esdms
             //创建文本刷
 
             //浮水印色碼，預設
-            int alpha = 180;  //透明度(100%=>255)
+            int alpha = 130;  //透明度(100%=>255)
             System.Drawing.Color con1DrawColor = Color.FromArgb(255, 220, 220, 220); //Gainsboro;
             System.Drawing.Color con2DrawColor = Color.FromArgb(alpha, 220, 220, 220);//Gainsboro;
 
