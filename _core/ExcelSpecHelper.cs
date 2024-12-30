@@ -422,7 +422,7 @@ namespace Esdms
             int x = 0, y = 50;
             int maxY = 1300;
 
-            string content = text + " " + text;
+            string content = text + " " + text + " " + text;
             while (y <= maxY)
             {
                 string con1 = "";
