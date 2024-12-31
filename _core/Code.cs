@@ -63,8 +63,14 @@ namespace Esdms
         /// <returns></returns>
         public static IEnumerable<KeyValuePair<string, object>> GetYaer()
         {
+            int endYear = DateTime.Now.Year - 1911;
+
+            //客製化(近年底114/12/31)，方便管理師登錄資料
+            if (endYear < 114)
+                endYear = 114;
+
             IEnumerable<KeyValuePair<string, object>> result = new List<KeyValuePair<string, object>>();
-            for (int i = DateTime.Now.Year - 1911; i >= 110; i--)
+            for (int i = endYear; i >= 110; i--)
             {
                 result = result.Append(new KeyValuePair<string, object>(i.ToString(), i.ToString() + "年度"));
             }
