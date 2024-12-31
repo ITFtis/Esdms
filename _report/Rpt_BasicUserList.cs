@@ -159,15 +159,22 @@ namespace Esdms
                 //特殊儲存格位置Top (會外評選=政府採購網公開評選)
                 List<string> topContents = new List<string>() { "專長", "政府採購網公開評選", "會內參與" };
 
+                string dCode = FtisHelperV2.DB.Helpe.Employee.GetEmployee(Dou.Context.CurrentUser<User>().Id).DCode;
+                string depName = FtisHelperV2.DB.Helpe.Department.GetDepartment(dCode).DName;
+
+                //設定標腳(footer)
+                String strFooter = string.Format(
+                    @"FTIS專家學者資料@{0}@{1}@{2}"
+                    , depName
+                    , Dou.Context.CurrentUser<User>().Name
+                    , DateFormat.ToDate4(DateTime.Now));
+
                 //產出excel
-                string fileName = Esdms.ExcelSpecHelper.GenerateExcelByLinqF1(fileTitle, titles, list, folder, autoSizeColumn, topContents);
+                string fileName = Esdms.ExcelSpecHelper.GenerateExcelByLinqF1(fileTitle, titles, list, folder, autoSizeColumn, topContents, strFooter);
                 string path = folder + fileName;
 
                 Workbook workbook = new Workbook();
-                workbook.LoadFromFile(path);
-
-                string dCode = FtisHelperV2.DB.Helpe.Employee.GetEmployee(Dou.Context.CurrentUser<User>().Id).DCode;
-                string depName = FtisHelperV2.DB.Helpe.Department.GetDepartment(dCode).DName;
+                workbook.LoadFromFile(path);   
 
                 Font font = new System.Drawing.Font("標楷體", 50, FontStyle.Bold);
                 String watermark = "FTIS專家學者資料庫";

@@ -25,7 +25,7 @@ namespace Esdms
         /// <param name="topContents">特殊儲存格位置Top</param>
         /// <returns>Excel檔名</returns>
         public static string GenerateExcelByLinqF1(string fileTitle, List<string> titles, List<dynamic> list, string savePath,
-                                                int autoSizeColumn, List<string> topContents = null)
+                                                int autoSizeColumn, List<string> topContents = null, string strFooter = "")
         {
             string fileName = "";
 
@@ -55,6 +55,13 @@ namespace Esdms
                 }
 
                 XSSFSheet mySheet1 = (XSSFSheet)workbook.CreateSheet(sheetName);
+
+                //設定標腳(footer)
+                if (strFooter != "")
+                {
+                    mySheet1.Footer.Center = strFooter; //斜體 "&I" + strFooter;
+                }
+
                 //mySheet1.DefaultRowHeight = 15 * 20;
 
                 //建立 Header                
