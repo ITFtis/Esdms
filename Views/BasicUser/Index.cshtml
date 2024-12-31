@@ -95,7 +95,7 @@
 
 
 <script>
-    var loginUserName = '@Dou.Context.CurrentUserBase.Name';
+    var loginUserId = '@Dou.Context.CurrentUserBase.Id';
     var aryVPower = JSON.parse('@Html.Raw(Json.Encode(ViewBag.VPower))');
     //只能檢視
     var IsView = '@ViewBag.IsView'.toLowerCase() == 'true';
