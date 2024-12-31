@@ -377,6 +377,16 @@ namespace Esdms
             return oStyle;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="font"></param>
+        /// <param name="waterColor">指定浮水印顏色</param>
+        /// <param name="backColor"></param>
+        /// <param name="height"></param>
+        /// <param name="width"></param>
+        /// <returns></returns>
         public static System.Drawing.Image DrawText(String text, System.Drawing.Font font, string waterColor, Color backColor, double height, double width)
         {
             //創建一個指定寬度和高度的圖像
@@ -393,10 +403,12 @@ namespace Esdms
             //创建文本刷
 
             //浮水印色碼，預設
+            string defalultColor = "BurlyWood";
             int alpha = 160;  //透明度(100%=>255)
-            System.Drawing.Color con1DrawColor = Color.FromArgb(255, 220, 220, 220); //Gainsboro;
-            System.Drawing.Color con2DrawColor = Color.FromArgb(alpha, 220, 220, 220);//Gainsboro;
+            System.Drawing.Color con1DrawColor = (System.Drawing.Color)ColorCode.GetWaterColor().Where(a => a.Key == defalultColor).First().Value;
+            System.Drawing.Color con2DrawColor = (System.Drawing.Color)ColorCode.GetWaterColor(alpha).Where(a => a.Key == defalultColor).First().Value;
 
+            //判斷是否有指定浮水印顏色
             var color1 = ColorCode.GetWaterColor().Where(a => a.Key == waterColor);
             var color2 = ColorCode.GetWaterColor(alpha).Where(a => a.Key == waterColor);
             if (color1.Count() > 0)
