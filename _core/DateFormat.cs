@@ -265,6 +265,28 @@ namespace Esdms
         }
 
         /// <summary>
+        /// yyyy/MM/dd HH:mm:ss
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static string ToDate7_1(object date)
+        {
+            string result = "";
+
+            try
+            {
+                DateTime dd = DateTime.Parse(date.ToString());
+                result = string.Format("{0:yyyy/MM/dd HH:mm:ss}", dd);
+            }
+            catch
+            {
+                return null;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// yyyyMMdd
         /// </summary>
         /// <param name="date"></param>

@@ -23,6 +23,7 @@ namespace Esdms
         /// <param name="savePath">儲存路徑</param>
         /// <param name="autoSizeColumn">"0":不調整width,"1":自動調整長度(效能差:資料量多),"2":字串長度調整width,"3":字串長度調整width(展開)</param>
         /// <param name="topContents">特殊儲存格位置Top</param>
+        /// <param name="strFooter">NPOI內建標記 粗體"&B測試"</param>
         /// <returns>Excel檔名</returns>
         public static string GenerateExcelByLinqF1(string fileTitle, List<string> titles, List<dynamic> list, string savePath,
                                                 int autoSizeColumn, List<string> topContents = null, string strFooter = "")
@@ -59,7 +60,7 @@ namespace Esdms
                 //設定標腳(footer)
                 if (strFooter != "")
                 {
-                    mySheet1.Footer.Center = strFooter; //斜體 "&I" + strFooter;
+                    mySheet1.Footer.Center = strFooter; //粗體"&B測試"
                 }
 
                 //mySheet1.DefaultRowHeight = 15 * 20;
