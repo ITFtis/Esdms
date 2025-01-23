@@ -378,7 +378,7 @@ namespace Esdms
         }
 
         /// <summary>
-        /// 
+        /// (版本1)1頁(斜印+無縫隙列)浮水印文字 => 董事長
         /// </summary>
         /// <param name="text"></param>
         /// <param name="font"></param>
@@ -388,6 +388,102 @@ namespace Esdms
         /// <param name="width"></param>
         /// <returns></returns>
         public static System.Drawing.Image DrawText(String text, System.Drawing.Font font, string waterColor, Color backColor, double height, double width)
+        {
+            //創建一個指定寬度和高度的圖像
+            Image img = new Bitmap((int)width, (int)height);
+            Graphics drawing = Graphics.FromImage(img);
+            //獲取文本大小
+            SizeF textSize = drawing.MeasureString(text, font);
+            //旋轉圖片
+            drawing.TranslateTransform(((int)width - textSize.Width) / 2, ((int)height - textSize.Height) / 2);
+            drawing.RotateTransform(0);  //defalut:-45
+            drawing.TranslateTransform(-((int)width - textSize.Width) / 2, -((int)height - textSize.Height) / 2);
+            //绘制背景
+            drawing.Clear(backColor);
+            //创建文本刷
+
+            //浮水印色碼，預設
+            string defalultColor = "BurlyWood";
+            int alpha = 160;  //透明度(100%=>255)
+            System.Drawing.Color con1DrawColor = (System.Drawing.Color)ColorCode.GetWaterColor().Where(a => a.Key == defalultColor).First().Value;
+            System.Drawing.Color con2DrawColor = (System.Drawing.Color)ColorCode.GetWaterColor(alpha).Where(a => a.Key == defalultColor).First().Value;
+
+            //判斷是否有指定浮水印顏色
+            var color1 = ColorCode.GetWaterColor().Where(a => a.Key == waterColor);
+            var color2 = ColorCode.GetWaterColor(alpha).Where(a => a.Key == waterColor);
+            if (color1.Count() > 0)
+            {
+                //Con1
+                con1DrawColor = (System.Drawing.Color)color1.First().Value;
+                //Con2
+                con2DrawColor = (System.Drawing.Color)color2.First().Value;
+            }
+
+            Brush textBrushCon1 = new SolidBrush(con1DrawColor);
+            Brush textBrushCon2 = new SolidBrush(con2DrawColor);
+
+            ////頭
+            //drawing.DrawString(text, font, textBrush, 140, 300);
+            ////置中
+            //drawing.DrawString(text, font, textBrush, 30, ((int)height - textSize.Height) / 2);
+            ////尾
+            //drawing.DrawString(text, font, textBrush, -90, 900);
+
+            //435, 28
+            //int x = 140, y = 300;
+            //while (x <= textSize.Width)
+            //{
+            //    drawing.DrawString(text, font, textBrush, x, y);
+            //    x += 50;
+            //}
+
+            //int x = 5, y = 50;
+            //左右：0 ~ 600
+            int x = 0, y = 100;
+            int maxY = 1300;
+
+            string content = text + " " + text + " " + text;
+            while (y <= maxY)
+            {
+                string con1 = "";
+                string con2 = "";
+                for (int i = 0; i < content.Length; i++)
+                {
+                    string str = content[i].ToString();
+                    if (i % 2 == 0)
+                    {
+                        con1 += content[i];
+                        con2 += StringHelper.HasChinese(str) ? "  " : " ";
+                    }
+                    else
+                    {
+                        con1 += StringHelper.HasChinese(str) ? "  " : " ";
+                        con2 += content[i];
+                    }
+                }
+
+
+                drawing.DrawString(con1, font, textBrushCon1, x, y);
+                drawing.DrawString(con2, font, textBrushCon2, x, y);
+
+                y += 220;
+            }
+
+            drawing.Save();
+            return img;
+        }
+
+        /// <summary>
+        /// (版本2)1頁(5列+特殊字體)浮水印文字 => 宇揚協理
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="font"></param>
+        /// <param name="waterColor">指定浮水印顏色</param>
+        /// <param name="backColor"></param>
+        /// <param name="height"></param>
+        /// <param name="width"></param>
+        /// <returns></returns>
+        public static System.Drawing.Image DrawText2(String text, System.Drawing.Font font, string waterColor, Color backColor, double height, double width)
         {
             //創建一個指定寬度和高度的圖像
             Image img = new Bitmap((int)width, (int)height);
