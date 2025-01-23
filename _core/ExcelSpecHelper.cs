@@ -60,7 +60,7 @@ namespace Esdms
                 //設定標腳(footer)
                 if (strFooter != "")
                 {
-                    mySheet1.Footer.Center = strFooter; //粗體"&B測試"
+                    mySheet1.Footer.Right = strFooter; //粗體"&B測試"
                 }
 
                 //mySheet1.DefaultRowHeight = 15 * 20;
@@ -396,7 +396,7 @@ namespace Esdms
             SizeF textSize = drawing.MeasureString(text, font);
             //旋轉圖片
             drawing.TranslateTransform(((int)width - textSize.Width) / 2, ((int)height - textSize.Height) / 2);
-            drawing.RotateTransform(0);  //defalut:-45
+            drawing.RotateTransform(-25);  //defalut:-45
             drawing.TranslateTransform(-((int)width - textSize.Width) / 2, -((int)height - textSize.Height) / 2);
             //绘制背景
             drawing.Clear(backColor);
@@ -404,23 +404,17 @@ namespace Esdms
 
             //浮水印色碼，預設
             string defalultColor = "BurlyWood";
-            int alpha = 160;  //透明度(100%=>255)
-            System.Drawing.Color con1DrawColor = (System.Drawing.Color)ColorCode.GetWaterColor().Where(a => a.Key == defalultColor).First().Value;
-            System.Drawing.Color con2DrawColor = (System.Drawing.Color)ColorCode.GetWaterColor(alpha).Where(a => a.Key == defalultColor).First().Value;
+            System.Drawing.Color conDrawColor = (System.Drawing.Color)ColorCode.GetWaterColor().Where(a => a.Key == defalultColor).First().Value;           
 
             //判斷是否有指定浮水印顏色
-            var color1 = ColorCode.GetWaterColor().Where(a => a.Key == waterColor);
-            var color2 = ColorCode.GetWaterColor(alpha).Where(a => a.Key == waterColor);
-            if (color1.Count() > 0)
+            var color = ColorCode.GetWaterColor().Where(a => a.Key == waterColor);
+            if (color.Count() > 0)
             {
                 //Con1
-                con1DrawColor = (System.Drawing.Color)color1.First().Value;
-                //Con2
-                con2DrawColor = (System.Drawing.Color)color2.First().Value;
+                conDrawColor = (System.Drawing.Color)color.First().Value;
             }
 
-            Brush textBrushCon1 = new SolidBrush(con1DrawColor);
-            Brush textBrushCon2 = new SolidBrush(con2DrawColor);
+            Brush textBrushCon = new SolidBrush(conDrawColor);
 
             ////頭
             //drawing.DrawString(text, font, textBrush, 140, 300);
@@ -429,44 +423,17 @@ namespace Esdms
             ////尾
             //drawing.DrawString(text, font, textBrush, -90, 900);
 
-            //435, 28
-            //int x = 140, y = 300;
-            //while (x <= textSize.Width)
-            //{
-            //    drawing.DrawString(text, font, textBrush, x, y);
-            //    x += 50;
-            //}
+            for (int i = 0; i < 5; i++)
+                text += text;            
 
-            //int x = 5, y = 50;
-            //左右：0 ~ 600
-            int x = 0, y = 100;
-            int maxY = 1300;
-
-            string content = text + " " + text + " " + text;
+            int x = 100, y = 50;
+            int maxY = 1150;
             while (y <= maxY)
             {
-                string con1 = "";
-                string con2 = "";
-                for (int i = 0; i < content.Length; i++)
-                {
-                    string str = content[i].ToString();
-                    if (i % 2 == 0)
-                    {
-                        con1 += content[i];
-                        con2 += StringHelper.HasChinese(str) ? "  " : " ";
-                    }
-                    else
-                    {
-                        con1 += StringHelper.HasChinese(str) ? "  " : " ";
-                        con2 += content[i];
-                    }
-                }
+                drawing.DrawString(text, font, textBrushCon, x, y);
+                x = x - 10;
 
-
-                drawing.DrawString(con1, font, textBrushCon1, x, y);
-                drawing.DrawString(con2, font, textBrushCon2, x, y);
-
-                y += 220;
+                y += 30;
             }
 
             drawing.Save();

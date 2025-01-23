@@ -159,8 +159,9 @@ namespace Esdms
                 //特殊儲存格位置Top (會外評選=政府採購網公開評選)
                 List<string> topContents = new List<string>() { "專長", "政府採購網公開評選", "會內參與" };
 
-                string dCode = FtisHelperV2.DB.Helpe.Employee.GetEmployee(Dou.Context.CurrentUser<User>().Id).DCode;
-                string depName = FtisHelperV2.DB.Helpe.Department.GetDepartment(dCode).DName;
+                var fEmp = FtisHelperV2.DB.Helpe.Employee.GetEmployee(Dou.Context.CurrentUser<User>().Id);
+                string dCode = fEmp == null ? "" : fEmp.DCode;
+                string depName = dCode == "" ? "" : FtisHelperV2.DB.Helpe.Department.GetDepartment(dCode).DName;
 
                 //設定標腳(footer) &B:粗體
                 String strFooter = "&B" + string.Format(
@@ -176,8 +177,8 @@ namespace Esdms
                 Workbook workbook = new Workbook();
                 workbook.LoadFromFile(path);   
 
-                Font font = new System.Drawing.Font("標楷體", 50, FontStyle.Bold);
-                String watermark = "FTIS專家學者資料庫";
+                Font font = new System.Drawing.Font("標楷體", 25, FontStyle.Bold);
+                String watermark = "FTIS專家學者資料庫@";
                 //String watermark = string.Format(
                 //    @"FTIS專家學者資料@{0}@{1}@{2}"
                 //    , depName
