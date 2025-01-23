@@ -192,7 +192,7 @@ namespace Esdms
                     //Gainsboro(剛好), Beige(有點淺), WhiteSmoke (複印無色), 
                     System.Drawing.Image imgWtrmrk = ExcelSpecHelper.DrawText(watermark, font, waterColor,
                                                         System.Drawing.Color.White,
-                                                        sheet.PageSetup.PageHeight + 400, sheet.PageSetup.PageWidth + 30);
+                                                        sheet.PageSetup.PageHeight + 550, sheet.PageSetup.PageWidth + 30);
 
                     sheet.PageSetup.LeftHeaderImage = imgWtrmrk;
                     sheet.PageSetup.LeftHeader = "&G";
