@@ -403,7 +403,7 @@ namespace Esdms
             //创建文本刷
 
             //浮水印色碼，預設
-            string defalultColor = "BurlyWood";
+            string defalultColor = "EsdmsWaterRGB";
             System.Drawing.Color conDrawColor = (System.Drawing.Color)ColorCode.GetWaterColor().Where(a => a.Key == defalultColor).First().Value;           
 
             //判斷是否有指定浮水印顏色
