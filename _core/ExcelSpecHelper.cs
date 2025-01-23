@@ -427,7 +427,7 @@ namespace Esdms
                 text += text;            
 
             int x = 100, y = 50;
-            int maxY = 1150;
+            int maxY = 1200;  //1150
             while (y <= maxY)
             {
                 drawing.DrawString(text, font, textBrushCon, x, y);
