@@ -18,7 +18,7 @@ namespace Esdms
             IEnumerable<KeyValuePair<string, object>> result = new List<KeyValuePair<string, object>>();
 
             //System.Drawing.Color.Beige
-            result = result.Append(new KeyValuePair<string, object>("EsdmsWaterRGB", Color.FromArgb(alpha, 0, 0, 0)));
+            result = result.Append(new KeyValuePair<string, object>("EsdmsWaterRGB", Color.FromArgb(alpha, 213, 213, 213)));
             result = result.Append(new KeyValuePair<string, object>("Gainsboro", Color.FromArgb(alpha, 220, 220, 220)));           
             result = result.Append(new KeyValuePair<string, object>("BurlyWood", Color.FromArgb(alpha, 222, 184, 135)));            
             result = result.Append(new KeyValuePair<string, object>("DarkCyan", Color.FromArgb(alpha, 0, 139, 139)));            
