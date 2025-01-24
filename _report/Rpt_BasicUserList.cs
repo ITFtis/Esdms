@@ -199,6 +199,8 @@ namespace Esdms
                     ////水印在此模式顯示
                     //sheet.ViewMode = ViewMode.Layout;
 
+                    sheet.PageSetup.LeftMargin = 1.1;
+                    sheet.PageSetup.RightMargin = 1.1;
 
                     //spire.XLS：浮水印無法左右展開
                     //AlignWithMargins：1 改不動(免費版本有此問題，商業版正常)
