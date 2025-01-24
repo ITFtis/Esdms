@@ -174,12 +174,12 @@ namespace Esdms.Controllers
         /// 略過Sso驗證
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous]
-        public ActionResult SkipSso()
-        {
-            DouUnobtrusiveSession.Session.Add(SkipSsoKey, true);
-            return RedirectToAction("DouLogin");
-        }
+        //////[AllowAnonymous]
+        //////public ActionResult SkipSso()
+        //////{
+        //////    DouUnobtrusiveSession.Session.Add(SkipSsoKey, true);
+        //////    return RedirectToAction("DouLogin");
+        //////}
         dynamic GetUserInfoSSO(string token)
         {
             var ttask = DouHelper.HClient.Get<Newtonsoft.Json.Linq.JToken>(SsoGetUser + "?token=" + token);
