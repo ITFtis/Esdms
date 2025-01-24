@@ -198,6 +198,15 @@ namespace Esdms
                     sheet.PageSetup.LeftHeader = "&G";
                     ////水印在此模式顯示
                     //sheet.ViewMode = ViewMode.Layout;
+
+
+                    //spire.XLS：浮水印無法左右展開
+                    //AlignWithMargins：1 改不動(免費版本有此問題，商業版正常)
+                    //https://www.e-iceblue.com/forum/post27913.html
+                    //sheet.PageSetup.LeftMargin = 0.5;
+                    //sheet.PageSetup.RightMargin = 0.5;
+                    //sheet.PageSetup.AlignWithMargins = 1;
+                    //NPOI不支援頁首插圖，則(spire.XLS)與(NPOI)都無法解浮水印無法左右展開
                 }
 
                 workbook.Save();
