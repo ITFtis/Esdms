@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace Esdms.Controllers.ProjectFold
 {
-    [Dou.Misc.Attr.MenuDef(Id = "Project", Name = "專案", MenuPath = "專案資料", Action = "Index", Index = 2, Func = Dou.Misc.Attr.FuncEnum.ALL, AllowAnonymous = false)]
+    [Dou.Misc.Attr.MenuDef(Id = "Project", Name = "專案", MenuPath = "專案資料", Action = "Index", Index = 2, Func = Dou.Misc.Attr.FuncEnum.None, AllowAnonymous = false)]
     public class ProjectController : APaginationModelController<Project>
     {
         // GET: Project
@@ -54,11 +54,15 @@ namespace Esdms.Controllers.ProjectFold
         {
             var opts = base.GetDataManagerOptions();
 
+            opts.viewable = true;
+
             //全部欄位排序
             foreach (var field in opts.fields)
                 field.sortable = true;
 
+            opts.ctrlFieldAlign = "left";
             opts.GetFiled("Year").align = "left";
+            opts.GetFiled("PrjId").editable = false;
 
             return opts;
         }

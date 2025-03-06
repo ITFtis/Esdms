@@ -12,6 +12,7 @@ namespace Esdms
 
         private static string _rootPath;
         private static string _systemWebSite;
+        private static bool _isBkTask;
         private static string _googleApiClientId;
         private static string _googleApiAccountsUrl;
 
@@ -29,6 +30,7 @@ namespace Esdms
             _systemWebSite = ConfigurationManager.AppSettings["SystemWebSite"].ToString();
             _googleApiClientId = ConfigurationManager.AppSettings["GoogleApiClientId"].ToString();
             _googleApiAccountsUrl = ConfigurationManager.AppSettings["GoogleApiAccountsUrl"].ToString();
+            bool.TryParse(ConfigurationManager.AppSettings["IsBkTask"].ToString(), out _isBkTask);
         }
 
         #endregion
@@ -65,6 +67,14 @@ namespace Esdms
         public static string GoogleApiAccountsUrl
         {
             get { return _googleApiAccountsUrl; }
+        }
+
+        /// <summary>
+        /// 是否執行背景程式
+        /// </summary>
+        public static bool IsBkTask
+        {
+            get { return _isBkTask; }
         }
 
         #endregion
