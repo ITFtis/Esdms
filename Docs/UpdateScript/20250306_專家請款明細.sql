@@ -8,4 +8,5 @@ alter Table Project add [PrjStartDate] [date] NULL
 alter Table Project add [PrjEndDate] [date] NULL
 alter Table Project add [PjNoM] [varchar](20) NULL
 alter Table Project add [PjNameM] [nvarchar](100) NULL
+alter Table Project add [Fee] [int] NULL
 
