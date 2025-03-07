@@ -278,6 +278,7 @@
     <Compile Include="_applyClass\Department.cs" />
     <Compile Include="_applyClass\KeyValue.cs" />
     <Compile Include="_core\AppConfig.cs" />
+    <Compile Include="_core\BkTask.cs" />
     <Compile Include="_core\Cm.cs" />
     <Compile Include="_core\Code.cs" />
     <Compile Include="_core\ColorCode.cs" />
