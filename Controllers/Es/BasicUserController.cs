@@ -643,7 +643,7 @@ namespace Esdms.Controllers.Es
                                                         .Where(a => ___ftisActivityCategoryId.Split(',').Any(b => b == a.DCode)).ToList();
 
                     //專案(單筆)
-                    var ftisProject = m_project.Where(a => ___ftisProjectId.Split(',').Any(b => b == a.DCode)).ToList();
+                    var ftisProject = m_project.Where(a => ___ftisProjectId.Split(',').Any(b => b == a.PrjId)).ToList();
 
                     //部門(單筆) 用名稱比對
                     var ftisDCode = Code.GetDepartment().Where(a => ___ftisDCode == a.Value.ToString()).ToList();

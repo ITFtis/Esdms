@@ -50,11 +50,6 @@ namespace Esdms.Models
         [ColumnDef(Visible = false)]
         public string BriefName { get; set; }
 
-        [StringLength(40)]
-        [Column(TypeName = "nvarchar")]
-        [Display(Name = "匯入代碼")]
-        public string DCode { get; set; }
-
         [Column(TypeName = "nvarchar")]
         [Display(Name = "委辦單位")]
         public string CommissionedUnit { get; set; }
