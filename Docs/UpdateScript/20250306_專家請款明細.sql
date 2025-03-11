@@ -11,3 +11,7 @@ alter Table Project add [Fee] [int] NULL
 
 --專案名稱加大
 alter TABLE Project ALTER COLUMN [Name] [nvarchar](100) NULL
+
+--刪除欄位(匯入代碼 DCode)
+ALTER TABLE Project DROP COLUMN DCode
+
