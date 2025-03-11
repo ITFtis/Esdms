@@ -6,27 +6,33 @@
     "IsOnlyPath": true
   },
   {
-    "Name": "專家資料",
+    "Name": "計畫請款(專家)",
     "MenuPath": "",
     "Index": 1,
     "IsOnlyPath": true
   },
   {
-    "Name": "專案資料",
+    "Name": "專家資料",
     "MenuPath": "",
     "Index": 2,
     "IsOnlyPath": true
   },
   {
-    "Name": "專長項目",
+    "Name": "專案資料",
     "MenuPath": "",
     "Index": 3,
     "IsOnlyPath": true
   },
   {
-    "Name": "代碼維護",
+    "Name": "專長項目",
     "MenuPath": "",
     "Index": 4,
+    "IsOnlyPath": true
+  },
+  {
+    "Name": "代碼維護",
+    "MenuPath": "",
+    "Index": 5,
     "IsOnlyPath": true
   }
 ]

@@ -1,4 +1,5 @@
 ﻿using Dou.Misc.Attr;
+using DouHelper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -42,7 +43,7 @@ namespace Esdms.Models
         [Display(Name = "建檔人帳號")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
         [StringLength(24)]
-        public string BId { get; set; }
+        public string BFno { get; set; }
 
         [Display(Name = "建檔人姓名")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
@@ -56,11 +57,48 @@ namespace Esdms.Models
         [Display(Name = "修改人帳號")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
         [StringLength(24)]
-        public string UId { get; set; }
+        public string UFno { get; set; }
 
         [Display(Name = "修改人姓名")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
         [StringLength(50)]
         public string UName { get; set; }
+
+        //專案請款學者明細
+        [NotMapped]
+        public virtual ICollection<ProjectInvoiceBasic> ProjectInvoiceBasics
+        {
+            get
+            {
+                return ProjectInvoiceBasic.GetAllDatas().Where(a => a.MId == this.Id).ToList();
+            }
+        }
+
+        static object lockGetAllDatas = new object();
+        public static IEnumerable<ProjectInvoice> GetAllDatas(int cachetimer = 0)
+        {
+            if (cachetimer == 0) cachetimer = Constant.cacheTime;
+
+            string key = "Esdms.Models.ProjectInvoice";
+            var allData = DouHelper.Misc.GetCache<IEnumerable<ProjectInvoice>>(cachetimer, key);
+            lock (lockGetAllDatas)
+            {
+                if (allData == null)
+                {
+                    Dou.Models.DB.IModelEntity<ProjectInvoice> modle = new Dou.Models.DB.ModelEntity<ProjectInvoice>(new EsdmsModelContextExt());
+                    allData = modle.GetAll().ToArray();
+
+                    DouHelper.Misc.AddCache(allData, key);
+                }
+            }
+
+            return allData;
+        }
+
+        public static void ResetGetAllDatas()
+        {
+            string key = "Esdms.Models.ProjectInvoice";
+            Misc.ClearCache(key);
+        }
     }
 }

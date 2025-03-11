@@ -1,4 +1,5 @@
 ﻿using Dou.Misc.Attr;
+using DouHelper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -50,11 +51,39 @@ namespace Esdms.Models
         [Display(Name = "建檔人帳號")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
         [StringLength(24)]
-        public string BId { get; set; }
+        public string BFno { get; set; }
 
         [Display(Name = "建檔人姓名")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
         [StringLength(50)]
         public string BName { get; set; }
+
+        static object lockGetAllDatas = new object();
+
+        public static IEnumerable<ProjectInvoiceBasic> GetAllDatas(int cachetimer = 0)
+        {
+            if (cachetimer == 0) cachetimer = Constant.cacheTime;
+
+            string key = "Esdms.Models.ProjectInvoiceBasic";
+            var allData = DouHelper.Misc.GetCache<IEnumerable<ProjectInvoiceBasic>>(cachetimer, key);
+            lock (lockGetAllDatas)
+            {
+                if (allData == null)
+                {
+                    Dou.Models.DB.IModelEntity<ProjectInvoiceBasic> modle = new Dou.Models.DB.ModelEntity<ProjectInvoiceBasic>(new EsdmsModelContextExt());
+                    allData = modle.GetAll().ToArray();
+
+                    DouHelper.Misc.AddCache(allData, key);
+                }
+            }
+
+            return allData;
+        }
+
+        public static void ResetGetAllDatas()
+        {
+            string key = "Esdms.Models.ProjectInvoiceBasic";
+            Misc.ClearCache(key);
+        }
     }
 }

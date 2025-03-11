@@ -232,6 +232,8 @@
     <Compile Include="Controllers\Es\UserHistoryOpinionController.cs" />
     <Compile Include="Controllers\Notify\GCalController.cs" />
     <Compile Include="Controllers\ProjectFold\ProjectCostCodeController.cs" />
+    <Compile Include="Controllers\ProjectFold\ProjectInvoiceBasicController.cs" />
+    <Compile Include="Controllers\ProjectFold\ProjectInvoiceController.cs" />
     <Compile Include="Controllers\SysCode\LicenseController.cs" />
     <Compile Include="Controllers\ExpertiseFold\SubjectController.cs" />
     <Compile Include="Controllers\ExpertiseFold\SubjectDetailController.cs" />
@@ -396,6 +398,7 @@
     <Content Include="Scripts\prj\BasicUserHistorySet.js" />
     <Content Include="Scripts\prj\Fun_BasicUserPId.js" />
     <Content Include="Scripts\prj\GCal.js" />
+    <Content Include="Scripts\prj\ProjectInvoice.js" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -462,6 +465,7 @@
     <Content Include="Views\Home\Privacy.cshtml" />
     <Content Include="Views\Home\Terms.cshtml" />
     <Content Include="Views\ProjectCostCode\Index.cshtml" />
+    <Content Include="Views\ProjectInvoice\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -475,6 +479,7 @@
     <Folder Include="Views\Expertise\" />
     <Folder Include="Views\FileProcessing\" />
     <Folder Include="Views\FTISUserHistory\" />
+    <Folder Include="Views\ProjectInvoiceBasic\" />
     <Folder Include="Views\Resume\" />
     <Folder Include="Views\UserHistoryOpinion\" />
     <Folder Include="Views\UserHistorySetBid\" />
