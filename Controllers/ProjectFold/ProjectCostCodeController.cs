@@ -42,6 +42,7 @@ namespace Esdms.Controllers.ProjectFold
 
             f.BDate = DateTime.Now;
             f.BFno = Dou.Context.CurrentUserBase.Id;
+            f.BName = Dou.Context.CurrentUserBase.Name;
 
             base.AddDBObject(dbEntity, objs);
             ProjectCostCode.ResetGetAllDatas();
@@ -55,7 +56,8 @@ namespace Esdms.Controllers.ProjectFold
                 return;
 
             f.UDate = DateTime.Now;
-            f.UFno = Dou.Context.CurrentUserBase.Id;            
+            f.UFno = Dou.Context.CurrentUserBase.Id;
+            f.UName = Dou.Context.CurrentUserBase.Name;
 
             base.UpdateDBObject(dbEntity, objs);
             ProjectCostCode.ResetGetAllDatas();

@@ -21,6 +21,10 @@ namespace Esdms.Models
         public virtual DbSet<ActivityCategory> ActivityCategory { get; set; }        
         public virtual DbSet<Project> Project { get; set; }
         public virtual DbSet<ProjectCostCode> ProjectCostCode { get; set; }
+
+        public virtual DbSet<ProjectInvoice> ProjectInvoice { get; set; }
+        public virtual DbSet<ProjectInvoiceBasic> ProjectInvoiceBasic { get; set; }
+
         public virtual DbSet<BasicUser> BasicUser { get; set; }       
         //與基本資料合併
         //public virtual DbSet<BasicUser_Private> BasicUser_Private { get; set; }

@@ -36,6 +36,11 @@ namespace Esdms.Models
         [StringLength(6)]
         public string BFno { get; set; }
 
+        [Display(Name = "建檔人姓名")]
+        [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
+        [StringLength(50)]
+        public string BName { get; set; }
+
         [Display(Name = "修改日期")]
         [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
         public DateTime? UDate { get; set; }
@@ -44,6 +49,11 @@ namespace Esdms.Models
         [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
         [StringLength(6)]
         public string UFno { get; set; }
+
+        [Display(Name = "修改人姓名")]
+        [ColumnDef(Visible = false, VisibleEdit = false, ColSize = 3)]
+        [StringLength(50)]
+        public string UName { get; set; }
 
         static object lockGetAllDatas = new object();
         public static IEnumerable<ProjectCostCode> GetAllDatas(int cachetimer = 0)
