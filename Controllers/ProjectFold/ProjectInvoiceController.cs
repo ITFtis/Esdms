@@ -1,4 +1,5 @@
 ﻿using Dou.Controllers;
+using Dou.Misc;
 using Dou.Models.DB;
 using Esdms.Models;
 using System;
@@ -67,5 +68,40 @@ namespace Esdms.Controllers.ProjectFold
             base.DeleteDBObject(dbEntity, objs);
             ProjectInvoice.ResetGetAllDatas();            
         }
+
+        public override DataManagerOptions GetDataManagerOptions()
+        {
+            var opts = base.GetDataManagerOptions();
+
+            //全部欄位排序
+            foreach (var field in opts.fields)
+            {
+                field.sortable = true;
+            }
+
+            ////opts.addable = false;
+
+            ////opts.GetFiled("PjNoM").editable = false;
+            ////opts.GetFiled("PrjYear").editable = false;
+            ////opts.GetFiled("OwnerA").editable = false;
+            ////opts.GetFiled("PrjName").editable = false;
+            ////opts.GetFiled("BriefName").editable = false;
+            ////opts.GetFiled("PrjStartDate").editable = false;
+            ////opts.GetFiled("PrjEndDate").editable = false;
+
+
+
+            opts.ctrlFieldAlign = "left";
+            opts.editformWindowStyle = "modal";
+            opts.editformWindowClasses = "modal-lg";
+            opts.editformSize.height = "fixed";
+            opts.editformSize.width = "auto";
+
+            //共用頁面
+            opts.editformWindowStyle = "showEditformOnly";
+
+            return opts;
+        }
+
     }
 }
