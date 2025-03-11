@@ -1,5 +1,7 @@
-﻿using Dou.Models.DB;
+﻿using Dou.Controllers;
+using Dou.Models.DB;
 using Esdms.Models;
+using Google.Apis.Calendar.v3.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +23,22 @@ namespace Esdms.Controllers.ProjectFold
             return new Dou.Models.DB.ModelEntity<ProjectCostCode>(new EsdmsModelContextExt());
         }
 
+        protected override IEnumerable<ProjectCostCode> GetDataDBObject(IModelEntity<ProjectCostCode> dbEntity, params KeyValueParams[] paras)
+        {
+            var result = base.GetDataDBObject(dbEntity, paras);
+
+            //預設排序
+            result = result.OrderBy(a => a.Sort);
+
+            return result;
+        }
+
         protected override void AddDBObject(IModelEntity<ProjectCostCode> dbEntity, IEnumerable<ProjectCostCode> objs)
         {
             var f = objs.First();
+
+            if (!ValidateSave(objs.First(), "Add"))
+                return;
 
             f.BDate = DateTime.Now;
             f.BFno = Dou.Context.CurrentUserBase.Id;
@@ -36,6 +51,9 @@ namespace Esdms.Controllers.ProjectFold
         {
             var f = objs.First();
 
+            if (!ValidateSave(f, "Update"))
+                return;
+
             f.UDate = DateTime.Now;
             f.UFno = Dou.Context.CurrentUserBase.Id;            
 
@@ -47,6 +65,26 @@ namespace Esdms.Controllers.ProjectFold
         {
             base.DeleteDBObject(dbEntity, objs);
             ProjectCostCode.ResetGetAllDatas();
+        }
+
+        private bool ValidateSave(ProjectCostCode f, string type)
+        {
+            bool result = false;
+
+            var fs = GetModelEntity().GetAll().Where(a => a.Code == f.Code);
+
+            //key驗證
+            if (type == "Add")
+            {
+                if (fs.Any(a => a.Code == f.Code))
+                {
+                    throw new Exception("該代碼已存在，不可重複：" + f.Code);
+                }
+            }
+
+            result = true;
+
+            return result;
         }
     }
 }
