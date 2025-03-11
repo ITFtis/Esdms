@@ -231,6 +231,7 @@
     <Compile Include="Controllers\Es\ResumeController.cs" />
     <Compile Include="Controllers\Es\UserHistoryOpinionController.cs" />
     <Compile Include="Controllers\Notify\GCalController.cs" />
+    <Compile Include="Controllers\ProjectFold\ProjectCostCodeController.cs" />
     <Compile Include="Controllers\SysCode\LicenseController.cs" />
     <Compile Include="Controllers\ExpertiseFold\SubjectController.cs" />
     <Compile Include="Controllers\ExpertiseFold\SubjectDetailController.cs" />
@@ -257,6 +258,7 @@
     <Compile Include="Models\FTISUserHistory.cs" />
     <Compile Include="Models\License.cs" />
     <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\ProjectCostCode.cs" />
     <Compile Include="Models\Resume.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Subject.cs" />
@@ -457,6 +459,7 @@
     <Content Include="Views\GCal\ValidGoogleLogin.cshtml" />
     <Content Include="Views\Home\Privacy.cshtml" />
     <Content Include="Views\Home\Terms.cshtml" />
+    <Content Include="Views\ProjectCostCode\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
