@@ -61,6 +61,7 @@ namespace Esdms.Controllers.ProjectFold
                 field.sortable = true;
 
             opts.ctrlFieldAlign = "left";
+            opts.GetFiled("PrjId").title = "專案編號<span style='color:blue'>(可匯入用)</span>";
             opts.GetFiled("Year").align = "left";
             opts.GetFiled("PrjId").editable = false;
 
