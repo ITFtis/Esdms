@@ -28,7 +28,7 @@ namespace Esdms.Models
 
         //虛欄位
         [Display(Name = "財務專案編號")]
-        [ColumnDef(ColSize = 6)]
+        [ColumnDef(ColSize = 3)]
         public string PrjPjNoM 
         {
             get
@@ -41,7 +41,7 @@ namespace Esdms.Models
 
         //虛欄位
         [Display(Name = "專案名稱")]
-        [ColumnDef(ColSize = 6)]
+        [ColumnDef(ColSize = 3)]
         public string PrjName
         {
             get
@@ -49,6 +49,30 @@ namespace Esdms.Models
                 string str = "";
                 var v = ProjectSelectItems.Projects.Where(a => a.PrjId == this.PrjId).FirstOrDefault();
                 return v == null ? str : v.Name;
+            }
+        }
+
+        //虛欄位
+        [Display(Name = "專案起始日期")]
+        [ColumnDef(EditType = EditType.Date, ColSize = 3)]
+        public DateTime? PrjStartDate
+        {
+            get
+            {
+                var v = ProjectSelectItems.Projects.Where(a => a.PrjId == this.PrjId).FirstOrDefault();
+                return v == null ? (DateTime?)null : v.PrjStartDate;
+            }
+        }
+
+        //虛欄位
+        [Display(Name = "專案終止日期")]
+        [ColumnDef(EditType = EditType.Date, ColSize = 3)]
+        public DateTime? PrjEndDate
+        {
+            get
+            {
+                var v = ProjectSelectItems.Projects.Where(a => a.PrjId == this.PrjId).FirstOrDefault();
+                return v == null ? (DateTime?)null : v.PrjEndDate;
             }
         }
 
@@ -65,30 +89,6 @@ namespace Esdms.Models
             }
         }
 
-        //虛欄位
-        [Display(Name = "專案起始日期")]
-        [ColumnDef(EditType = EditType.Date, ColSize = 6)]
-        public DateTime? PrjStartDate
-        {
-            get
-            {
-                var v = ProjectSelectItems.Projects.Where(a => a.PrjId == this.PrjId).FirstOrDefault();
-                return v == null ? (DateTime?)null : v.PrjStartDate;
-            }
-        }
-
-        //虛欄位
-        [Display(Name = "專案終止日期")]
-        [ColumnDef(EditType = EditType.Date, ColSize = 6)]
-        public DateTime? PrjEndDate
-        {
-            get
-            {
-                var v = ProjectSelectItems.Projects.Where(a => a.PrjId == this.PrjId).FirstOrDefault();
-                return v == null ? (DateTime?)null : v.PrjEndDate;
-            }
-        }
-
         [Required]
         [Display(Name = "工項")]
         [ColumnDef(ColSize = 3)]
@@ -96,7 +96,10 @@ namespace Esdms.Models
 
         [Required]
         [Display(Name = "科目")]
-        [ColumnDef(ColSize = 3)]
+        [ColumnDef(EditType = EditType.Select,
+            SelectItemsClassNamespace = Esdms.Models.ProjectCostCodeSelectItems.AssemblyQualifiedName,
+            Filter = true, FilterAssign = FilterAssignType.Contains,
+            ColSize = 3)]
         public string CostCode { get; set; }
 
         [Display(Name = "合約金額")]

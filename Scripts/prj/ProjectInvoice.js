@@ -50,9 +50,20 @@
             }
         }
 
+        //檢視用
+        var $modal = $('.projectinvoicecontroller .modal-dialog');
+        $modal.find('[data-fn="PrjName"]').attr("disabled", true);
+        $modal.find('[data-fn="PrjCommissionedUnit"]').attr("disabled", true);
+        $modal.find('[data-fn="PrjPjNoM"]').attr("disabled", true);
+        $modal.find('[data-fn="PrjStartDate"] input').attr("disabled", true);
+        $modal.find('[data-fn="PrjEndDate"] input').attr("disabled", true);
+
         if (!isAdd) {
             editBtn = '<li class="ms-auto">' + editBtn + '</li>';
             $(editBtn).appendTo($('#_tabs').closest('div[class=tab-content]').siblings());
+
+            //修改，不能變更專案編號
+            $modal.find('[data-fn="PrjId"]').attr("disabled", true);
         }
 
         $('#btnBack').click(function () {
@@ -62,14 +73,19 @@
         //保留確定按鈕
         $container.find('.modal-footer button').hide();
         $container.find('.modal-footer').find('.btn-primary').show();
+        
+        //必填
+        var $p1 = $modal.find('div[data-field=PrjId]').find('label');
+        var remind = '<span class="text-danger fw-lighter pull-right">*必填</span>';
+        $(remind).appendTo($p1);
 
-        //檢視用
-        var $modal = $('.projectinvoicecontroller .modal-dialog');
-        $modal.find('[data-fn="PrjName"]').attr("disabled", true);
-        $modal.find('[data-fn="PrjCommissionedUnit"]').attr("disabled", true);
-        $modal.find('[data-fn="PrjPjNoM"]').attr("disabled", true);
-        $modal.find('[data-fn="PrjStartDate"] input').attr("disabled", true);
-        $modal.find('[data-fn="PrjEndDate"] input').attr("disabled", true);
+        var $p2 = $modal.find('div[data-field=WorkItem]').find('label');
+        var remind = '<span class="text-danger fw-lighter pull-right">*必填</span>';
+        $(remind).appendTo($p2);
+
+        var $p3 = $modal.find('div[data-field=CostCode]').find('label');
+        var remind = '<span class="text-danger fw-lighter pull-right">*必填</span>';
+        $(remind).appendTo($p3);
 
         //選擇Project
         $('.projectinvoicecontroller .modal-dialog').find('[data-fn="PrjId"]').autocomplete({

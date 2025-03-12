@@ -82,4 +82,14 @@ namespace Esdms.Models
             Misc.ClearCache(key);
         }
     }
+
+    public class ProjectCostCodeSelectItems : Dou.Misc.Attr.SelectItemsClass
+    {
+        public const string AssemblyQualifiedName = "Esdms.Models.ProjectCostCodeSelectItems, Esdms";
+
+        public override IEnumerable<KeyValuePair<string, object>> GetSelectItems()
+        {
+            return ProjectCostCode.GetAllDatas().Select(s => new KeyValuePair<string, object>(s.Code, s.Name));
+        }
+    }
 }

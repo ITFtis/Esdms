@@ -3,6 +3,7 @@ using Dou.Misc;
 using Dou.Models.DB;
 using Esdms.Models;
 using Newtonsoft.Json;
+using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace Esdms.Controllers.ProjectFold
         protected override void AddDBObject(IModelEntity<ProjectInvoice> dbEntity, IEnumerable<ProjectInvoice> objs)
         {
             var f = objs.First();
-            ////ValidateSave("Add", f);
+            ValidateSave(f, "Add");
 
             f.BDate = DateTime.Now;
             f.BFno = Dou.Context.CurrentUserBase.Id;
@@ -41,7 +42,7 @@ namespace Esdms.Controllers.ProjectFold
         protected override void UpdateDBObject(IModelEntity<ProjectInvoice> dbEntity, IEnumerable<ProjectInvoice> objs)
         {
             var f = objs.First();
-            ////ValidateSave("Update", f);
+            ValidateSave(f, "Update");
 
             f.UDate = DateTime.Now;
             f.UFno = Dou.Context.CurrentUserBase.Id;
@@ -104,6 +105,46 @@ namespace Esdms.Controllers.ProjectFold
         public ActionResult GetProject(string prjId)
         {
             return Content(WebFunction.GetProject(prjId), "application/json");
+        }
+
+        private bool ValidateSave(ProjectInvoice f, string type)
+        {
+            bool result = false;
+            List<string> errors = new List<string>();
+
+            var fs = GetModelEntity().GetAll();
+
+            if (type == "Update")
+            {
+                fs = fs.Where(a => a.Id != f.Id);
+            }
+
+            //key驗證
+            if (fs.Any(a => a.PrjId == f.PrjId
+                                && a.WorkItem == f.WorkItem && a.CostCode == f.CostCode))
+            {
+                var vCost = ProjectCostCode.GetAllDatas().Where(a => a.Code == f.CostCode).FirstOrDefault();
+                throw new Exception(string.Format("該請款單已存在，不可重複：(專案編號{0}),工項({1}),科目({2})",
+                                    f.PrjId,
+                                    f.WorkItem,
+                                    vCost != null ? vCost.Name : ""));
+            }
+
+            //驗證專案編號
+            if (!ProjectSelectItems.Projects.Any(a => a.PrjId == f.PrjId))
+            {
+                errors.Add("此專案編號不存在：" + f.PrjId);
+            }
+
+            if (errors.Count > 0)
+            {
+                string str = string.Join("\n", errors);
+                throw new Exception(str);
+            }
+
+            result = true;
+
+            return result;
         }
     }
 }
