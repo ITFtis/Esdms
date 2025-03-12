@@ -94,29 +94,16 @@ namespace Esdms.Controllers.ProjectFold
             return opts;
         }
 
-        //取得autocomplete user
+        //取得專案(like 專案編號,名稱,財編)
         public ActionResult GetAutocompleteProject(string searchKeyword)
         {
-            var projects = ProjectSelectItems.Projects.Where(a => !string.IsNullOrEmpty(a.PrjId));
-
-            var result = projects.Where(a => a.PrjId.Contains(searchKeyword)
-                                        || (!string.IsNullOrEmpty(a.PjNoM) && a.PjNoM.Contains(searchKeyword))
-                                        || (!string.IsNullOrEmpty(a.Name) && a.Name.Contains(searchKeyword))
-                                        );
-
-            var jstr = JsonConvert.SerializeObject(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-            jstr = jstr.Replace(DataManagerScriptHelper.JavaScriptFunctionStringStart, "(").Replace(DataManagerScriptHelper.JavaScriptFunctionStringEnd, ")");
-            return Content(jstr, "application/json");
+            return Content(WebFunction.GetAutocompleteProjectF1(searchKeyword), "application/json");
         }
 
-        //取得autocomplete user
+        //取得專案
         public ActionResult GetProject(string prjId)
         {
-            var result = ProjectSelectItems.Projects.Where(a => a.PrjId == prjId).FirstOrDefault();
-
-            var jstr = JsonConvert.SerializeObject(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-            jstr = jstr.Replace(DataManagerScriptHelper.JavaScriptFunctionStringStart, "(").Replace(DataManagerScriptHelper.JavaScriptFunctionStringEnd, ")");
-            return Content(jstr, "application/json");
+            return Content(WebFunction.GetProject(prjId), "application/json");
         }
     }
 }
