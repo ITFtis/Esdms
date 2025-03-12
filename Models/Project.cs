@@ -133,7 +133,7 @@ namespace Esdms.Models
                 {
                     using (var db = new EsdmsModelContextExt())
                     {
-                        _projects = db.Project.ToArray();
+                        _projects = db.Project.OrderByDescending(a => a.Year).ToArray();
                     }
                 }
                 return _projects;

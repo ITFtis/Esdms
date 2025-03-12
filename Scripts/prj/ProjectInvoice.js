@@ -63,6 +63,66 @@
         $container.find('.modal-footer button').hide();
         $container.find('.modal-footer').find('.btn-primary').show();
 
+        //檢視用
+        var $modal = $('.projectinvoicecontroller .modal-dialog');
+        $modal.find('[data-fn="PrjName"]').attr("disabled", true);
+        $modal.find('[data-fn="PrjCommissionedUnit"]').attr("disabled", true);
+        $modal.find('[data-fn="PrjPjNoM"]').attr("disabled", true);
+        $modal.find('[data-fn="PrjStartDate"] input').attr("disabled", true);
+        $modal.find('[data-fn="PrjEndDate"] input').attr("disabled", true);
+
+        //選擇Project
+        $('.projectinvoicecontroller .modal-dialog').find('[data-fn="PrjId"]').autocomplete({
+            change: function (event, ui) {
+                var prjId = $(this).val();
+                $.ajax({
+                    url: app.siteRoot + 'ProjectInvoice/GetProject',
+                    datatype: "json",
+                    type: "Get",
+                    data: { prjId: prjId },
+                    async: false,
+                    appendTo: $('.projectassigncontroller .modal-dialog'),
+                    success: function (data) {
+                        var $modal = $('.projectinvoicecontroller .modal-dialog');
+                        if (data != null) {                            
+                            $modal.find('[data-fn="PrjName"]').val(data.Name);
+                            $modal.find('[data-fn="PrjCommissionedUnit"]').val(data.CommissionedUnit);
+                            $modal.find('[data-fn="PrjPjNoM"]').val(data.PjNoM);                            
+                            $modal.find('[data-fn="PrjStartDate"] input').val(JsonDateStr2Datetime(data.PrjStartDate).DateFormat("yyyy-MM-dd"))
+                            $modal.find('[data-fn="PrjEndDate"] input').val(JsonDateStr2Datetime(data.PrjEndDate).DateFormat("yyyy-MM-dd"))                            
+                        }
+                        else {
+                            $modal.find('[data-fn="PrjCommissionedUnit"]').val('');
+                            $modal.find('[data-fn="PrjPjNoM"]').val('');
+                            $modal.find('[data-fn="PrjStartDate"] input').val('');
+                            $modal.find('[data-fn="PrjEndDate"] input').val('');
+
+                            alert("查無此專案編號：" + prjId);
+                        }
+                    }
+                });
+            },
+            source: function (request, response) {
+                $.ajax({
+                    url: app.siteRoot + 'ProjectInvoice/GetAutocompleteProject',
+                    datatype: "json",
+                    type: "Get",
+                    data: { searchKeyword: request.term },
+                    async: false,
+                    appendTo: $('.projectassigncontroller .modal-dialog'),
+                    success: function (data) {
+                        response($.map(data, function (obj) {
+                            return {
+                                value: obj.PrjId,
+                                label: obj.PrjId + " " + obj.Name + (obj.PjNoM != null ? " (財)" + obj.PjNoM : ""),
+                            };
+                        }));
+                    }
+                });
+            },
+            delay: 0,
+            minLength: 0,
+        }).on('focus', function () { $(this).keydown(); });
     };
 
     douoptions.afterUpdateServerData = function (row, callback) {

@@ -22,18 +22,85 @@ namespace Esdms.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "專案編號")]        
-        public string PrjID { get; set; }
+        [Display(Name = "專案編號")]
+        [ColumnDef(ColSize = 6)]
+        public string PrjId { get; set; }
+
+        //虛欄位
+        [Display(Name = "財務專案編號")]
+        [ColumnDef(ColSize = 6)]
+        public string PrjPjNoM 
+        {
+            get
+            {
+                string str = "";
+                var v = ProjectSelectItems.Projects.Where(a => a.PrjId == this.PrjId).FirstOrDefault();
+                return v == null ? str : v.PjNoM;
+            }
+        }
+
+        //虛欄位
+        [Display(Name = "專案名稱")]
+        [ColumnDef(ColSize = 6)]
+        public string PrjName
+        {
+            get
+            {
+                string str = "";
+                var v = ProjectSelectItems.Projects.Where(a => a.PrjId == this.PrjId).FirstOrDefault();
+                return v == null ? str : v.Name;
+            }
+        }
+
+        //虛欄位
+        [Display(Name = "委辦單位")]
+        [ColumnDef(ColSize = 6)]
+        public string PrjCommissionedUnit
+        {
+            get
+            {
+                string str = "";
+                var v = ProjectSelectItems.Projects.Where(a => a.PrjId == this.PrjId).FirstOrDefault();
+                return v == null ? str : v.CommissionedUnit;
+            }
+        }
+
+        //虛欄位
+        [Display(Name = "專案起始日期")]
+        [ColumnDef(EditType = EditType.Date, ColSize = 6)]
+        public DateTime? PrjStartDate
+        {
+            get
+            {
+                var v = ProjectSelectItems.Projects.Where(a => a.PrjId == this.PrjId).FirstOrDefault();
+                return v == null ? (DateTime?)null : v.PrjStartDate;
+            }
+        }
+
+        //虛欄位
+        [Display(Name = "專案終止日期")]
+        [ColumnDef(EditType = EditType.Date, ColSize = 6)]
+        public DateTime? PrjEndDate
+        {
+            get
+            {
+                var v = ProjectSelectItems.Projects.Where(a => a.PrjId == this.PrjId).FirstOrDefault();
+                return v == null ? (DateTime?)null : v.PrjEndDate;
+            }
+        }
 
         [Required]
         [Display(Name = "工項")]
+        [ColumnDef(ColSize = 3)]
         public string WorkItem { get; set; }
 
         [Required]
         [Display(Name = "科目")]
+        [ColumnDef(ColSize = 3)]
         public string CostCode { get; set; }
 
         [Display(Name = "合約金額")]
+        [ColumnDef(ColSize = 3)]
         public int? Fee { get; set; }
 
         [Display(Name = "建檔日")]

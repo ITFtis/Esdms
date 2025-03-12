@@ -2,6 +2,7 @@
 using Dou.Misc;
 using Dou.Models.DB;
 using Esdms.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,16 +82,6 @@ namespace Esdms.Controllers.ProjectFold
 
             ////opts.addable = false;
 
-            ////opts.GetFiled("PjNoM").editable = false;
-            ////opts.GetFiled("PrjYear").editable = false;
-            ////opts.GetFiled("OwnerA").editable = false;
-            ////opts.GetFiled("PrjName").editable = false;
-            ////opts.GetFiled("BriefName").editable = false;
-            ////opts.GetFiled("PrjStartDate").editable = false;
-            ////opts.GetFiled("PrjEndDate").editable = false;
-
-
-
             opts.ctrlFieldAlign = "left";
             opts.editformWindowStyle = "modal";
             opts.editformWindowClasses = "modal-lg";
@@ -103,5 +94,29 @@ namespace Esdms.Controllers.ProjectFold
             return opts;
         }
 
+        //取得autocomplete user
+        public ActionResult GetAutocompleteProject(string searchKeyword)
+        {
+            var projects = ProjectSelectItems.Projects.Where(a => !string.IsNullOrEmpty(a.PrjId));
+
+            var result = projects.Where(a => a.PrjId.Contains(searchKeyword)
+                                        || (!string.IsNullOrEmpty(a.PjNoM) && a.PjNoM.Contains(searchKeyword))
+                                        || (!string.IsNullOrEmpty(a.Name) && a.Name.Contains(searchKeyword))
+                                        );
+
+            var jstr = JsonConvert.SerializeObject(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            jstr = jstr.Replace(DataManagerScriptHelper.JavaScriptFunctionStringStart, "(").Replace(DataManagerScriptHelper.JavaScriptFunctionStringEnd, ")");
+            return Content(jstr, "application/json");
+        }
+
+        //取得autocomplete user
+        public ActionResult GetProject(string prjId)
+        {
+            var result = ProjectSelectItems.Projects.Where(a => a.PrjId == prjId).FirstOrDefault();
+
+            var jstr = JsonConvert.SerializeObject(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            jstr = jstr.Replace(DataManagerScriptHelper.JavaScriptFunctionStringStart, "(").Replace(DataManagerScriptHelper.JavaScriptFunctionStringEnd, ")");
+            return Content(jstr, "application/json");
+        }
     }
 }
