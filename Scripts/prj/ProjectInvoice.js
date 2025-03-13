@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-    douoptions.title = '專案請款';
+    douoptions.title = '專案請款基本資料';
 
     douoptions.afterCreateEditDataForm = function ($container, row) {
 
@@ -29,7 +29,7 @@
             SetDouDa5(row, row.ProjectInvoiceBasics, oId);
 
             helper.bootstrap.genBootstrapTabpanel($_d5EditDataContainer.parent(), undefined, undefined,
-                ['專案請款', '專案請款學者明細'],
+                ['專案請款基本資料', '請款專家學者明細'],
                 [$_oform, $_d5EditDataContainer]);
         }
 
@@ -167,7 +167,7 @@
     function SetDouDa5(orow, datas, MId) {
         $.getJSON($.AppConfigOptions.baseurl + 'ProjectInvoiceBasic/GetDataManagerOptionsJson', function (_opt) { //取model option
 
-            _opt.title = '專案請款學者明細';
+            _opt.title = '請款專家學者明細';
 
             //取消自動抓後端資料
             _opt.tableOptions.url = undefined;

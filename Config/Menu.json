@@ -20,9 +20,9 @@
     "TypeId": "Dou.Misc.Attr.MenuDefAttribute, Dou, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null"
   },
   {
-    "Name": "計畫請款(專家)",
+    "Name": "請款",
     "MenuPath": "",
-    "FullMenuPath": "計畫請款(專家)",
+    "FullMenuPath": "請款",
     "Index": 1,
     "Desc": null,
     "AllowAnonymous": false,
@@ -31,11 +31,11 @@
     "IsOnlyPath": true,
     "IsPromptUI": false,
     "FromAppend": false,
-    "Target": "計畫請款(專家)",
+    "Target": "請款",
     "ActionController": null,
     "Action": null,
     "ExportCSV": false,
-    "Id": "計畫請款(專家)",
+    "Id": "請款",
     "Remark": null,
     "TypeId": "Dou.Misc.Attr.MenuDefAttribute, Dou, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null"
   },
@@ -100,9 +100,9 @@
     "TypeId": "Dou.Misc.Attr.MenuDefAttribute, Dou, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null"
   },
   {
-    "Name": "專家請款明細",
-    "MenuPath": "計畫請款(專家)",
-    "FullMenuPath": "計畫請款(專家)/專家請款明細",
+    "Name": "專家請款單",
+    "MenuPath": "請款",
+    "FullMenuPath": "請款/專家請款單",
     "Index": 1,
     "Desc": null,
     "AllowAnonymous": false,

@@ -27,7 +27,7 @@ namespace Esdms.Controllers.ProjectFold
         protected override void AddDBObject(IModelEntity<ProjectInvoiceBasic> dbEntity, IEnumerable<ProjectInvoiceBasic> objs)
         {
             var f = objs.First();
-            ////ValidateSave("Add", f);
+            ValidateSave(f, "Add");
 
             f.BDate = DateTime.Now;
             f.BFno = Dou.Context.CurrentUserBase.Id;
@@ -40,7 +40,7 @@ namespace Esdms.Controllers.ProjectFold
         protected override void UpdateDBObject(IModelEntity<ProjectInvoiceBasic> dbEntity, IEnumerable<ProjectInvoiceBasic> objs)
         {
             var f = objs.First();
-            ////ValidateSave("Update", f);
+            ValidateSave(f, "Update");
 
             base.UpdateDBObject(dbEntity, objs);
             ProjectInvoiceBasic.ResetGetAllDatas();
@@ -59,6 +59,41 @@ namespace Esdms.Controllers.ProjectFold
             opts.editformWindowClasses = "modal-lg";
 
             return opts;
+        }
+
+        private bool ValidateSave(ProjectInvoiceBasic f, string type)
+        {
+            bool result = false;
+            List<string> errors = new List<string>();
+
+            var fs = GetModelEntity().GetAll();
+
+            if (type == "Update")
+            {
+                fs = fs.Where(a => a.Id != f.Id);
+            }
+
+            //key驗證
+            if (fs.Any(a => a.MId == f.MId && a.BasicName == f.BasicName))
+            {                
+                throw new Exception("該請款單已存在此專家學者，不可重複：" + f.BasicName);
+            }
+
+            //驗證專家學者
+            if (!BasicUserNameSelectItems.BasicUsers.Any(a => a.Name == f.BasicName))
+            {
+                errors.Add("此專家學者不存在：" + f.BasicName);
+            }
+
+            if (errors.Count > 0)
+            {
+                string str = string.Join("\n", errors);
+                throw new Exception(str);
+            }
+
+            result = true;
+
+            return result;
         }
     }
 }

@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace Esdms.Controllers.ProjectFold
 {
-    [Dou.Misc.Attr.MenuDef(Id = "ProjectInvoice", Name = "專家請款明細", MenuPath = "計畫請款(專家)", Action = "Index", Index = 1, Func = Dou.Misc.Attr.FuncEnum.ALL, AllowAnonymous = false)]
+    [Dou.Misc.Attr.MenuDef(Id = "ProjectInvoice", Name = "專家請款單", MenuPath = "請款", Action = "Index", Index = 1, Func = Dou.Misc.Attr.FuncEnum.ALL, AllowAnonymous = false)]
     public class ProjectInvoiceController : APaginationModelController<ProjectInvoice>
     {
         // GET: ProjectInvoice

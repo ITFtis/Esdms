@@ -28,6 +28,8 @@ namespace Esdms.Models
 
         [Required]
         [Display(Name = "委員姓名")]
+        [ColumnDef(EditType = EditType.TextList, SelectItemsClassNamespace = Esdms.Models.BasicUserNameSelectItems.AssemblyQualifiedName,
+            Filter = true, FilterAssign = FilterAssignType.Contains)]
         public string BasicName { get; set; }
 
         [Display(Name = "公司名稱")]
