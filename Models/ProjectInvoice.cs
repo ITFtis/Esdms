@@ -40,6 +40,18 @@ namespace Esdms.Models
         }
 
         //虛欄位
+        [Display(Name = "專案年度")]
+        [ColumnDef(Visible = false, VisibleEdit = false, EditType = EditType.Date, ColSize = 3)]
+        public int? PrjYear
+        {
+            get
+            {
+                var v = ProjectSelectItems.Projects.Where(a => a.PrjId == this.PrjId).FirstOrDefault();
+                return v == null ? (int?)null : v.Year;
+            }
+        }
+
+        //虛欄位
         [Display(Name = "專案名稱")]
         [ColumnDef(ColSize = 3)]
         public string PrjName

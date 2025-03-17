@@ -1,5 +1,8 @@
 ﻿using Esdms.Controllers.Es;
 using Esdms.Models;
+using NPOI.SS.Formula.Functions;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.Streaming.Values;
 using NPOI.XSSF.UserModel;
 using Spire.Xls;
 using Spire.Xls.Core.Spreadsheet;
@@ -17,17 +20,28 @@ namespace Esdms
     {
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public string Export(string prjId)
+        public string Export(int id)
         {
             string url = "";
 
             try
             {
+                Dou.Models.DB.IModelEntity<ProjectInvoice> m_ProjectInvoice = new Dou.Models.DB.ModelEntity<ProjectInvoice>(new EsdmsModelContextExt());
+                var invoice = m_ProjectInvoice.GetAll().Where(a => a.Id == id).FirstOrDefault();
+
+                ////Dou.Models.DB.IModelEntity<Project> m_Project = new Dou.Models.DB.ModelEntity<Project>(new EsdmsModelContextExt());
+                ////var project = m_Project.GetAll().Where(a => a.PrjId == invoice.PrjId).FirstOrDefault();
+
+                ////if (project == null)
+                ////{
+                ////    _errorMessage = "查無此專案編號：" + project.PrjId;
+                ////    return "";
+                ////}
+
                 //複製範本
                 string sourcePath = HttpContext.Current.Server.MapPath("~/DocsWeb/Template/") + "(範本)114年專家學者請款明細.xlsx";
 
-                string fileName = System.IO.Path.GetFileNameWithoutExtension(sourcePath).Replace("(範本)", "") 
-                                    + "_" + prjId + "_" 
+                string fileName = invoice.PrjId + "_" + invoice.PrjName + "_" 
                                     + DateFormat.ToDate2_1(DateTime.Now) + ".xlsx";
                 string toFolder = FileHelper.GetFileFolder(Code.TempUploadFile.匯出專家請款單);
 
@@ -48,9 +62,42 @@ namespace Esdms
 
                     //Sheet
                     sheet = (XSSFSheet)workbook.GetSheetAt(0);
-                    workbook.SetSheetName(workbook.GetSheetIndex(sheet), "aaa");
+                    workbook.SetSheetName(workbook.GetSheetIndex(sheet), invoice.WorkItem);
 
                     //內容
+                    var costCode = ProjectCostCode.GetAllDatas().Where(a => a.Code == invoice.CostCode).FirstOrDefault();                    
+                    Dictionary<string, string> doc = new Dictionary<string, string>()
+                    {
+                        {"Year", invoice.PrjYear.ToString()},
+                        {"WorkItem", invoice.WorkItem},
+                        {"PjNoM", invoice.PrjPjNoM },
+                        {"PrjName", invoice.PrjName },
+                        {"CostName", costCode != null ? costCode.Name : "" },
+                        {"CommissionedUnit", invoice.PrjCommissionedUnit },
+                        {"Fee", invoice.Fee.ToString() },
+                        {"PrjStartDate", DateFormat.ToTwDate5((DateTime)invoice.PrjStartDate) },
+                        {"PrjEndDate", DateFormat.ToTwDate5((DateTime)invoice.PrjEndDate) },
+                    };
+
+                    // 獲取行數和列數
+                    int rowCount = sheet.LastRowNum;
+                    int columnCount = sheet.GetRow(0).LastCellNum - 1;
+
+                    // 循環遍歷所有行和列
+                    for (int i = 0; i <= rowCount; i++)
+                    {
+                        IRow row = sheet.GetRow(i);
+                        for (int j = 0; j <= columnCount; j++)
+                        {
+                            // 獲取單元格值
+                            string cellValue = row.GetCell(j).ToString();
+                            foreach (var k in doc)
+                            {
+                                cellValue = cellValue.Replace("[$" + k.Key + "$]", k.Value);
+                                row.GetCell(j).SetCellValue(cellValue);
+                            }
+                        }
+                    }
 
                     //寫入
                     FileStream s = new FileStream(toPath, FileMode.Create, FileAccess.Write);

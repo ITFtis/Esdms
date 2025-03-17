@@ -152,12 +152,12 @@ namespace Esdms.Controllers.ProjectFold
         /// <summary>
         /// 產製請款單
         /// </summary>
-        /// <param name="prjId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult ExportInvoice(string prjId)
+        public ActionResult ExportInvoice(int id)
         {
             Rpt_ProjectInvoice rep = new Rpt_ProjectInvoice();
-            string url = rep.Export(prjId);
+            string url = rep.Export(id);
 
             if (url == "")
             {

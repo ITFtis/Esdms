@@ -653,6 +653,57 @@ namespace Esdms
         }
 
         /// <summary>
+        /// 西元轉民國：2023-12-20 00:00:00.000 => 112.03.05
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static string ToTwDate5(string date)
+        {
+            string result = "";
+
+            try
+            {
+                DateTime dd = DateTime.Parse(date);
+                result = ToTwDate5(dd);
+            }
+            catch
+            {
+                return date;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 西元轉民國：2023-12-20 00:00:00.000 => 112.03.05
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static string ToTwDate5(DateTime date)
+        {
+            string result = "";
+
+            CultureInfo culture = new CultureInfo("zh-TW");
+            culture.DateTimeFormat.Calendar = new TaiwanCalendar();
+            //result = date.ToString("yyy", culture).PadLeft(3, '0') + date.ToString("/MM/dd", culture);
+
+            string str = date.ToString("yyy", culture).PadLeft(3, '0');
+            string month = date.Month.ToString().PadLeft(2, '0');
+            string day = date.Day.ToString().PadLeft(2, '0');
+
+            if (str.Substring(0, 1) == "0")
+            {
+                result = string.Format("{0}.{1}.{2}", str.Substring(1, 2), month, day);
+            }
+            else
+            {
+                result = string.Format("{0}.{1}.{2}", str, month, day);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// 民國轉西元：091/01/01 => 2004-12-20 00:00:00.000
         /// </summary>
         /// <param name="date"></param>

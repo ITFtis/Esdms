@@ -14,7 +14,7 @@
             type: "POST",
             data: {
                 //"waterColor": waterColor,
-                "prjId": row.PrjId
+                "id": row.Id
             },
             success: function (data) {
                 if (data.result) {
