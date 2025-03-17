@@ -13,7 +13,8 @@ namespace Esdms
         {
             none = 0,
             匯入專家資料 = 1,  //瀏覽檔案送出(前)
-            匯出專家清單 = 2
+            匯出專家清單 = 2,
+            匯出專家請款單 = 3,
         }
 
         public enum UploadFile

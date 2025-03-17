@@ -95,6 +95,42 @@ namespace Esdms
         }
 
         /// <summary>
+        /// yyyyMMddHHmmss
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static string ToDate2_1(string date)
+        {
+            string result = "";
+
+            try
+            {
+                DateTime dd = DateTime.Parse(date);
+                result = ToDate2_1(dd);
+            }
+            catch
+            {
+                return date;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// yyyyMMddHHmmss
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static string ToDate2_1(DateTime date)
+        {
+            string result = "";
+
+            result = date.ToString("yyyyMMddHHmmss");
+
+            return result;
+        }
+
+        /// <summary>
         /// MM
         /// </summary>
         /// <param name="date"></param>
