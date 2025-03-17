@@ -46,6 +46,10 @@ namespace Esdms.Models
         [Column(TypeName = "date")]
         public DateTime ApplyDate { get; set; }
 
+        [Display(Name = "備註")]
+        [StringLength(300)]
+        public string Note { get; set; }
+
         [Display(Name = "建檔日")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
         public DateTime? BDate { get; set; }

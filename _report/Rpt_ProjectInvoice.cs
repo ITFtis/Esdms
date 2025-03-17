@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace Esdms
@@ -101,33 +102,52 @@ namespace Esdms
                     }
 
                     //2.專家學者明細 第5列學者資料
-                    IRow srow = sheet.GetRow(5);
-                    for (int j = 0; j <= columnCount; j++)
-                    {
-                        // 獲取單元格值
-                        string cellValue = srow.GetCell(j).ToString();
+                    //IRow srow = sheet.GetRow(5);
+                    int refn = 5;                    
+                    IRow refRow = sheet.GetRow(refn);
 
-                        var basics = ProjectInvoiceBasic.GetAllDatas().Where(a => a.MId == id).ToList();
-                        foreach (var basic in basics)
+                    int index = 0;
+                    var basics = ProjectInvoiceBasic.GetAllDatas().Where(a => a.MId == id).ToList();
+                    foreach (var basic in basics)
+                    {
+                        var rowInsert = sheet.CreateRow(refn + index);
+
+                        Dictionary<string, string> dicBasic = new Dictionary<string, string>()
                         {
+                            {"ApplyDate", DateFormat.ToDate12_1(basic.ApplyDate.ToString())},
+                            {"CopName", basic.CopName},
+                            {"BasicName", basic.BasicName },
+                            {"Amount", basic.Amount.ToString()},
+                            {"Note", basic.Note },
+                        };
+
+                        for (int j = 0; j <= columnCount; j++)
+                        {                                                        
+                            //序次
+                            if (j == 0)
+                            {
+                                var cellInsert = rowInsert.CreateCell(j);
+                                rowInsert.GetCell(j).SetCellValue(index + 1);
+                                continue;
+                            }
+
+                            // 獲取單元格值
+                            string cellValue = refRow.GetCell(j).ToString();
+
                             if (!string.IsNullOrEmpty(cellValue))
                             {
-                                Dictionary<string, string> dicBasic = new Dictionary<string, string>()
-                            {
-                                {"ApplyDate", DateFormat.ToDate12_1(basic.ApplyDate.ToString())},
-                                {"CopName", basic.CopName},
-                                {"BasicName", basic.BasicName },
-                                {"Amount", basic.Amount.ToString()},
-                                {"Note", "xxx" },
-                            };
-
+                                var cellInsert = rowInsert.CreateCell(j);
                                 foreach (var k in dicBasic)
                                 {
                                     cellValue = cellValue.Replace("[$" + k.Key + "$]", k.Value);
-                                    srow.GetCell(j).SetCellValue(cellValue);
+
+                                    rowInsert.GetCell(j).SetCellValue(cellValue);                                    
                                 }
                             }
                         }
+
+                        //新row index
+                        index++;
                     }
 
                     //寫入
