@@ -8,6 +8,7 @@ using Spire.Xls;
 using Spire.Xls.Core.Spreadsheet;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Drawing;
 using System.Dynamic;
 using System.IO;
@@ -63,8 +64,8 @@ namespace Esdms
                     //Sheet
                     sheet = (XSSFSheet)workbook.GetSheetAt(0);
                     workbook.SetSheetName(workbook.GetSheetIndex(sheet), invoice.WorkItem);
-
-                    //內容
+                    
+                    //1.專案內容
                     var costCode = ProjectCostCode.GetAllDatas().Where(a => a.Code == invoice.CostCode).FirstOrDefault();                    
                     Dictionary<string, string> doc = new Dictionary<string, string>()
                     {
@@ -95,6 +96,36 @@ namespace Esdms
                             {
                                 cellValue = cellValue.Replace("[$" + k.Key + "$]", k.Value);
                                 row.GetCell(j).SetCellValue(cellValue);
+                            }
+                        }
+                    }
+
+                    //2.專家學者明細 第5列學者資料
+                    IRow srow = sheet.GetRow(5);
+                    for (int j = 0; j <= columnCount; j++)
+                    {
+                        // 獲取單元格值
+                        string cellValue = srow.GetCell(j).ToString();
+
+                        var basics = ProjectInvoiceBasic.GetAllDatas().Where(a => a.MId == id).ToList();
+                        foreach (var basic in basics)
+                        {
+                            if (!string.IsNullOrEmpty(cellValue))
+                            {
+                                Dictionary<string, string> dicBasic = new Dictionary<string, string>()
+                            {
+                                {"ApplyDate", DateFormat.ToDate12_1(basic.ApplyDate.ToString())},
+                                {"CopName", basic.CopName},
+                                {"BasicName", basic.BasicName },
+                                {"Amount", basic.Amount.ToString()},
+                                {"Note", "xxx" },
+                            };
+
+                                foreach (var k in dicBasic)
+                                {
+                                    cellValue = cellValue.Replace("[$" + k.Key + "$]", k.Value);
+                                    srow.GetCell(j).SetCellValue(cellValue);
+                                }
                             }
                         }
                     }

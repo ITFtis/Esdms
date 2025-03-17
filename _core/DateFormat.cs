@@ -510,6 +510,45 @@ namespace Esdms
         }
 
         /// <summary>
+        /// 月/日 01/12
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static string ToDate12_1(string date)
+        {
+            string result = "";
+
+            try
+            {
+                DateTime dd = DateTime.Parse(date);
+                result = ToDate12_1(dd);
+            }
+            catch
+            {
+                return date;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 月/日 01/12
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public static string ToDate12_1(DateTime date)
+        {
+            string result = "";
+
+            string month = date.Month.ToString().PadLeft(2, '0');
+            string day = date.Day.ToString().PadLeft(2, '0');
+
+            result = month + "月" + day + "日";
+
+            return result;
+        }
+
+        /// <summary>
         /// 西元轉民國：2004-12-20 00:00:00.000 => 091/01/01
         /// </summary>
         /// <param name="date"></param>
