@@ -298,6 +298,7 @@
     <Compile Include="_core\vPower.cs" />
     <Compile Include="_core\WebFunction.cs" />
     <Compile Include="_report\Rpt_BasicUserList.cs" />
+    <Compile Include="_report\Rpt_ProjectInvoice.cs" />
     <Compile Include="_report\_ReportClass.cs" />
   </ItemGroup>
   <ItemGroup>

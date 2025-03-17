@@ -2,6 +2,41 @@
 
     douoptions.title = '專案請款基本資料';
 
+    //產製請款單
+    var a = {};
+    a.item = '<span class="ps-1"></span>' + '<span id="BtnExportInvoice" class="btn btn-sm btn-light glyphicon"> 請款單</span>';
+    a.event = 'click #BtnExportInvoice';
+    a.callback = function ExportInvoice(evt, value, row, index) {
+        helper.misc.showBusyIndicator();
+        $.ajax({
+            url: app.siteRoot + 'ProjectInvoice/ExportInvoice',
+            datatype: "json",
+            type: "POST",
+            data: {
+                //"waterColor": waterColor,
+                "prjId": row.PrjId
+            },
+            success: function (data) {
+                if (data.result) {
+                    //location.href = app.siteRoot + data.url;
+                    alert("匯出成功");
+                } else {
+                    alert("匯出失敗：\n" + data.errorMessage);
+                }
+            },
+            complete: function () {
+                helper.misc.hideBusyIndicator();
+            },
+            error: function (xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                alert(err.Message);
+                helper.misc.hideBusyIndicator();
+            }
+        });
+    }
+
+    douoptions.appendCustomFuncs = [a];
+
     douoptions.afterCreateEditDataForm = function ($container, row) {
 
         var isAdd = JSON.stringify(row) == '{}';

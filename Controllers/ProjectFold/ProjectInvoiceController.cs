@@ -1,6 +1,7 @@
 ﻿using Dou.Controllers;
 using Dou.Misc;
 using Dou.Models.DB;
+using Esdms.Controllers.Es;
 using Esdms.Models;
 using Newtonsoft.Json;
 using NPOI.SS.Formula.Functions;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static NPOI.HSSF.Util.HSSFColor;
 
 namespace Esdms.Controllers.ProjectFold
 {
@@ -145,6 +147,26 @@ namespace Esdms.Controllers.ProjectFold
             result = true;
 
             return result;
+        }
+
+        /// <summary>
+        /// 產製請款單
+        /// </summary>
+        /// <param name="prjId"></param>
+        /// <returns></returns>
+        public ActionResult ExportInvoice(string prjId)
+        {
+            Rpt_ProjectInvoice rep = new Rpt_ProjectInvoice();
+            string url = rep.Export(prjId);
+
+            if (url == "")
+            {
+                return Json(new { result = false, errorMessage = rep.ErrorMessage }, JsonRequestBehavior.AllowGet);                
+            }
+            else
+            {
+                return Json(new { result = true, url = url }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }
