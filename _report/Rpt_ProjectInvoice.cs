@@ -1,6 +1,8 @@
 ﻿using Esdms.Controllers.Es;
 using Esdms.Models;
+using NPOI.XSSF.UserModel;
 using Spire.Xls;
+using Spire.Xls.Core.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -35,7 +37,28 @@ namespace Esdms
                 }
 
                 string toPath = toFolder + fileName;
-                File.Copy(sourcePath, toPath, true);
+
+                using (FileStream rFile = System.IO.File.OpenRead(sourcePath))
+                {
+                    //編輯範本檔
+                    XSSFWorkbook workbook = null;
+                    XSSFSheet sheet = null;                    
+                    workbook = new XSSFWorkbook(rFile);
+                    rFile.Close();
+
+                    //Sheet
+                    sheet = (XSSFSheet)workbook.GetSheetAt(0);
+                    workbook.SetSheetName(workbook.GetSheetIndex(sheet), "aaa");
+
+                    //內容
+
+                    //寫入
+                    FileStream s = new FileStream(toPath, FileMode.Create, FileAccess.Write);
+                    workbook.Write(s);
+                    s.Close();
+
+                    workbook.Close();
+                }
 
                 url = "abc";
             }
