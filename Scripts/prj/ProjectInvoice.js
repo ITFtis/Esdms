@@ -18,8 +18,7 @@
             },
             success: function (data) {
                 if (data.result) {
-                    //location.href = app.siteRoot + data.url;
-                    alert("匯出成功");
+                    location.href = app.siteRoot + data.url;
                 } else {
                     alert("匯出失敗：\n" + data.errorMessage);
                 }

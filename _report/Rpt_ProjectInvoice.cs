@@ -2,6 +2,7 @@
 using Esdms.Models;
 using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
+using NPOI.SS.Util;
 using NPOI.XSSF.Streaming.Values;
 using NPOI.XSSF.UserModel;
 using Spire.Xls;
@@ -101,17 +102,14 @@ namespace Esdms
                         }
                     }
 
-                    //2.專家學者明細 第5列學者資料
-                    //IRow srow = sheet.GetRow(5);
+                    //2.專家學者明細 第5列學者資料                    
                     int refn = 5;                    
                     IRow refRow = sheet.GetRow(refn);
 
-                    int index = 0;
+                    int count = 0;
                     var basics = ProjectInvoiceBasic.GetAllDatas().Where(a => a.MId == id).ToList();
                     foreach (var basic in basics)
-                    {
-                        var rowInsert = sheet.CreateRow(refn + index);
-
+                    {                        
                         Dictionary<string, string> dicBasic = new Dictionary<string, string>()
                         {
                             {"ApplyDate", DateFormat.ToDate12_1(basic.ApplyDate.ToString())},
@@ -121,13 +119,32 @@ namespace Esdms
                             {"Note", basic.Note },
                         };
 
+                        int index = refn + count;  //實際新增row位置
+                        var rowInsert = sheet.CreateRow(index);
+                        
+                        //Copy row style
+                        for (int i = 0; i <= refRow.LastCellNum - 1; i++)
+                        {
+                            var cell = rowInsert.CreateCell(i);
+                            cell.CellStyle = refRow.Cells[i].CellStyle;
+                        }
+
+                        //Merge Cell
+                        //0：已Merge，使用原範本
+                        if (count > 0)
+                        {
+                            //Merge the cell(起行、止行，起列，止列)                        
+                            sheet.AddMergedRegion(new CellRangeAddress(index, index, 2, 5));
+                            sheet.AddMergedRegion(new CellRangeAddress(index, index, 6, 7));
+                            sheet.AddMergedRegion(new CellRangeAddress(index, index, 9, 10));
+                        }
+
                         for (int j = 0; j <= columnCount; j++)
-                        {                                                        
+                        {
                             //序次
                             if (j == 0)
                             {
-                                var cellInsert = rowInsert.CreateCell(j);
-                                rowInsert.GetCell(j).SetCellValue(index + 1);
+                                rowInsert.GetCell(j).SetCellValue(count + 1);
                                 continue;
                             }
 
@@ -136,18 +153,16 @@ namespace Esdms
 
                             if (!string.IsNullOrEmpty(cellValue))
                             {
-                                var cellInsert = rowInsert.CreateCell(j);
                                 foreach (var k in dicBasic)
                                 {
                                     cellValue = cellValue.Replace("[$" + k.Key + "$]", k.Value);
 
-                                    rowInsert.GetCell(j).SetCellValue(cellValue);                                    
+                                    rowInsert.GetCell(j).SetCellValue(cellValue);
                                 }
                             }
                         }
 
-                        //新row index
-                        index++;
+                        count++;
                     }
 
                     //寫入
@@ -158,7 +173,7 @@ namespace Esdms
                     workbook.Close();
                 }
 
-                url = "abc";
+                url = Esdms.Cm.PhysicalToUrl(toPath);
             }
             catch (Exception ex)
             {
