@@ -204,7 +204,7 @@ namespace Esdms
                     //    , Dou.Context.CurrentUser<User>().Name
                     //    , DateFormat.ToDate4(DateTime.Now));
 
-                    WaterMarkFormat.WaterMarkF1(toPath, watermark);
+                    WaterMarkFormat.WaterMarkF2(toPath, watermark);
 
                     workbook.Close();
                 }

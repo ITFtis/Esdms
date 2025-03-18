@@ -2,7 +2,7 @@
 
     douoptions.title = '專案請款基本資料';
 
-    //產製請款單
+    //產製專家請款單
     var a = {};
     a.item = '<span class="ps-1"></span>' + '<span id="BtnExportInvoice" class="btn btn-sm btn-light glyphicon"> 請款單</span>';
     a.event = 'click #BtnExportInvoice';
