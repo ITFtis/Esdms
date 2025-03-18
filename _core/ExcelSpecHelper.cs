@@ -386,8 +386,10 @@ namespace Esdms
         /// <param name="backColor"></param>
         /// <param name="height"></param>
         /// <param name="width"></param>
+        /// <param name="multiple">倍數，預設專家清冊列印1 (範本不同，設定不同)</param>
         /// <returns></returns>
-        public static System.Drawing.Image DrawText(String text, System.Drawing.Font font, string waterColor, Color backColor, double height, double width)
+        public static System.Drawing.Image DrawText(String text, System.Drawing.Font font, string waterColor, Color backColor, 
+                                                        double height, double width, int multiple = 1)
         {
             //創建一個指定寬度和高度的圖像
             Image img = new Bitmap((int)width, (int)height);
@@ -424,16 +426,17 @@ namespace Esdms
             //drawing.DrawString(text, font, textBrush, -90, 900);
 
             for (int i = 0; i < 5; i++)
-                text += text;            
+                text += text;
 
-            int x = 100, y = 20;
-            int maxY = 1250;  //1150
+            int x = 100 * multiple;
+            int y = 20 * multiple;
+            int maxY = 1300 * multiple;  //1150 1250 1300
             while (y <= maxY)
             {
                 drawing.DrawString(text, font, textBrushCon, x, y);
-                x = x - 10;
+                x = x - (10 * multiple);
 
-                y += 30;
+                y += (30 * multiple);
             }
 
             drawing.Save();

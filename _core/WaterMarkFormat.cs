@@ -12,7 +12,7 @@ namespace Esdms
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
-        /// 套用浮水印
+        /// 套用浮水印(專家清冊列印)
         /// </summary>
         /// <param name="path">xlsx檔案來源</param>
         /// <param name="watermark">浮水印文字</param>
