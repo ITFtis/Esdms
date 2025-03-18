@@ -191,6 +191,19 @@ namespace Esdms
                         count++;
                     }
 
+                    //設定標腳(footer) &B:粗體
+                    var fEmp = FtisHelperV2.DB.Helpe.Employee.GetEmployee(Dou.Context.CurrentUser<User>().Id);
+                    string dCode = fEmp == null ? "" : fEmp.DCode;
+                    string depName = dCode == "" ? "" : FtisHelperV2.DB.Helpe.Department.GetDepartment(dCode).DName;
+
+                    String strFooter = "&20&B" + string.Format(
+                        @"{0}@{1}@{2}產製"
+                        , depName
+                        , Dou.Context.CurrentUser<User>().Name
+                        , DateFormat.ToDate7_1(DateTime.Now));
+
+                    sheet.Footer.Right = strFooter;
+
                     //寫入
                     FileStream s = new FileStream(toPath, FileMode.Create, FileAccess.Write);
                     workbook.Write(s);
