@@ -71,15 +71,15 @@ namespace Esdms
                     var costCode = ProjectCostCode.GetAllDatas().Where(a => a.Code == invoice.CostCode).FirstOrDefault();                    
                     Dictionary<string, string> doc = new Dictionary<string, string>()
                     {
-                        {"Year", invoice.PrjYear.ToString()},
-                        {"WorkItem", invoice.WorkItem},
-                        {"PjNoM", invoice.PrjPjNoM },
-                        {"PrjName", invoice.PrjName },
-                        {"CostName", costCode != null ? costCode.Name : "" },
-                        {"CommissionedUnit", invoice.PrjCommissionedUnit },
-                        {"Fee", invoice.Fee.ToString() },
-                        {"PrjStartDate", DateFormat.ToTwDate5((DateTime)invoice.PrjStartDate) },
-                        {"PrjEndDate", DateFormat.ToTwDate5((DateTime)invoice.PrjEndDate) },
+                        {"[$Year$]", invoice.PrjYear.ToString()},
+                        {"[$WorkItem$]", invoice.WorkItem},
+                        {"[$PjNoM$]", invoice.PrjPjNoM },
+                        {"[$PrjName$]", invoice.PrjName },
+                        {"[$CostName$]", costCode != null ? costCode.Name : "" },
+                        {"[$CommissionedUnit$]", invoice.PrjCommissionedUnit },
+                        {"[$Fee$]", invoice.Fee.ToString() },
+                        {"[$PrjStartDate$]", DateFormat.ToTwDate5((DateTime)invoice.PrjStartDate) },
+                        {"[$PrjEndDate$]", DateFormat.ToTwDate5((DateTime)invoice.PrjEndDate) },
                     };
 
                     // 獲取行數和列數
@@ -94,10 +94,20 @@ namespace Esdms
                         {
                             // 獲取單元格值
                             string cellValue = row.GetCell(j).ToString();
-                            foreach (var k in doc)
+
+                            var v = doc.Where(a => cellValue.Contains(a.Key));
+
+                            if (v.Count() > 0)
                             {
-                                cellValue = cellValue.Replace("[$" + k.Key + "$]", k.Value);
-                                row.GetCell(j).SetCellValue(cellValue);
+                                if (v.First().Key == "[$Fee$]")
+                                {
+                                    row.GetCell(j).SetCellValue(int.Parse(v.First().Value));
+                                }
+                                else
+                                {
+                                    cellValue = cellValue.Replace(v.First().Key, v.First().Value);
+                                    row.GetCell(j).SetCellValue(cellValue);
+                                }
                             }
                         }
                     }
@@ -112,11 +122,11 @@ namespace Esdms
                     {                        
                         Dictionary<string, string> dicBasic = new Dictionary<string, string>()
                         {
-                            {"ApplyDate", DateFormat.ToDate12_1(basic.ApplyDate.ToString())},
-                            {"CopName", basic.CopName},
-                            {"BasicName", basic.BasicName },
-                            {"Amount", basic.Amount.ToString()},
-                            {"Note", basic.Note },
+                            {"[$ApplyDate$]", DateFormat.ToDate12_1(basic.ApplyDate.ToString())},
+                            {"[$CopName$]", basic.CopName},
+                            {"[$BasicName$]", basic.BasicName },
+                            {"[$Amount$]", basic.Amount.ToString()},
+                            {"[$Note$]", basic.Note },
                         };
 
                         int index = refn + count;  //實際新增row位置
@@ -152,12 +162,20 @@ namespace Esdms
                             string cellValue = refRow.GetCell(j).ToString();
 
                             if (!string.IsNullOrEmpty(cellValue))
-                            {
-                                foreach (var k in dicBasic)
-                                {
-                                    cellValue = cellValue.Replace("[$" + k.Key + "$]", k.Value);
+                            {                                
+                                var v = dicBasic.Where(a => cellValue.Contains(a.Key));
 
-                                    rowInsert.GetCell(j).SetCellValue(cellValue);
+                                if (v.Count() > 0)
+                                {
+                                    if (v.First().Key == "[$Amount$]")
+                                    {
+                                        rowInsert.GetCell(j).SetCellValue(int.Parse(v.First().Value));
+                                    }
+                                    else
+                                    {
+                                        cellValue = cellValue.Replace(v.First().Key, v.First().Value);
+                                        rowInsert.GetCell(j).SetCellValue(cellValue);
+                                    }
                                 }
                             }
                         }
