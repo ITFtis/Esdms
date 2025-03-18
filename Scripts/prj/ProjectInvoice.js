@@ -16,12 +16,23 @@
                 //"waterColor": waterColor,
                 "id": row.Id
             },
-            success: function (data) {
-                if (data.result) {
-                    location.href = app.siteRoot + data.url;
-                } else {
-                    alert("匯出失敗：\n" + data.errorMessage);
-                }
+            success: function (datas) {
+                $(datas).each(function (index) {
+                    var data = this;
+                    var aryUrl = [];
+
+                    if (data.result) {
+                        //多檔案下載連結 <a>
+                        const link = document.createElement('a');
+                        link.href = app.siteRoot + data.url;
+                        link.download = data.fileName; // 假设文件为PDF格式，可以根据实际情况修改
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    } else {
+                        alert("匯出失敗：\n" + data.errorMessage);
+                    }
+                })
             },
             complete: function () {
                 helper.misc.hideBusyIndicator();

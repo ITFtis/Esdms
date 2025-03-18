@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -165,17 +167,53 @@ namespace Esdms.Controllers.ProjectFold
                 return Json(new { result = false, errorMessage = "尚未設定請款專家學者明細" }, JsonRequestBehavior.AllowGet);
             }
 
+            List<Export> outputs = new List<Export>();
+
+            //1.請款明細
+            Export output1 = new Export();
             Rpt_ProjectInvoice rep = new Rpt_ProjectInvoice();
             string url = rep.Export(id);
 
             if (url == "")
             {
-                return Json(new { result = false, errorMessage = rep.ErrorMessage }, JsonRequestBehavior.AllowGet);                
+                output1.result = false;
+                output1.errorMessage = "請款專家學者明細：" + rep.ErrorMessage;                
             }
             else
             {
-                return Json(new { result = true, url = url }, JsonRequestBehavior.AllowGet);
+                output1.result = true;
+                output1.url = url;
+                output1.fileName = "1." + Path.GetFileName(url);
             }
+            outputs.Add(output1);
+
+            //2.專家學者基本資料
+            Export output2 = new Export();
+            Rpt_ProjectInvoice rep2 = new Rpt_ProjectInvoice();
+            url = rep.Export(id);
+
+            if (url == "")
+            {
+                output2.result = false;
+                output2.errorMessage = "請款專家學者明細：" + rep.ErrorMessage;
+            }
+            else
+            {
+                output2.result = true;
+                output2.url = url;
+                output2.fileName = "2." + Path.GetFileName(url);
+            }
+            outputs.Add(output2);
+
+            return Json(outputs, JsonRequestBehavior.AllowGet);
         }
+    }
+
+    public class Export
+    {
+        public bool result { get; set; }
+        public string url { get; set; }
+        public string fileName { get; set; }
+        public string errorMessage { get; set; }        
     }
 }
