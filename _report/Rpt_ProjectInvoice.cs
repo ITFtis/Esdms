@@ -95,18 +95,22 @@ namespace Esdms
                             // 獲取單元格值
                             string cellValue = row.GetCell(j).ToString();
 
-                            var v = doc.Where(a => cellValue.Contains(a.Key));
+                            var vs = doc.Where(a => cellValue.Contains(a.Key));
 
-                            if (v.Count() > 0)
+                            if (vs.Count() > 0)
                             {
-                                if (v.First().Key == "[$Fee$]")
+                                //1個儲存格可能有2個取代變數
+                                foreach (var v in vs)
                                 {
-                                    row.GetCell(j).SetCellValue(int.Parse(v.First().Value));
-                                }
-                                else
-                                {
-                                    cellValue = cellValue.Replace(v.First().Key, v.First().Value);
-                                    row.GetCell(j).SetCellValue(cellValue);
+                                    if (v.Key == "[$Fee$]")
+                                    {
+                                        row.GetCell(j).SetCellValue(int.Parse(v.Value));
+                                    }
+                                    else
+                                    {
+                                        cellValue = cellValue.Replace(v.Key, v.Value);
+                                        row.GetCell(j).SetCellValue(cellValue);
+                                    }
                                 }
                             }
                         }
@@ -163,18 +167,22 @@ namespace Esdms
 
                             if (!string.IsNullOrEmpty(cellValue))
                             {                                
-                                var v = dicBasic.Where(a => cellValue.Contains(a.Key));
+                                var vs = dicBasic.Where(a => cellValue.Contains(a.Key));
 
-                                if (v.Count() > 0)
+                                if (vs.Count() > 0)
                                 {
-                                    if (v.First().Key == "[$Amount$]")
+                                    foreach (var v in vs)
                                     {
-                                        rowInsert.GetCell(j).SetCellValue(int.Parse(v.First().Value));
-                                    }
-                                    else
-                                    {
-                                        cellValue = cellValue.Replace(v.First().Key, v.First().Value);
-                                        rowInsert.GetCell(j).SetCellValue(cellValue);
+                                        //1個儲存格可能有2個取代變數
+                                        if (v.Key == "[$Amount$]")
+                                        {
+                                            rowInsert.GetCell(j).SetCellValue(int.Parse(v.Value));
+                                        }
+                                        else
+                                        {
+                                            cellValue = cellValue.Replace(v.Key, v.Value);
+                                            rowInsert.GetCell(j).SetCellValue(cellValue);
+                                        }
                                     }
                                 }
                             }
