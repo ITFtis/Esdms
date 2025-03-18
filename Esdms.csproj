@@ -296,6 +296,7 @@
     <Compile Include="_core\HtmlHelper.cs" />
     <Compile Include="_core\StringHelper.cs" />
     <Compile Include="_core\vPower.cs" />
+    <Compile Include="_core\WaterMarkFormat.cs" />
     <Compile Include="_core\WebFunction.cs" />
     <Compile Include="_report\Rpt_BasicUserList.cs" />
     <Compile Include="_report\Rpt_ProjectInvoice.cs" />

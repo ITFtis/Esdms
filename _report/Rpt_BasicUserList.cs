@@ -174,44 +174,15 @@ namespace Esdms
                 string fileName = Esdms.ExcelSpecHelper.GenerateExcelByLinqF1(fileTitle, titles, list, folder, autoSizeColumn, topContents, strFooter);
                 string path = folder + fileName;
 
-                Workbook workbook = new Workbook();
-                workbook.LoadFromFile(path);   
-
-                Font font = new System.Drawing.Font("標楷體", 25, FontStyle.Bold);
-                String watermark = "FTIS專家學者資料庫@";
+                //浮水印
+                String watermark = "11FTIS專家學者資料庫@";
                 //String watermark = string.Format(
                 //    @"FTIS專家學者資料@{0}@{1}@{2}"
                 //    , depName
                 //    , Dou.Context.CurrentUser<User>().Name
-                //    , DateFormat.ToDate4(DateTime.Now));                
+                //    , DateFormat.ToDate4(DateTime.Now));
 
-                foreach (Worksheet sheet in workbook.Worksheets)
-                {
-                    //sheet.PageSetup.PageHeight  841.8897637795277   double
-                    //sheet.PageSetup.PageWidth   595.27559055118115  double
-                    //Gainsboro(剛好), Beige(有點淺), WhiteSmoke (複印無色), 
-                    System.Drawing.Image imgWtrmrk = ExcelSpecHelper.DrawText(watermark, font, waterColor,
-                                                        System.Drawing.Color.White,
-                                                        sheet.PageSetup.PageHeight + 550, sheet.PageSetup.PageWidth + 30);
-
-                    sheet.PageSetup.LeftHeaderImage = imgWtrmrk;
-                    sheet.PageSetup.LeftHeader = "&G";
-                    ////水印在此模式顯示
-                    //sheet.ViewMode = ViewMode.Layout;
-
-                    sheet.PageSetup.LeftMargin = 1.1;
-                    sheet.PageSetup.RightMargin = 1.1;
-
-                    //spire.XLS：浮水印無法左右展開
-                    //AlignWithMargins：1 改不動(免費版本有此問題，商業版正常)
-                    //https://www.e-iceblue.com/forum/post27913.html
-                    //sheet.PageSetup.LeftMargin = 0.5;
-                    //sheet.PageSetup.RightMargin = 0.5;
-                    //sheet.PageSetup.AlignWithMargins = 1;
-                    //NPOI不支援頁首插圖，則(spire.XLS)與(NPOI)都無法解浮水印無法左右展開
-                }
-
-                workbook.Save();
+                WaterMarkFormat.WaterMarkF1(path, watermark, waterColor);
 
                 url = Esdms.Cm.PhysicalToUrl(path);
             }

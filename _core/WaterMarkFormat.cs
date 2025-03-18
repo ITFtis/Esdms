@@ -1,0 +1,54 @@
+﻿using Spire.Xls;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Web;
+
+namespace Esdms
+{
+    public class WaterMarkFormat
+    {
+        /// <summary>
+        /// 套用浮水印
+        /// </summary>
+        /// <param name="path">xlsx檔案來源</param>
+        /// <param name="watermark">浮水印文字</param>
+        /// <param name="waterColor">浮水印深淺色</param>
+        public static void WaterMarkF1(string path, string watermark, string waterColor)
+        {
+            Workbook workbook = new Workbook();
+            workbook.LoadFromFile(path);
+
+            Font font = new System.Drawing.Font("標楷體", 25, FontStyle.Bold);                            
+
+            foreach (Worksheet sheet in workbook.Worksheets)
+            {
+                //sheet.PageSetup.PageHeight  841.8897637795277   double
+                //sheet.PageSetup.PageWidth   595.27559055118115  double
+                //Gainsboro(剛好), Beige(有點淺), WhiteSmoke (複印無色), 
+                System.Drawing.Image imgWtrmrk = ExcelSpecHelper.DrawText(watermark, font, waterColor,
+                                                    System.Drawing.Color.White,
+                                                    sheet.PageSetup.PageHeight + 550, sheet.PageSetup.PageWidth + 30);
+
+                sheet.PageSetup.LeftHeaderImage = imgWtrmrk;
+                sheet.PageSetup.LeftHeader = "&G";
+                ////水印在此模式顯示
+                //sheet.ViewMode = ViewMode.Layout;
+
+                sheet.PageSetup.LeftMargin = 1.1;
+                sheet.PageSetup.RightMargin = 1.1;
+
+                //spire.XLS：浮水印無法左右展開
+                //AlignWithMargins：1 改不動(免費版本有此問題，商業版正常)
+                //https://www.e-iceblue.com/forum/post27913.html
+                //sheet.PageSetup.LeftMargin = 0.5;
+                //sheet.PageSetup.RightMargin = 0.5;
+                //sheet.PageSetup.AlignWithMargins = 1;
+                //NPOI不支援頁首插圖，則(spire.XLS)與(NPOI)都無法解浮水印無法左右展開
+            }
+
+            workbook.Save();
+        }
+    }
+}
