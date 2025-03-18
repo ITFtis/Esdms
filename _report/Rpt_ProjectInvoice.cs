@@ -196,6 +196,16 @@ namespace Esdms
                     workbook.Write(s);
                     s.Close();
 
+                    //浮水印
+                    String watermark = "11FTIS專家學者資料庫@";
+                    //String watermark = string.Format(
+                    //    @"FTIS專家學者資料@{0}@{1}@{2}"
+                    //    , depName
+                    //    , Dou.Context.CurrentUser<User>().Name
+                    //    , DateFormat.ToDate4(DateTime.Now));
+
+                    WaterMarkFormat.WaterMarkF1(toPath, watermark);
+
                     workbook.Close();
                 }
 
