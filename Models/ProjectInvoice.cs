@@ -53,7 +53,9 @@ namespace Esdms.Models
 
         //虛欄位
         [Display(Name = "專案名稱")]
-        [ColumnDef(ColSize = 3)]
+        [ColumnDef(EditType = EditType.TextList, SelectItemsClassNamespace = Esdms.Models.ProjectNameSelectItems.AssemblyQualifiedName,
+            Filter = true, FilterAssign = FilterAssignType.Contains, 
+            ColSize = 3)]
         public string PrjName
         {
             get
