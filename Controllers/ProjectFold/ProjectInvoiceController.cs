@@ -172,9 +172,9 @@ namespace Esdms.Controllers.ProjectFold
             //1.請款明細
             Export output1 = new Export();
             Rpt_ProjectInvoice rep = new Rpt_ProjectInvoice();
-            string url = rep.Export(id);
+            string a_url = rep.Export(id);
 
-            if (url == "")
+            if (a_url == "")
             {
                 output1.result = false;
                 output1.errorMessage = "請款專家學者明細：" + rep.ErrorMessage;                
@@ -182,26 +182,35 @@ namespace Esdms.Controllers.ProjectFold
             else
             {
                 output1.result = true;
-                output1.url = url;
-                output1.fileName = "1." + Path.GetFileName(url);
+                output1.url = a_url;
+                output1.fileName = "(1)" + Path.GetFileName(a_url);
             }
             outputs.Add(output1);
 
             //2.專家學者基本資料
-            Export output2 = new Export();
-            Rpt_ProjectInvoice rep2 = new Rpt_ProjectInvoice();
-            url = rep.Export(id);
+            vwe_ChkExport chks = new vwe_ChkExport() {
+                ChkCategoryId = true,
+                ChkPosition = true,
+                ChkUnitName = true,
+            };
 
-            if (url == "")
+            int autoSizeColumn = 3;
+            string waterColor = "";
+
+            Export output2 = new Export();
+            Rpt_BasicUserList rep2 = new Rpt_BasicUserList();
+            string a2_url = rep2.Export(chks, basics, autoSizeColumn, waterColor);
+
+            if (a2_url == "")
             {
                 output2.result = false;
-                output2.errorMessage = "請款專家學者明細：" + rep.ErrorMessage;
+                output2.errorMessage = "專家學者基本資料：" + rep2.ErrorMessage;
             }
             else
             {
                 output2.result = true;
-                output2.url = url;
-                output2.fileName = "2." + Path.GetFileName(url);
+                output2.url = a2_url;
+                output2.fileName = "(2)" + Path.GetFileName(a2_url);
             }
             outputs.Add(output2);
 
