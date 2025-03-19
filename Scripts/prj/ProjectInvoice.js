@@ -195,6 +195,20 @@
         //callback();
     }
 
+    douoptions.queryFilter = function (params, callback) {
+        //多選專家
+        var Names = params.find(a => a.key == "Names");
+        if (Names != null) {
+            var $Names = $('.filter-toolbar-plus [data-fn="Names"]').parent().find(".ui-autocomplete-multiselect-item");
+            var aryNames = $Names.map(function () {
+                return $(this).text();
+            }).get();
+            Names.value = aryNames.join(',')
+        }
+
+        callback();
+    }
+
     $_masterTable = $("#_table").DouEditableTable(douoptions).on($.dou.events.add, function (e, row) {
 
         //錨點
@@ -205,6 +219,48 @@
         $_masterTable.DouEditableTable("editSpecificData", row);
 
     });
+
+    //多選專家
+    $('.filter-toolbar-plus [data-fn="Names"]').autocomplete({
+        source: function (request, response) {
+
+            //不可超過10位專家
+            var limit = 10;
+            var $Names = $('.filter-toolbar-plus [data-fn="Names"]').parent().find(".ui-autocomplete-multiselect-item");
+            var aryNames = $Names.map(function () {
+                return $(this).text();
+            }).get();
+            if (aryNames.length >= limit) {
+                return;
+            }
+
+            $.ajax({
+                url: app.siteRoot + 'BasicUser/GetBasicUserList',
+                datatype: "json",
+                type: "Get",
+                data: { searchKeyword: request.term },
+                async: false,
+                success: function (datas) {
+                    //autocomplete不挑重複
+                    var $Names = $('.filter-toolbar-plus [data-fn="Names"]').parent().find(".ui-autocomplete-multiselect-item");
+                    var aryNames = $Names.map(function () {
+                        return $(this).text();
+                    }).get();
+                    datas = datas.filter(x => !aryNames.includes(x.Name));
+                    response($.map(datas, function (obj) {
+                        return {
+                            value: obj.label,
+                            label: obj.Name,
+                        };
+                    }));
+                },
+            });
+        },
+        multiselect: true,
+        delay: 0,
+        minLength: 0
+    }).on('focus', function () { $(this).keydown(); });
+    $('.filter-toolbar-plus [data-fn="Names"]').removeClass('form-control');
 
     function SetDouDa5(orow, datas, MId) {
         $.getJSON($.AppConfigOptions.baseurl + 'ProjectInvoiceBasic/GetDataManagerOptionsJson', function (_opt) { //取model option

@@ -130,6 +130,13 @@ namespace Esdms.Models
             }
         }
 
+        /// <summary>
+        /// Filter使用
+        /// </summary>
+        [Display(Name = "多筆姓名挑選")]
+        [ColumnDef(Visible = false, VisibleEdit = false, Filter = true)]
+        public string Names { get; }
+
         [Display(Name = "建檔日")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
         public DateTime? BDate { get; set; }

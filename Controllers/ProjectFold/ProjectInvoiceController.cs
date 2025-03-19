@@ -30,6 +30,22 @@ namespace Esdms.Controllers.ProjectFold
             return new Dou.Models.DB.ModelEntity<ProjectInvoice>(new EsdmsModelContextExt());
         }
 
+        protected override IQueryable<ProjectInvoice> BeforeIQueryToPagedList(IModelEntity<ProjectInvoice> dbEntity, IQueryable<ProjectInvoice> iquery, params KeyValueParams[] paras)
+        {
+            var Names = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "Names");
+
+            if (!string.IsNullOrEmpty(Names))
+            {
+                List<string> strs = Names.Split(',').ToList();
+                var MIds = ProjectInvoiceBasic.GetAllDatas()
+                                        .Where(a => strs.Contains(a.BasicName))
+                                        .Select(a => a.MId).ToList();
+                iquery = iquery.Where(a => MIds.Any(b => b == a.Id));
+            }
+
+            return base.BeforeIQueryToPagedList(dbEntity, iquery, paras);
+        }
+
         protected override void AddDBObject(IModelEntity<ProjectInvoice> dbEntity, IEnumerable<ProjectInvoice> objs)
         {
             var f = objs.First();
