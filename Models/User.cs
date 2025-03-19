@@ -1,6 +1,8 @@
-﻿using Dou.Models;
+﻿using Dou.Misc.Attr;
+using Dou.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -10,6 +12,14 @@ namespace Esdms.Models
     [Table("User")]
     public partial class User : Dou.Models.UserBase
     {
+        [Display(Name = "部門")]
+        [ColumnDef(
+            VisibleEdit = false,
+            EditType = EditType.Select,
+            SelectItemsClassNamespace = Esdms.Models.UserDCodeSelectItems.AssemblyQualifiedName,            
+            ColSize = 3)]
+        public string DCode { get; set; }
+
         //取得User所有角色
         public List<RoleUser> GetUserRoles()
         {
@@ -34,6 +44,37 @@ namespace Esdms.Models
             result = isFinances;
 
             return result;
+        }
+    }
+
+    /// <summary>
+    /// 員工下拉：部門
+    /// </summary>
+    public class UserDCodeSelectItems : Dou.Misc.Attr.SelectItemsClass
+    {
+        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        public const string AssemblyQualifiedName = "Esdms.Models.UserDCodeSelectItems, Esdms";
+
+        public override IEnumerable<KeyValuePair<string, object>> GetSelectItems()
+        {
+            //有時部門出現連線錯誤問題
+            //return FtisHelperV2.DB.Helpe.Department.GetAllDepartment().Select(s => new KeyValuePair<string, object>(s.DCode, s.DName));
+
+            IEnumerable<KeyValuePair<string, object>> deps = new List<KeyValuePair<string, object>>();
+            try
+            {
+                deps = FtisHelperV2.DB.Helper.GetAllDepartment().Select(s => new KeyValuePair<string, object>(s.DCode, s.DName));
+                var aaa = deps.ToList();
+            }
+            catch (Exception ex)
+            {
+                logger.Error("執行錯誤 - Esdms.Models.UserDCodeSelectItems, Esdms");
+                logger.Error(ex.Message);
+                logger.Error(ex.StackTrace);
+            }
+
+            return deps;
         }
     }
 

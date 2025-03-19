@@ -77,6 +77,13 @@ namespace Esdms
             logger.Info("Start:" + "iHub匯入專案");
             To_ImportiHubToProject();
             logger.Info(@"Execution time(sec)=" + DateTime.Now.Subtract(start_time).TotalSeconds);
+
+            //工作2
+            logger.Info("job2");
+            start_time = DateTime.Now;
+            logger.Info("Start:" + "iHub匯入帳號基本資料(員工部門)");
+            To_ImportiHubToUser();
+            logger.Info(@"Execution time(sec)=" + DateTime.Now.Subtract(start_time).TotalSeconds);
         }
 
         /// <summary>
@@ -170,6 +177,43 @@ namespace Esdms
             }
             catch (Exception ex)
             {
+                logger.Error(ex.Message + "\n" + ex.StackTrace);
+            }
+        }
+
+        /// <summary>
+        /// iHub匯入員工薪資
+        /// </summary>
+        private void To_ImportiHubToUser()
+        {
+            try
+            {
+                //所有員工
+                var datas = FtisHelperV2.DB.Helper.GetAllEmployee()
+                            //.Where(a => a.Fno == "J00007")    //測試帳號
+                            .Where(a => !a.Quit)                            //尚未離職                            
+                            .ToList();
+
+                Dou.Models.DB.IModelEntity<User> m_User = new Dou.Models.DB.ModelEntity<User>(new EsdmsModelContextExt());
+                var users = m_User.GetAll().ToList();
+
+                //修改(updates)                                
+                var updates = users.Where(a => datas.Any(b => b.Fno == a.Id)) //存在母體資料
+                                    .ToList();
+
+                foreach (var update in updates)
+                {
+                    var f = datas.Where(a => a.Fno == update.Id).First();
+                    update.DCode = f.DCode;
+                }
+
+                logger.Info("執行中，帳號基本資料(修改)數量：" + updates.Count());
+                m_User.Update(updates);
+                logger.Info("修改成功");                
+            }
+            catch (Exception ex)
+            {
+                logger.Error("(錯誤)iHub匯入員工薪資");
                 logger.Error(ex.Message + "\n" + ex.StackTrace);
             }
         }
