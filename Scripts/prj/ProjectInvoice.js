@@ -22,13 +22,10 @@
                     var aryUrl = [];
 
                     if (data.result) {
-                        //多檔案下載連結 <a>
-                        const link = document.createElement('a');
-                        link.href = app.siteRoot + data.url;
-                        link.download = data.fileName; // 假设文件为PDF格式，可以根据实际情况修改
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
+                        //多檔案下載連結
+                        var url = app.siteRoot + data.url;
+                        var fileName = data.fileName;
+                        downloadclick(url, fileName);                        
                     } else {
                         alert("匯出失敗：\n" + data.errorMessage);
                     }

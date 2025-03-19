@@ -121,3 +121,13 @@ function ValidateFrom(current) {
 
     return true;
 }
+
+//多檔案下載連結 <a>
+function downloadclick(url, fileName) {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName; // 假设文件为PDF格式，可以根据实际情况修改
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
