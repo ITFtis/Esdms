@@ -118,7 +118,7 @@
         
         //必填
         var $p1 = $modal.find('div[data-field=PrjId]').find('label');
-        var remind = '<span class="text-danger fw-lighter pull-right">*必填</span>';
+        var remind = '<span class="text-danger fw-lighter pull-right">*必填(若查無專案，請確認「線上系統」已建立專案，隔日系統自動匯入)</span>';
         $(remind).appendTo($p1);
 
         var $p2 = $modal.find('div[data-field=WorkItem]').find('label');
@@ -283,32 +283,17 @@
                 callback();
             };
 
-            ////_opt.afterCreateEditDataForm = function ($container, row) {
+            _opt.afterCreateEditDataForm = function ($container, row) {
+                //加提示字
 
-            ////    //選擇Fno
-            ////    $('.projectassigncontroller .modal-dialog').find('[data-fn="Fno"]').autocomplete({
-            ////        source: function (request, response) {
-            ////            $.ajax({
-            ////                url: app.siteRoot + 'ProjectAssign/GetProjectFno',
-            ////                datatype: "json",
-            ////                type: "Get",
-            ////                data: { searchKeyword: request.term },
-            ////                async: false,
-            ////                appendTo: $('.projectassigncontroller .modal-dialog'),
-            ////                success: function (data) {
-            ////                    response($.map(data, function (obj) {
-            ////                        return {
-            ////                            value: obj.Key,
-            ////                            label: obj.Value,
-            ////                        };
-            ////                    }));
-            ////                }
-            ////            });
-            ////        },
-            ////        delay: 0,
-            ////        minLength: 0,
-            ////    }).on('focus', function () { $(this).keydown(); });
-            ////}
+                var $p1 = $('div[data-field=BasicName]').find('label');
+                var remind = '<span class="text-danger fw-lighter pull-right">*必填(若查無專家，請與「許瓊中」確認專家資料已建立)</span>';
+                $(remind).appendTo($p1);
+
+                var $p2 = $('div[data-field=Amount]').find('label');
+                var remind = '<span class="text-danger fw-lighter pull-right">*必填</span>';
+                $(remind).appendTo($p2);
+            }
 
             //實體Dou js
             $_d5Table = $_d5EditDataContainer.douTable(_opt);
