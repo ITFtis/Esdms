@@ -602,15 +602,18 @@
                         </div>');
 
         //限定匯出欄位 $('#divExportExportList .form-check')
-        if (IsFinances) {
-            //做帳管理師
-            $.each($content.find('.detail-view-field').filter('[data-field]'), function (index, value) {                
-                var ary_field = ['ChkCategoryId', 'ChkUnitName', 'ChkPosition'];
-                var name_field = $(this).attr('data-field');
-                if (ary_field.indexOf(name_field) == -1) {
-                    $(this).remove();
-                }
-            });            
+        if (!adminUsed) {
+            //非管理者
+            if (IsFinances) {
+                //做帳管理師
+                $.each($content.find('.detail-view-field').filter('[data-field]'), function (index, value) {
+                    var ary_field = ['ChkCategoryId', 'ChkUnitName', 'ChkPosition'];
+                    var name_field = $(this).attr('data-field');
+                    if (ary_field.indexOf(name_field) == -1) {
+                        $(this).remove();
+                    }
+                });
+            }
         }
 
         jspConfirmYesNo($("body"), { content: $content[0] }, function (confrim) {
@@ -997,17 +1000,15 @@
             $('.glyphicon-download-alt').css("display", "block");
         }
     }
+    else if (adminUsed) {
+        //管理者
+        $('.glyphicon-download-alt').css("display", "block");
+    }
     else if (IsFinances)
     {
         //做帳管理師 有權限
         $('.glyphicon-download-alt').css("display", "block");
-    }
-    else {
-        //json原編(無)
-        if (adminUsed) {
-            $('.glyphicon-download-alt').css("display", "block");
-        }
-    }
+    }    
 
     //專長
     function SetDouDa4(datas, PId) {

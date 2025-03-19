@@ -11,6 +11,14 @@ namespace Esdms
 {
     public class WebFunction
     {
+        public static bool IsAdminRole() {
+
+            var roles = Dou.Context.CurrentUser<User>().RoleUsers;
+            var result = roles.Any(a => Code.GetAdminRoles().Any(b => b == a.RoleId));
+
+            return result;
+        }
+
         /// <summary>
         /// 取得專家學者(like 姓名)
         /// </summary>

@@ -33,8 +33,11 @@ namespace Esdms.Controllers.Es
             ViewBag.Roles = roles;
 
             //有專家編輯權限
-            List<string> editRoles = new List<string>() { "admin", "DataManager", "ftisadmin" };
-            ViewBag.IsView = roles.Where(a => editRoles.Any(b => a.RoleId == b)).Count() == 0;
+            List<string> editRoles = Code.GetAdminRoles();
+            editRoles.Add("DataManager");            
+            bool isEdit = roles.Any(a => editRoles.Any(b => a.RoleId == b));
+
+            ViewBag.IsView = !isEdit;
             ViewBag.IsFinances = Dou.Context.CurrentUser<User>().IsFinances();
 
             string path = Server.MapPath("~/Data/vPower.json");
@@ -117,8 +120,12 @@ namespace Esdms.Controllers.Es
 
             //"0":不調整width,"1":自動調整長度(效能差:資料量多),"2":字串長度調整width,"3":字串長度調整width(展開)
             int autoSizeColumn = 2;
-            if (Dou.Context.CurrentUser<User>().IsFinances())
-                autoSizeColumn = 3;
+            bool isAdmin = WebFunction.IsAdminRole();
+            if (!isAdmin)
+            {
+                if (Dou.Context.CurrentUser<User>().IsFinances())
+                    autoSizeColumn = 3;
+            }
 
             string url = rep.Export(chks, datas, autoSizeColumn, waterColor);
 
@@ -142,17 +149,21 @@ namespace Esdms.Controllers.Es
             var SubjectDetailId = KeyValue.GetFilterParaValue(paras, "SubjectDetailId");
             var strExpertises = KeyValue.GetFilterParaValue(paras, "strExpertises");
 
-            if (Dou.Context.CurrentUser<User>().IsFinances())
+            bool isAdmin = WebFunction.IsAdminRole();
+            if (!isAdmin)
             {
-                //做帳管理師 無查詢條件，沒資料
-                if (string.IsNullOrEmpty(Names)
-                    && string.IsNullOrEmpty(Name)
-                    && string.IsNullOrEmpty(DuplicateName)
-                    && string.IsNullOrEmpty(SubjectId)
-                    && string.IsNullOrEmpty(SubjectDetailId)
-                    && string.IsNullOrEmpty(strExpertises))
+                if (Dou.Context.CurrentUser<User>().IsFinances())
                 {
-                    return new List<BasicUser>() as IQueryable<BasicUser>;
+                    //做帳管理師 無查詢條件，沒資料
+                    if (string.IsNullOrEmpty(Names)
+                        && string.IsNullOrEmpty(Name)
+                        && string.IsNullOrEmpty(DuplicateName)
+                        && string.IsNullOrEmpty(SubjectId)
+                        && string.IsNullOrEmpty(SubjectDetailId)
+                        && string.IsNullOrEmpty(strExpertises))
+                    {
+                        return new List<BasicUser>() as IQueryable<BasicUser>;
+                    }
                 }
             }
 
@@ -272,18 +283,19 @@ namespace Esdms.Controllers.Es
             options.editable = false;
 
             //客製化頁面角色
-            List<string> specRoles = new List<string>() { "admin", "ftisadmin" };
-            bool isAdmin = Dou.Context.CurrentUser<User>().RoleUsers.Any(a => specRoles.Any(b => b == a.RoleId));
+            //List<string> specRoles = Code.GetAdminRoles();
+            //bool isAdmin = Dou.Context.CurrentUser<User>().RoleUsers.Any(a => specRoles.Any(b => b == a.RoleId));
+            bool isAdmin = WebFunction.IsAdminRole();
 
             //多筆姓名挑選 (限定：admin + 做帳管理師)
             options.GetFiled("Names").filter = isAdmin || Dou.Context.CurrentUser<User>().IsFinances();
 
-            if (Dou.Context.CurrentUser<User>().IsFinances())
+            if (isAdmin)
             {
-                //做帳管理師，只能多筆姓名挑選
-            }
-            else
-            {
+                options.GetFiled("strExpertises").visible = true;
+                options.GetFiled("vmOutCount").visible = true;
+                options.GetFiled("vmInCount").visible = true;
+
                 options.editable = true;
 
                 options.GetFiled("Name").filter = true;
@@ -292,12 +304,9 @@ namespace Esdms.Controllers.Es
                 options.GetFiled("strExpertises").filter = true;
                 options.GetFiled("DuplicateName").filter = true;
             }
-
-            if(isAdmin)
+            else if (Dou.Context.CurrentUser<User>().IsFinances())
             {
-                options.GetFiled("strExpertises").visible = true;
-                options.GetFiled("vmOutCount").visible = true;
-                options.GetFiled("vmInCount").visible = true;
+                //做帳管理師，只能多筆姓名挑選
             }
 
             options.GetFiled("Name").visible = true;

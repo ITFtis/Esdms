@@ -24,6 +24,17 @@ namespace Esdms
         }
 
         /// <summary>
+        /// 管理者腳色
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetAdminRoles() {
+
+            List<string> specRoles = new List<string>() { "admin", "ftisadmin" };
+            return specRoles;
+
+        }
+
+        /// <summary>
         /// 新增來源
         /// </summary>
         /// <returns></returns>
