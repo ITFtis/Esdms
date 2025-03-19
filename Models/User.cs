@@ -1,5 +1,6 @@
 ﻿using Dou.Misc.Attr;
 using Dou.Models;
+using DouHelper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -44,6 +45,33 @@ namespace Esdms.Models
             result = isFinances;
 
             return result;
+        }
+
+        static object lockGetAllDatas = new object();
+        public static IEnumerable<User> GetAllDatas(int cachetimer = 0)
+        {
+            if (cachetimer == 0) cachetimer = Constant.cacheTime;
+
+            string key = "Esdms.Models.User";
+            var allData = DouHelper.Misc.GetCache<IEnumerable<User>>(cachetimer, key);
+            lock (lockGetAllDatas)
+            {
+                if (allData == null)
+                {
+                    Dou.Models.DB.IModelEntity<User> modle = new Dou.Models.DB.ModelEntity<User>(new EsdmsModelContextExt());
+                    allData = modle.GetAll().ToArray();
+
+                    DouHelper.Misc.AddCache(allData, key);
+                }
+            }
+
+            return allData;
+        }
+
+        public static void ResetGetAllDatas()
+        {
+            string key = "Esdms.Models.User";
+            Misc.ClearCache(key);
         }
     }
 

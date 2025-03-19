@@ -34,6 +34,8 @@ namespace Esdms.Controllers.ProjectFold
         {
             var Names = Dou.Misc.HelperUtilities.GetFilterParaValue(paras, "Names");
 
+            bool isAdmin = WebFunction.IsAdminRole();
+
             if (!string.IsNullOrEmpty(Names))
             {
                 List<string> strs = Names.Split(',').ToList();
@@ -41,6 +43,16 @@ namespace Esdms.Controllers.ProjectFold
                                         .Where(a => strs.Contains(a.BasicName))
                                         .Select(a => a.MId).ToList();
                 iquery = iquery.Where(a => MIds.Any(b => b == a.Id));
+            }
+
+            //72 財務
+            List<string> passDCodes = new List<string>() { "72" };
+            if (!isAdmin && !passDCodes.Contains(Dou.Context.CurrentUser<User>().DCode))
+            {
+                //綁部門
+                var enumerable = iquery.AsEnumerable();
+                enumerable = enumerable.Where(a => a.BDCode == Dou.Context.CurrentUser<User>().DCode);
+                iquery = enumerable.AsQueryable();
             }
 
             return base.BeforeIQueryToPagedList(dbEntity, iquery, paras);

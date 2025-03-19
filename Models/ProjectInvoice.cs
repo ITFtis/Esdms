@@ -153,6 +153,20 @@ namespace Esdms.Models
         [StringLength(50)]
         public string BName { get; set; }
 
+        //虛欄位
+        [Display(Name = "建檔人部門")]
+        [ColumnDef(Visible = false, VisibleEdit = false)]
+        public string BDCode
+        {
+            get
+            {
+                var u = User.GetAllDatas().Where(a => a.Id == this.BFno).FirstOrDefault();
+                string str = u != null ? u.DCode : "";
+
+                return str;
+            }
+        }
+
         [Display(Name = "修改日")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
         public DateTime? UDate { get; set; }
