@@ -1,3 +1,8 @@
+
+--0.新增登入者部門
+alter Table [User] add [DCode] [nvarchar](2) NULL
+Go
+
 --1.新增專案費用科目代碼(ProjectCostCode)
 
 
