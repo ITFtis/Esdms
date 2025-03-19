@@ -34,7 +34,7 @@ namespace Esdms.Controllers.Es
 
             //有專家編輯權限
             List<string> editRoles = Code.GetAdminRoles();
-            editRoles.Add("DataManager");            
+            ////editRoles.Add("DataManager");            
             bool isEdit = roles.Any(a => editRoles.Any(b => a.RoleId == b));
 
             ViewBag.IsView = !isEdit;
