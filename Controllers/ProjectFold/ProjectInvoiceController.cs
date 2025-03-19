@@ -158,9 +158,8 @@ namespace Esdms.Controllers.ProjectFold
         /// <returns></returns>
         public ActionResult ExportInvoice(int id)
         {
-            var basicNames = ProjectInvoiceBasic.GetAllDatas().Where(a => a.MId == id).Select(a => a.BasicName).ToList();
-            Dou.Models.DB.IModelEntity<BasicUser> m_BasicUser = new Dou.Models.DB.ModelEntity<BasicUser>(new EsdmsModelContextExt());
-            var basics = m_BasicUser.GetAll().Where(a => basicNames.Any(b => b == a.Name)).ToList();
+            var basicNames = ProjectInvoiceBasic.GetAllDatas().Where(a => a.MId == id).Select(a => a.BasicName).ToList();            
+            var basics = BasicUserNameSelectItems.BasicUsers.Where(a => basicNames.Any(b => b == a.Name)).ToList();
 
             if (basics.Count == 0)
             {

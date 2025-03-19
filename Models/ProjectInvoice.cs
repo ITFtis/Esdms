@@ -90,7 +90,7 @@ namespace Esdms.Models
 
         //虛欄位
         [Display(Name = "委辦單位")]
-        [ColumnDef(ColSize = 6)]
+        [ColumnDef(Visible = false, ColSize = 6)]
         public string PrjCommissionedUnit
         {
             get
@@ -117,6 +117,18 @@ namespace Esdms.Models
         [Display(Name = "合約金額")]
         [ColumnDef(ColSize = 3)]
         public int? Fee { get; set; }
+
+        //虛欄位
+        [Display(Name = "請款委員")]
+        [ColumnDef(VisibleEdit = false, ColSize = 6)]
+        public string ApplyBasic
+        {
+            get
+            {
+                var basicNames = ProjectInvoiceBasic.GetAllDatas().Where(a => a.MId == this.Id).Select(a => a.BasicName).ToList();
+                return string.Join(",", basicNames);
+            }
+        }
 
         [Display(Name = "建檔日")]
         [ColumnDef(Visible = false, VisibleEdit = false)]
