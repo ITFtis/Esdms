@@ -281,6 +281,7 @@ namespace Esdms.Controllers.Es
 
             //預設權限
             options.editable = false;
+            options.addable = false;
 
             //客製化頁面角色
             //List<string> specRoles = Code.GetAdminRoles();
@@ -292,11 +293,15 @@ namespace Esdms.Controllers.Es
 
             if (isAdmin)
             {
+                options.editable = true;
+                options.addable = true;
+                options.deleteable = true;
+
                 options.GetFiled("strExpertises").visible = true;
                 options.GetFiled("vmOutCount").visible = true;
                 options.GetFiled("vmInCount").visible = true;
 
-                options.editable = true;
+
 
                 options.GetFiled("Name").filter = true;
                 options.GetFiled("SubjectId").filter = true;
