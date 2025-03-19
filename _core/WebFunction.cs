@@ -12,6 +12,28 @@ namespace Esdms
     public class WebFunction
     {
         /// <summary>
+        /// 取得專家學者(like 姓名)
+        /// </summary>
+        /// <param name="searchKeyword"></param>
+        /// <returns>json字串</returns>
+        public static string GetAutocompleteBasic(string searchKeyword)
+        {
+            var jquery = BasicUserNameSelectItems.BasicUsers;//.Where(a => a.PId == PId);
+
+            jquery = jquery.Where(a => a.Name.Contains(searchKeyword));
+
+            var result = jquery.Select(a => new {
+                a.PId,
+                a.Name,
+            });
+
+            var jstr = JsonConvert.SerializeObject(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            jstr = jstr.Replace(DataManagerScriptHelper.JavaScriptFunctionStringStart, "(").Replace(DataManagerScriptHelper.JavaScriptFunctionStringEnd, ")");
+
+            return jstr;
+        }
+
+        /// <summary>
         /// 取得專案(like 專案編號,名稱,財編)
         /// </summary>
         /// <param name="searchKeyword"></param>

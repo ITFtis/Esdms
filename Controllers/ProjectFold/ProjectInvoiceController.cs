@@ -231,6 +231,12 @@ namespace Esdms.Controllers.ProjectFold
 
             return Json(outputs, JsonRequestBehavior.AllowGet);
         }
+
+        //取得autocomplete user
+        public ActionResult GetBasicUserList(string searchKeyword)
+        {
+            return Content(WebFunction.GetAutocompleteBasic(searchKeyword), "application/json");
+        }
     }
 
     public class Export

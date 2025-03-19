@@ -235,7 +235,7 @@
             }
 
             $.ajax({
-                url: app.siteRoot + 'BasicUser/GetBasicUserList',
+                url: app.siteRoot + 'ProjectInvoice/GetBasicUserList',
                 datatype: "json",
                 type: "Get",
                 data: { searchKeyword: request.term },

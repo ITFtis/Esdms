@@ -421,17 +421,19 @@ namespace Esdms.Controllers.Es
         //取得autocomplete user
         public ActionResult GetBasicUserList(string searchKeyword)
         {
-            var jquery = BasicUserNameSelectItems.BasicUsers;//.Where(a => a.PId == PId);
+            return Content(WebFunction.GetAutocompleteBasic(searchKeyword), "application/json");
 
-            jquery = jquery.Where(a=>a.Name.Contains(searchKeyword));
+            ////var jquery = BasicUserNameSelectItems.BasicUsers;//.Where(a => a.PId == PId);
 
-            var result = jquery.Select(a => new { 
-                a.PId, a.Name,
-            });
+            ////jquery = jquery.Where(a=>a.Name.Contains(searchKeyword));
 
-            var jstr = JsonConvert.SerializeObject(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-            jstr = jstr.Replace(DataManagerScriptHelper.JavaScriptFunctionStringStart, "(").Replace(DataManagerScriptHelper.JavaScriptFunctionStringEnd, ")");
-            return Content(jstr, "application/json");
+            ////var result = jquery.Select(a => new { 
+            ////    a.PId, a.Name,
+            ////});
+
+            ////var jstr = JsonConvert.SerializeObject(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            ////jstr = jstr.Replace(DataManagerScriptHelper.JavaScriptFunctionStringStart, "(").Replace(DataManagerScriptHelper.JavaScriptFunctionStringEnd, ")");
+            ////return Content(jstr, "application/json");
         }
 
         //上傳檔案(匯入專家資料)
