@@ -1,1 +1,1 @@
-alter TABLE BasicUse ALTER COLUMN [UnitName] [nvarchar](200) NULL
+alter TABLE BasicUser ALTER COLUMN [UnitName] [nvarchar](200) NULL
