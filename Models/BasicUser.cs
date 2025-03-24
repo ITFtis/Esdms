@@ -55,7 +55,7 @@ namespace Esdms.Models
 
         [Display(Name = "單位(全銜)")]
         [ColumnDef(ColSize = 3)]
-        [StringLength(50)]
+        [StringLength(200)]
         public string UnitName { get; set; }
 
         [Display(Name = "職稱")]

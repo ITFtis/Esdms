@@ -967,6 +967,8 @@ namespace Esdms.Controllers.Es
             }
             catch (Exception ex)
             {
+                logger.Info(ex.Message);
+                logger.Info(ex.StackTrace);
                 return Json(new { result = false, errorMessage = ex.Message });
             }
 
