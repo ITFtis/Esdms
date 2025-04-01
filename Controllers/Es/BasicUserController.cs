@@ -831,13 +831,17 @@ namespace Esdms.Controllers.Es
                         if (ftisActivityCategoryId.Count > 0)
                         {                            
                             int ftisYear = 0;
-                            if (int.TryParse(___ftisYear, out ftisYear) && ftisProject.Count > 0)
+                            //if (int.TryParse(___ftisYear, out ftisYear) && ftisProject.Count > 0)
+                            //Brian_20250401：蔡副總，沒有專案代碼先匯入
+                            if (int.TryParse(___ftisYear, out ftisYear))
                             {
                                 //a_1(會內)刪除(條件：年度+專案ID)
                                 var delfTISUserHistory = fTISUserHistory.GetAll().Where(a => a.PId == rPId
                                                             && a.Year == ftisYear && a.ActivityCategoryType == 1)
                                                             .AsEnumerable()
-                                                            .Where(a => ftisProject.Any(b => b.Id == a.ProjectId));
+                                                            .Where(a => ftisProject.Any(b => b.Id == a.ProjectId)
+                                                                      || (a.addfrom == 1 && a.ProjectId == null)  //刪除資料(沒有專案代碼先匯入)
+                                                            );
                                 
                                 var aa = delfTISUserHistory.ToList();
                                 fTISUserHistory.Delete(delfTISUserHistory);
@@ -848,7 +852,7 @@ namespace Esdms.Controllers.Es
                                     PId = rPId,
                                     DCode = ftisDCode.Count == 0 ? null : ftisDCode.FirstOrDefault().Key,
                                     Year = ftisYear,
-                                    ProjectId = ftisProject == null ? (int?)null : ftisProject.FirstOrDefault().Id,
+                                    ProjectId = (ftisProject == null || ftisProject.Count == 0) ? (int?)null : ftisProject.FirstOrDefault().Id,
                                     ActivityCategoryType = 1,  //1會內
                                     ActivityCategoryId = a.Id,
                                     Owner = ftisOwner,
