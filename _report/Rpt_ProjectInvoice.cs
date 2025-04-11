@@ -122,8 +122,22 @@ namespace Esdms
 
                     int count = 0;
                     var basics = ProjectInvoiceBasic.GetAllDatas().Where(a => a.MId == id).ToList();
+
+                    //學者基本資料(us)
+                    Dou.Models.DB.IModelEntity<BasicUser> m_BasicUser = new Dou.Models.DB.ModelEntity<BasicUser>(new EsdmsModelContextExt());
+                    var us = m_BasicUser.GetAll().ToList()
+                                .Where(a => basics.Any(b => b.BasicName == a.Name)).ToList();
+
                     foreach (var basic in basics)
-                    {                        
+                    {
+                        var u = us.Where(a => a.Name == basic.BasicName).FirstOrDefault();
+                        if (u == null)
+                        {
+                            logger.Info("無此請款學者基本資料：" + basic.BasicName);
+                            continue;
+                        }
+
+                        var Category = CategorySelectItems.Categorys.Where(a => a.Id == u.CategoryId).FirstOrDefault();
                         Dictionary<string, string> dicBasic = new Dictionary<string, string>()
                         {
                             {"[$ApplyDate$]", DateFormat.ToDate12_1(basic.ApplyDate.ToString())},
@@ -131,6 +145,9 @@ namespace Esdms
                             {"[$BasicName$]", basic.BasicName },
                             {"[$Amount$]", basic.Amount.ToString()},
                             {"[$Note$]", basic.Note },
+                            {"[$Category$]", Category == null ? "" : Category.Name},//f.人員類別
+                            {"[$UnitName$]", u.UnitName },//f.單位系所
+                            {"[$Position$]", u.Position },//f.職稱
                         };
 
                         int index = refn + count;  //實際新增row位置
