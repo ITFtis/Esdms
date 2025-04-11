@@ -214,32 +214,32 @@ namespace Esdms.Controllers.ProjectFold
             }
             outputs.Add(output1);
 
-            //2.專家學者基本資料
-            vwe_ChkExport chks = new vwe_ChkExport() {
-                ChkCategoryId = true,
-                ChkPosition = true,
-                ChkUnitName = true,
-            };
+            //////2.專家學者基本資料
+            ////vwe_ChkExport chks = new vwe_ChkExport() {
+            ////    ChkCategoryId = true,
+            ////    ChkPosition = true,
+            ////    ChkUnitName = true,
+            ////};
 
-            int autoSizeColumn = 3;
-            string waterColor = "";
+            ////int autoSizeColumn = 3;
+            ////string waterColor = "";
 
-            Export output2 = new Export();
-            Rpt_BasicUserList rep2 = new Rpt_BasicUserList();
-            string a2_url = rep2.Export(chks, basics, autoSizeColumn, waterColor);
+            ////Export output2 = new Export();
+            ////Rpt_BasicUserList rep2 = new Rpt_BasicUserList();
+            ////string a2_url = rep2.Export(chks, basics, autoSizeColumn, waterColor);
 
-            if (a2_url == "")
-            {
-                output2.result = false;
-                output2.errorMessage = "專家學者基本資料：" + rep2.ErrorMessage;
-            }
-            else
-            {
-                output2.result = true;
-                output2.url = a2_url;
-                output2.fileName = "(2)" + Path.GetFileName(a2_url);
-            }
-            outputs.Add(output2);
+            ////if (a2_url == "")
+            ////{
+            ////    output2.result = false;
+            ////    output2.errorMessage = "專家學者基本資料：" + rep2.ErrorMessage;
+            ////}
+            ////else
+            ////{
+            ////    output2.result = true;
+            ////    output2.url = a2_url;
+            ////    output2.fileName = "(2)" + Path.GetFileName(a2_url);
+            ////}
+            ////outputs.Add(output2);
 
             return Json(outputs, JsonRequestBehavior.AllowGet);
         }

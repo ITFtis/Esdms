@@ -150,7 +150,7 @@ namespace Esdms
                             //Merge the cell(起行、止行，起列，止列)                        
                             sheet.AddMergedRegion(new CellRangeAddress(index, index, 2, 5));
                             sheet.AddMergedRegion(new CellRangeAddress(index, index, 6, 7));
-                            sheet.AddMergedRegion(new CellRangeAddress(index, index, 9, 10));
+                            sheet.AddMergedRegion(new CellRangeAddress(index, index, 12, 13));
                         }
 
                         for (int j = 0; j <= columnCount; j++)
