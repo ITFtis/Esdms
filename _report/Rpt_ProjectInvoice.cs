@@ -203,6 +203,7 @@ namespace Esdms
                         , DateFormat.ToDate7_1(DateTime.Now));
 
                     sheet.Footer.Right = strFooter;
+                    sheet.PrintSetup.Landscape = true;
 
                     //寫入
                     FileStream s = new FileStream(toPath, FileMode.Create, FileAccess.Write);
