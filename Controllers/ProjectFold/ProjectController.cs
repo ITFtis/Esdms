@@ -20,6 +20,14 @@ namespace Esdms.Controllers.ProjectFold
             return View();
         }
 
+        protected override IQueryable<Project> BeforeIQueryToPagedList(IModelEntity<Project> dbEntity, IQueryable<Project> iquery, params KeyValueParams[] paras)
+        {
+            //預設排序
+            iquery = iquery.OrderByDescending(a => a.Year).ThenByDescending(a => a.Id);
+
+            return base.BeforeIQueryToPagedList(dbEntity, iquery, paras);
+        }
+
         protected override void AddDBObject(IModelEntity<Project> dbEntity, IEnumerable<Project> objs)
         {
             var f = objs.First();
